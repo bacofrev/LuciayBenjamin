@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benjamín & Lucía — 15.08.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f9f9f7;
+  --gray-100: #f2f2f0;
+  --gray-200: #e0e0dc;
+  --gray-400: #9e9e9a;
+  --gray-600: #5c5c58;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--white); color:var(--black); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; background:rgba(249,249,247,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--gray-200); }
+.nav-logo { font-family:'DM Serif Display',serif; font-size:1rem; letter-spacing:0.04em; }
+.nav-links { display:flex; gap:40px; list-style:none; }
+.nav-links a { text-decoration:none; color:var(--gray-600); font-size:0.7rem; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; transition:color 0.2s; }
+.nav-links a:hover { color:var(--black); }
+
+/* HERO */
+.hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:60px; }
+.hero-left { display:flex; flex-direction:column; justify-content:center; padding:80px 60px 80px 80px; border-right:1px solid var(--gray-200); }
+.hero-right { display:flex; flex-direction:column; justify-content:flex-end; padding:80px; background:var(--black); position:relative; overflow:hidden; }
+.hero-right::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:40px 40px; }
+.hero-tag { font-size:0.65rem; font-weight:400; letter-spacing:0.22em; text-transform:uppercase; color:var(--gray-400); margin-bottom:32px; }
+.hero-names { font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(3.5rem,6vw,6rem); line-height:1.0; color:var(--black); }
+.hero-names .italic { font-style:italic; }
+.hero-and { display:block; font-family:'DM Serif Display',serif; font-style:italic; font-size:0.45em; color:var(--gray-400); letter-spacing:0.08em; margin:8px 0; }
+.hero-meta { margin-top:48px; display:flex; flex-direction:column; gap:8px; }
+.hero-meta-row { display:flex; align-items:center; gap:16px; }
+.hero-meta-line { width:24px; height:1px; background:var(--gray-400); }
+.hero-meta-text { font-size:0.75rem; font-weight:300; color:var(--gray-600); letter-spacing:0.08em; }
+.hero-right-content { position:relative; z-index:1; }
+.hero-counter-label { font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:20px; }
+#countdown { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:48px; }
+.count-block { text-align:center; }
+.count-number { font-family:'DM Serif Display',serif; font-size:2.8rem; color:white; line-height:1; display:block; }
+.count-label { font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-top:6px; display:block; }
+.hero-right-quote { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.05rem; color:rgba(255,255,255,0.45); line-height:1.6; border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; }
+
+/* SECTIONS */
+.section { padding:100px 80px; border-top:1px solid var(--gray-200); }
+.section-header { display:flex; align-items:flex-start; gap:80px; margin-bottom:64px; }
+.section-num { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray-400); padding-top:8px; min-width:24px; }
+.section-title { font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:400; line-height:1.05; }
+.section-title em { font-style:italic; color:var(--gray-400); }
+.section-body { max-width:920px; margin-left:104px; }
+
+/* HISTORIA */
+.historia-text { font-size:1.05rem; line-height:1.9; color:var(--gray-600); max-width:580px; }
+.historia-text p+p { margin-top:1.5em; }
+
+/* PROGRAMA */
+#programa { background:var(--black); }
+#programa .section-num { color:rgba(255,255,255,0.25); }
+#programa .section-title { color:white; }
+#programa .section-title em { color:rgba(255,255,255,0.3); }
+.timeline { border-top:1px solid rgba(255,255,255,0.08); }
+.tl-row { display:grid; grid-template-columns:120px 1fr; gap:40px; padding:32px 0; border-bottom:1px solid rgba(255,255,255,0.08); align-items:start; transition:background 0.2s; }
+.tl-row:hover { background:rgba(255,255,255,0.02); padding-left:12px; }
+.tl-time { font-size:0.7rem; letter-spacing:0.12em; color:rgba(255,255,255,0.3); padding-top:3px; }
+.tl-event { font-family:'DM Serif Display',serif; font-size:1.3rem; color:white; margin-bottom:6px; }
+.tl-desc { font-size:0.82rem; color:rgba(255,255,255,0.35); line-height:1.6; }
+
+/* LLEGAR */
+.llegar-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--gray-200); border:1px solid var(--gray-200); }
+.llegar-card { background:var(--white); padding:36px; transition:background 0.2s; }
+.llegar-card:hover { background:var(--gray-100); }
+.llegar-card-label { font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray-400); margin-bottom:10px; }
+.llegar-card-title { font-family:'DM Serif Display',serif; font-size:1.1rem; color:var(--black); margin-bottom:10px; }
+.llegar-card-text { font-size:0.82rem; line-height:1.7; color:var(--gray-600); }
+
+/* REGALOS */
+#regalos { background:var(--gray-100); }
+.regalos-intro { font-size:0.95rem; line-height:1.85; color:var(--gray-600); max-width:520px; margin-bottom:48px; }
+.gifts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--gray-200); border:1px solid var(--gray-200); }
+.gift-card { background:var(--white); padding:32px; cursor:pointer; transition:background 0.2s; display:flex; flex-direction:column; }
+.gift-card:hover { background:var(--black); }
+.gift-card:hover .gift-name,.gift-card:hover .gift-arrow { color:white; }
+.gift-card:hover .gift-desc,.gift-card:hover .gift-price { color:rgba(255,255,255,0.4); }
+.gift-card:hover .gift-footer { border-color:rgba(255,255,255,0.1); }
+.gift-icon { font-size:1.6rem; margin-bottom:20px; display:block; filter:grayscale(1); }
+.gift-name { font-family:'DM Serif Display',serif; font-size:1.1rem; color:var(--black); margin-bottom:8px; transition:color 0.2s; }
+.gift-desc { font-size:0.78rem; line-height:1.6; color:var(--gray-600); flex:1; transition:color 0.2s; }
+.gift-footer { display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--gray-200); transition:border-color 0.2s; }
+.gift-price { font-size:0.68rem; letter-spacing:0.1em; color:var(--gray-400); transition:color 0.2s; }
+.gift-arrow { font-size:0.9rem; color:var(--gray-400); transition:color 0.2s; }
+
+/* ALERGIAS */
+#alergias { display:flex; align-items:center; gap:80px; padding:80px; border-top:1px solid var(--gray-200); }
+.alergias-title { font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); line-height:1.1; margin-bottom:20px; }
+.alergias-title em { font-style:italic; color:var(--gray-400); }
+.alergias-text { font-size:0.9rem; line-height:1.8; color:var(--gray-600); max-width:420px; }
+.alergias-right { flex-shrink:0; }
+.btn { display:inline-flex; align-items:center; gap:12px; padding:16px 32px; background:var(--black); color:white; font-family:'DM Sans',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.16em; text-transform:uppercase; text-decoration:none; border:1px solid var(--black); transition:background 0.2s,color 0.2s; cursor:pointer; white-space:nowrap; }
+.btn:hover { background:var(--white); color:var(--black); }
+
+/* FOOTER */
+footer { background:var(--black); padding:60px 80px; display:flex; align-items:center; justify-content:space-between; }
+.footer-names { font-family:'DM Serif Display',serif; font-size:1.5rem; font-style:italic; color:white; }
+.footer-date { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:4px; text-align:right; }
+.footer-loc { font-size:0.72rem; color:rgba(255,255,255,0.2); text-align:right; }
+
+/* MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.8); z-index:200; align-items:center; justify-content:center; padding:20px; }
+.modal-overlay.active { display:flex; }
+.modal { background:var(--white); max-width:480px; width:100%; animation:modalIn 0.25s ease; }
+@keyframes modalIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.modal-head { padding:32px 32px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:flex-start; }
+.modal-title { font-family:'DM Serif Display',serif; font-size:1.6rem; }
+.modal-subtitle { font-size:0.72rem; color:var(--gray-400); margin-top:4px; }
+.modal-close { background:none; border:none; font-size:1.2rem; color:var(--gray-400); cursor:pointer; margin-left:16px; line-height:1; padding:4px; }
+.modal-body { padding:28px 32px; }
+.modal-note { font-size:0.82rem; line-height:1.7; color:var(--gray-600); margin-bottom:20px; }
+.modal-tabs { display:flex; margin-bottom:16px; border:1px solid var(--gray-200); }
+.modal-tab { flex:1; padding:11px; background:none; border:none; border-right:1px solid var(--gray-200); cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-400); transition:all 0.15s; }
+.modal-tab:last-child { border-right:none; }
+.modal-tab.active { background:var(--black); color:white; }
+.bank-panel { display:none; background:var(--gray-100); padding:20px; }
+.bank-panel.active { display:block; }
+.bank-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--gray-200); gap:20px; }
+.bank-row:last-child { border-bottom:none; }
+.bank-label { font-size:0.7rem; letter-spacing:0.06em; color:var(--gray-400); min-width:100px; }
+.bank-value { font-size:0.82rem; color:var(--black); font-weight:400; text-align:right; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.7s ease,transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{min-height:320px; padding:48px 24px}
+  nav{padding:0 24px}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:0.62rem}
+  .section{padding:64px 24px}
+  .section-header{flex-direction:column; gap:16px}
+  .section-body{margin-left:0}
+  .llegar-grid,.gifts-grid{grid-template-columns:1fr}
+  #alergias{flex-direction:column; gap:32px; padding:64px 24px}
+  footer{flex-direction:column; gap:24px; padding:48px 24px}
+  .footer-date,.footer-loc{text-align:left}
+  .hero-left{padding:64px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Benjamín & Lucía</div>
+  <ul class="nav-links">
+    <li><a href="#historia">Historia</a></li>
+    <li><a href="#programa">Programa</a></li>
+    <li><a href="#llegar">Cómo llegar</a></li>
+    <li><a href="#regalos">Regalos</a></li>
+    <li><a href="#alergias">Alergias</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Matrimonio · 15 de agosto, 2026</p>
+    <h1 class="hero-names">
+      Benjamín
+      <span class="hero-and">y</span>
+      <span class="italic">Lucía</span>
+    </h1>
+    <div class="hero-meta">
+      <div class="hero-meta-row"><div class="hero-meta-line"></div><span class="hero-meta-text">San José de Maipo, Chile</span></div>
+      <div class="hero-meta-row"><div class="hero-meta-line"></div><span class="hero-meta-text">Ceremonia a las 17:00 hrs</span></div>
+      <div class="hero-meta-row"><div class="hero-meta-line"></div><span class="hero-meta-text">Al aire libre, en la cordillera</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-content">
+      <p class="hero-counter-label">Faltan</p>
+      <div id="countdown">
+        <div class="count-block"><span class="count-number" id="cd-days">—</span><span class="count-label">días</span></div>
+        <div class="count-block"><span class="count-number" id="cd-hours">—</span><span class="count-label">horas</span></div>
+        <div class="count-block"><span class="count-number" id="cd-mins">—</span><span class="count-label">min</span></div>
+        <div class="count-block"><span class="count-number" id="cd-secs">—</span><span class="count-label">seg</span></div>
+      </div>
+      <div class="hero-right-quote">"Gracias por ser parte<br>de este momento."</div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section id="historia" class="section">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Nuestra<br><em>historia</em></h2>
+  </div>
+  <div class="section-body reveal">
+    <div class="historia-text">
+      <p>Hay historias que empiezan sin anunciarse, en conversaciones ordinarias que sin querer se vuelven extraordinarias. La nuestra es así.</p>
+      <p>Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más queremos.</p>
+      <p>El 15 de agosto de 2026, en medio de las montañas de San José de Maipo, vamos a decir que sí frente a ustedes.</p>
+      <p>Gracias por estar acá.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMA -->
+<section id="programa" class="section">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Programa<br><em>del día</em></h2>
+  </div>
+  <div class="section-body reveal">
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">16:00 hrs</div><div><div class="tl-event">Llegada de invitados</div><div class="tl-desc">Recepción con algo para tomar mientras todos se instalan.</div></div></div>
+      <div class="tl-row"><div class="tl-time">17:00 hrs</div><div><div class="tl-event">Ceremonia</div><div class="tl-desc">Al aire libre, con la cordillera de fondo.</div></div></div>
+      <div class="tl-row"><div class="tl-time">18:00 hrs</div><div><div class="tl-event">Cóctel</div><div class="tl-desc">Brindis y conversación mientras el sol se va entre los cerros.</div></div></div>
+      <div class="tl-row"><div class="tl-time">20:00 hrs</div><div><div class="tl-event">Cena y fiesta</div><div class="tl-desc">Mesa compartida, música, baile. La noche que estábamos esperando.</div></div></div>
+      <div class="tl-row"><div class="tl-time">00:00 hrs</div><div><div class="tl-event">Cierre</div><div class="tl-desc">Coordinamos movilización de regreso a Santiago.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LLEGAR -->
+<section id="llegar" class="section">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Cómo<br><em>llegar</em></h2>
+  </div>
+  <div class="section-body reveal">
+    <div class="llegar-grid">
+      <div class="llegar-card"><div class="llegar-card-label">Ubicación</div><div class="llegar-card-title">San José de Maipo</div><div class="llegar-card-text">A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado.</div></div>
+      <div class="llegar-card"><div class="llegar-card-label">En auto</div><div class="llegar-card-title">~1 hora desde Santiago</div><div class="llegar-card-text">Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. Hay estacionamiento en el lugar.</div></div>
+      <div class="llegar-card"><div class="llegar-card-label">Transporte coordinado</div><div class="llegar-card-title">Bus desde Santiago</div><div class="llegar-card-text">Organizaremos un bus de ida y vuelta. Escríbenos para reservar un cupo. Detalles próximamente.</div></div>
+      <div class="llegar-card"><div class="llegar-card-label">Dónde quedarse</div><div class="llegar-card-title">Cabañas en el Cajón</div><div class="llegar-card-text">Hay hospedaje en San José de Maipo, Pirque y San Alfonso. También puedes volver a Santiago en el bus de regreso.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGALOS -->
+<section id="regalos" class="section">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Si quieren<br><em>regalarnos algo</em></h2>
+  </div>
+  <div class="section-body reveal">
+    <p class="regalos-intro">Lo más bonito que pueden hacer es estar. Pero si quieren sumarse a algo más, preparamos una lista de sueños que nos gustaría vivir juntos. Elige lo que quieras, haz la transferencia con los datos que aparecen al hacer clic, y listo.</p>
+    <div class="gifts-grid">
+      <div class="gift-card" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $50.000 CLP / ARS 50.000')"><span class="gift-icon">🌙</span><div class="gift-name">Luna de miel</div><div class="gift-desc">Un par de noches en algún lugar remoto, solo nosotros dos.</div><div class="gift-footer"><span class="gift-price">desde $50.000 CLP</span><span class="gift-arrow">→</span></div></div>
+      <div class="gift-card" onclick="openGift('Una noche de cena','Una salida especial, de esas cenas que se recuerdan siempre.','desde $30.000 CLP / ARS 30.000')"><span class="gift-icon">🍷</span><div class="gift-name">Una noche de cena</div><div class="gift-desc">Una salida especial, de esas cenas que se recuerdan siempre.</div><div class="gift-footer"><span class="gift-price">desde $30.000 CLP</span><span class="gift-arrow">→</span></div></div>
+      <div class="gift-card" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $40.000 CLP / ARS 40.000')"><span class="gift-icon">🏔️</span><div class="gift-name">Aventura en la montaña</div><div class="gift-desc">Una experiencia en la cordillera — senderismo, rafting, lo que venga.</div><div class="gift-footer"><span class="gift-price">desde $40.000 CLP</span><span class="gift-arrow">→</span></div></div>
+      <div class="gift-card" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $20.000 CLP / ARS 20.000')"><span class="gift-icon">🏡</span><div class="gift-name">Nuestro hogar</div><div class="gift-desc">Para lo que necesite nuestra casa en esta nueva etapa.</div><div class="gift-footer"><span class="gift-price">desde $20.000 CLP</span><span class="gift-arrow">→</span></div></div>
+      <div class="gift-card" onclick="openGift('Un viaje','Ese destino que algún día vamos a visitar juntos.','desde $80.000 CLP / ARS 80.000')"><span class="gift-icon">✈️</span><div class="gift-name">Un viaje</div><div class="gift-desc">Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar.</div><div class="gift-footer"><span class="gift-price">desde $80.000 CLP</span><span class="gift-arrow">→</span></div></div>
+      <div class="gift-card" onclick="openGift('Lo que quieran','Todo suma a la nueva vida que estamos construyendo.','monto libre')"><span class="gift-icon">🎁</span><div class="gift-name">Lo que quieran</div><div class="gift-desc">Todo suma a la nueva vida que estamos construyendo juntos.</div><div class="gift-footer"><span class="gift-price">monto libre</span><span class="gift-arrow">→</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERGIAS -->
+<section id="alergias">
+  <div class="alergias-left reveal">
+    <h2 class="alergias-title">¿Tienes alguna restricción<br><em>alimentaria?</em></h2>
+    <p class="alergias-text">Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering.</p>
+  </div>
+  <div class="alergias-right reveal">
+    <a href="https://airtable.com" target="_blank" class="btn">Indicar mi restricción &nbsp;→</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-names">Benjamín & Lucía</div>
+  <div>
+    <div class="footer-date">15 · VIII · 2026</div>
+    <div class="footer-loc">San José de Maipo, Chile</div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="giftModal" onclick="closeOutside(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title" id="modalTitle">—</div><div class="modal-subtitle" id="modalPrice">—</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-note" id="modalDesc">—</p>
+      <p class="modal-note" style="color:var(--gray-400);font-style:italic;margin-top:-8px;">Elige tu país y transfiere con los datos de abajo. ¡Gracias!</p>
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchTab(this,'cl')">🇨🇱 Chile</button>
+        <button class="modal-tab" onclick="switchTab(this,'ar')">🇦🇷 Argentina</button>
+      </div>
+      <div class="bank-panel active" id="panel-cl">
+        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Tu banco aquí</span></div>
+        <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
+        <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">0000000000</span></div>
+        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">XX.XXX.XXX-X</span></div>
+        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Apellido</span></div>
+        <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">tu@email.cl</span></div>
+      </div>
+      <div class="bank-panel" id="panel-ar">
+        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Tu banco Argentina</span></div>
+        <div class="bank-row"><span class="bank-label">CBU / Alias</span><span class="bank-value">tu.alias.aqui</span></div>
+        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Apellido</span></div>
+        <div class="bank-row"><span class="bank-label">Concepto</span><span class="bank-value">Regalo B&L</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Countdown
+function tick() {
+  const t = new Date('2026-08-15T17:00:00-04:00') - new Date();
+  if (t <= 0) return;
+  document.getElementById('cd-days').textContent  = String(Math.floor(t/86400000)).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(Math.floor(t%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(Math.floor(t%3600000/60000)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(Math.floor(t%60000/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+// Reveal
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+// Modal
+function openGift(name, desc, price) {
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalPrice').textContent = price;
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bank-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.modal-tab')[0].classList.add('active');
+  document.getElementById('panel-cl').classList.add('active');
+  document.getElementById('giftModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() { document.getElementById('giftModal').classList.remove('active'); document.body.style.overflow=''; }
+function closeOutside(e) { if(e.target.id==='giftModal') closeModal(); }
+function switchTab(btn, c) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bank-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+c).classList.add('active');
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>
