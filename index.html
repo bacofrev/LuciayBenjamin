@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
 :root {
   --black: #080808;
@@ -483,9 +484,24 @@ footer {
   #programa { padding:80px 24px; }
   .programa-header { flex-direction:column; gap:12px; }
 }
+/* ── AUTH GATE ── */
+#auth-gate { position:fixed; inset:0; z-index:10000; background:var(--black); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; cursor:auto; transition:opacity 0.5s ease; }
+#auth-gate.out { opacity:0; pointer-events:none; }
+.auth-title { font-family:'Shippori Mincho',serif; font-size:2rem; letter-spacing:0.22em; color:var(--white); }
+.auth-sub { font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gray-400); }
+.auth-btn { margin-top:20px; padding:13px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:background 0.25s,color 0.25s; }
+.auth-btn:hover { background:var(--gold); color:var(--black); }
+#logout-btn { display:none; font-size:0.55rem; letter-spacing:0.18em; text-transform:uppercase; color:white; background:none; border:none; cursor:pointer; opacity:0.5; transition:opacity 0.2s; }
+#logout-btn:hover { opacity:1; }
 </style>
 </head>
 <body>
+
+<div id="auth-gate">
+  <div class="auth-title">L &amp; B</div>
+  <div class="auth-sub">15 · VIII · 2026</div>
+  <button class="auth-btn" id="auth-open-btn">Ingresar</button>
+</div>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -499,6 +515,7 @@ footer {
     <li><a href="#regalos">Regalos</a></li>
     <li><a href="#alergias">Alergias</a></li>
   </ul>
+  <button id="logout-btn">Salir</button>
 </nav>
 
 <!-- HERO -->
@@ -816,6 +833,33 @@ function switchTab(btn, c) {
   document.getElementById('panel-'+c).classList.add('active');
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+</script>
+
+<script>
+(function() {
+  var gate = document.getElementById('auth-gate');
+  var openBtn = document.getElementById('auth-open-btn');
+  var logoutBtn = document.getElementById('logout-btn');
+
+  function showSite() {
+    gate.classList.add('out');
+    setTimeout(function() { gate.style.display = 'none'; }, 500);
+    logoutBtn.style.display = 'inline-block';
+  }
+
+  function showGate() {
+    gate.style.display = 'flex';
+    gate.classList.remove('out');
+    logoutBtn.style.display = 'none';
+  }
+
+  netlifyIdentity.on('init', function(user) { if (user) { showSite(); } });
+  netlifyIdentity.on('login', function() { netlifyIdentity.close(); showSite(); });
+  netlifyIdentity.on('logout', function() { showGate(); });
+
+  openBtn.addEventListener('click', function() { netlifyIdentity.open('login'); });
+  logoutBtn.addEventListener('click', function() { netlifyIdentity.logout(); });
+})();
 </script>
 </body>
 </html>
