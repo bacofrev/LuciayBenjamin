@@ -507,8 +507,6 @@ footer {
   <div class="auth-title">L &amp; B</div>
   <div class="auth-sub">15 · VIII · 2026</div>
   <div id="auth-form">
-    <div class="auth-hint" id="auth-hint"></div>
-    <input type="email" id="auth-email" class="auth-input" placeholder="correo@email.com" autocomplete="email" />
     <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" autocomplete="current-password" />
     <button class="auth-btn" id="auth-submit-btn">Ingresar</button>
     <div class="auth-error" id="auth-error"></div>
@@ -849,12 +847,11 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
 <script>
 (function() {
-  var API = '/.netlify/identity';
-  var STORAGE_KEY = 'nl_session';
+  var PASSWORD = 'luyben2026';
+  var KEY = 'wedding_auth';
 
   var gate = document.getElementById('auth-gate');
   var logoutBtn = document.getElementById('logout-btn');
-  var emailInput = document.getElementById('auth-email');
   var passwordInput = document.getElementById('auth-password');
   var submitBtn = document.getElementById('auth-submit-btn');
   var errorDiv = document.getElementById('auth-error');
@@ -869,73 +866,24 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     gate.style.display = 'flex';
     gate.classList.remove('out');
     logoutBtn.style.display = 'none';
+    passwordInput.value = '';
   }
 
-  function saveSession(token, expiresIn) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      access_token: token,
-      _expires_at: Date.now() + (parseInt(expiresIn) || 3600) * 1000
-    }));
-  }
+  if (localStorage.getItem(KEY) === PASSWORD) { showSite(); }
 
-  function hasSession() {
-    try {
-      var s = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return s && s._expires_at && Date.now() < s._expires_at;
-    } catch(e) { return false; }
-  }
-
-  var hash = new URLSearchParams(window.location.hash.substring(1));
-
-  // 1. Viene con access_token (después del redirect de GoTrue)
-  if (hash.get('access_token')) {
-    saveSession(hash.get('access_token'), hash.get('expires_in'));
-    history.replaceState(null, '', window.location.pathname);
-    showSite();
-    return;
-  }
-
-  // 2. Sesión guardada válida
-  if (hasSession()) { showSite(); return; }
-
-  // 3. Viene con invite_token → redirigir a GoTrue para que procese el invite
-  var inviteToken = hash.get('invite_token');
-  if (inviteToken) {
-    var redirectTo = window.location.origin + window.location.pathname;
-    window.location.replace(API + '/verify?token=' + encodeURIComponent(inviteToken) + '&type=invite&redirect_to=' + encodeURIComponent(redirectTo));
-    return;
-  }
-
-  // 4. Login normal con email y contraseña
   submitBtn.addEventListener('click', function() {
-    var email = emailInput.value.trim();
-    var password = passwordInput.value;
-    if (!email || !password) return;
-    errorDiv.textContent = '';
-    submitBtn.disabled = true;
-
-    fetch(API + '/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
-    })
-    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
-    .then(function(res) {
-      if (!res.ok) throw new Error();
-      saveSession(res.data.access_token, res.data.expires_in);
+    if (passwordInput.value === PASSWORD) {
+      localStorage.setItem(KEY, PASSWORD);
       showSite();
-    })
-    .catch(function() {
-      errorDiv.textContent = 'Correo o contraseña incorrectos.';
-      submitBtn.disabled = false;
-    });
+    } else {
+      errorDiv.textContent = 'Contraseña incorrecta.';
+    }
   });
 
   passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
-  emailInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') passwordInput.focus(); });
 
   logoutBtn.addEventListener('click', function() {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(KEY);
     showGate();
   });
 })();
