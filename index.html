@@ -907,12 +907,14 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
     var request;
     if (inviteToken) {
-      var body = new URLSearchParams({ type: 'invite', token: inviteToken, password: password });
-      console.log('Sending invite verify. Token length:', inviteToken.length, 'Body:', body.toString());
+      var bodyObj = { type: 'invite', token: inviteToken, password: password };
+      var bodyStr = JSON.stringify(bodyObj);
+      console.log('Token (primeros 30 chars):', inviteToken.substring(0, 30));
+      console.log('Body enviado:', bodyStr.substring(0, 120));
       request = fetch(API + '/verify', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body
+        headers: { 'Content-Type': 'application/json' },
+        body: bodyStr
       });
     } else {
       var email = emailInput.value;
