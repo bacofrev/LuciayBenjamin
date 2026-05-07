@@ -899,46 +899,65 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     submitBtn.textContent = 'Crear contraseña';
   }
 
+  function doLogin(email, password) {
+    return fetch(API + '/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+    })
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (!res.ok) throw new Error(res.data.error_description || 'Error al iniciar sesión');
+      saveSession(res.data);
+      showSite();
+    });
+  }
+
   submitBtn.addEventListener('click', function() {
     var password = passwordInput.value;
     if (!password) return;
     errorDiv.textContent = '';
     submitBtn.disabled = true;
 
-    var request;
     if (inviteToken) {
-      var bodyObj = { type: 'invite', token: inviteToken, password: password };
-      var bodyStr = JSON.stringify(bodyObj);
-      console.log('Token (primeros 30 chars):', inviteToken.substring(0, 30));
-      console.log('Body enviado:', bodyStr.substring(0, 120));
-      request = fetch(API + '/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: bodyStr
-      });
-    } else {
-      var email = emailInput.value;
-      request = fetch(API + '/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
-      });
-    }
-
-    request
-      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+      // Paso 1: setear contraseña usando el invite_token como Bearer
+      fetch(API + '/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + inviteToken
+        },
+        body: JSON.stringify({ password: password })
+      })
+      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
       .then(function(res) {
-        console.log('API response:', res);
-        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || JSON.stringify(res.data));
-        saveSession(res.data);
-        showSite();
+        console.error('PUT /user response:', JSON.stringify(res));
+        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || 'HTTP ' + res.status);
+        // Paso 2: obtener email del usuario y hacer login para tener sesión real
+        var email = res.data.email;
+        if (!email) {
+          try {
+            var payload = JSON.parse(atob(inviteToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+            email = payload.email;
+          } catch(e) {}
+        }
+        if (!email) throw new Error('No se pudo obtener el email del usuario');
+        return doLogin(email, password);
       })
       .catch(function(e) {
         console.error('Auth error:', e.message);
-        errorDiv.textContent = e.message || 'Error desconocido.';
+        errorDiv.textContent = e.message || 'Error al crear la contraseña.';
         submitBtn.disabled = false;
-        submitBtn.textContent = inviteToken ? 'Crear contraseña' : 'Ingresar';
+        submitBtn.textContent = 'Crear contraseña';
       });
+    } else {
+      var email = emailInput.value;
+      doLogin(email, password).catch(function(e) {
+        console.error('Auth error:', e.message);
+        errorDiv.textContent = 'Correo o contraseña incorrectos.';
+        submitBtn.disabled = false;
+      });
+    }
   });
 
   passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
