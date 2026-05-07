@@ -857,6 +857,12 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
   netlifyIdentity.on('login', function() { netlifyIdentity.close(); showSite(); });
   netlifyIdentity.on('logout', function() { showGate(); });
 
+  // Auto-abrir el widget si el link viene con token de invitación o recuperación
+  var hash = window.location.hash;
+  if (hash && (hash.indexOf('invite_token') !== -1 || hash.indexOf('recovery_token') !== -1)) {
+    netlifyIdentity.open();
+  }
+
   openBtn.addEventListener('click', function() { netlifyIdentity.open('login'); });
   logoutBtn.addEventListener('click', function() { netlifyIdentity.logout(); });
 })();
