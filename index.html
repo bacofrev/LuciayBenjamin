@@ -858,7 +858,6 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
   var passwordInput = document.getElementById('auth-password');
   var submitBtn = document.getElementById('auth-submit-btn');
   var errorDiv = document.getElementById('auth-error');
-  var hintDiv = document.getElementById('auth-hint');
 
   function showSite() {
     gate.classList.add('out');
@@ -872,92 +871,64 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     logoutBtn.style.display = 'none';
   }
 
-  function saveSession(data) {
-    data._expires_at = Date.now() + data.expires_in * 1000;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  function saveSession(token, expiresIn) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      access_token: token,
+      _expires_at: Date.now() + (parseInt(expiresIn) || 3600) * 1000
+    }));
   }
 
   function hasSession() {
-    var raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return false;
     try {
-      var s = JSON.parse(raw);
-      return s._expires_at && Date.now() < s._expires_at;
+      var s = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return s && s._expires_at && Date.now() < s._expires_at;
     } catch(e) { return false; }
   }
 
-  // Si ya hay sesión válida, mostrar el sitio directamente
-  if (hasSession()) { showSite(); }
+  var hash = new URLSearchParams(window.location.hash.substring(1));
 
-  // Detectar token de invitación en la URL
-  var params = new URLSearchParams(window.location.hash.substring(1));
-  var inviteToken = params.get('invite_token');
-
-  if (inviteToken) {
-    emailInput.style.display = 'none';
-    hintDiv.textContent = 'Crea tu contraseña para acceder';
-    submitBtn.textContent = 'Crear contraseña';
+  // 1. Viene con access_token (después del redirect de GoTrue)
+  if (hash.get('access_token')) {
+    saveSession(hash.get('access_token'), hash.get('expires_in'));
+    history.replaceState(null, '', window.location.pathname);
+    showSite();
+    return;
   }
 
-  function doLogin(email, password) {
-    return fetch(API + '/token', {
+  // 2. Sesión guardada válida
+  if (hasSession()) { showSite(); return; }
+
+  // 3. Viene con invite_token → redirigir a GoTrue para que procese el invite
+  var inviteToken = hash.get('invite_token');
+  if (inviteToken) {
+    var redirectTo = window.location.origin + window.location.pathname;
+    window.location.replace(API + '/verify?token=' + encodeURIComponent(inviteToken) + '&type=invite&redirect_to=' + encodeURIComponent(redirectTo));
+    return;
+  }
+
+  // 4. Login normal con email y contraseña
+  submitBtn.addEventListener('click', function() {
+    var email = emailInput.value.trim();
+    var password = passwordInput.value;
+    if (!email || !password) return;
+    errorDiv.textContent = '';
+    submitBtn.disabled = true;
+
+    fetch(API + '/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
     })
     .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
     .then(function(res) {
-      if (!res.ok) throw new Error(res.data.error_description || 'Error al iniciar sesión');
-      saveSession(res.data);
+      if (!res.ok) throw new Error();
+      saveSession(res.data.access_token, res.data.expires_in);
       showSite();
+    })
+    .catch(function() {
+      errorDiv.textContent = 'Correo o contraseña incorrectos.';
+      submitBtn.disabled = false;
     });
-  }
-
-  submitBtn.addEventListener('click', function() {
-    var password = passwordInput.value;
-    if (!password) return;
-    errorDiv.textContent = '';
-    submitBtn.disabled = true;
-
-    if (inviteToken) {
-      // Paso 1: setear contraseña usando el invite_token como Bearer
-      fetch(API + '/user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + inviteToken
-        },
-        body: JSON.stringify({ password: password })
-      })
-      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
-      .then(function(res) {
-        console.error('PUT /user response:', JSON.stringify(res));
-        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || 'HTTP ' + res.status);
-        // Paso 2: obtener email del usuario y hacer login para tener sesión real
-        var email = res.data.email;
-        if (!email) {
-          try {
-            var payload = JSON.parse(atob(inviteToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-            email = payload.email;
-          } catch(e) {}
-        }
-        if (!email) throw new Error('No se pudo obtener el email del usuario');
-        return doLogin(email, password);
-      })
-      .catch(function(e) {
-        console.error('Auth error:', e.message);
-        errorDiv.textContent = e.message || 'Error al crear la contraseña.';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Crear contraseña';
-      });
-    } else {
-      var email = emailInput.value;
-      doLogin(email, password).catch(function(e) {
-        console.error('Auth error:', e.message);
-        errorDiv.textContent = 'Correo o contraseña incorrectos.';
-        submitBtn.disabled = false;
-      });
-    }
   });
 
   passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
