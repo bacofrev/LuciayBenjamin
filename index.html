@@ -924,12 +924,14 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     request
       .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
       .then(function(res) {
-        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || 'Error');
+        console.log('API response:', res);
+        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || JSON.stringify(res.data));
         saveSession(res.data);
         showSite();
       })
       .catch(function(e) {
-        errorDiv.textContent = inviteToken ? 'Error al crear la contraseña.' : 'Correo o contraseña incorrectos.';
+        console.error('Auth error:', e.message);
+        errorDiv.textContent = e.message || 'Error desconocido.';
         submitBtn.disabled = false;
         submitBtn.textContent = inviteToken ? 'Crear contraseña' : 'Ingresar';
       });
