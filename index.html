@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/gotrue-js/dist/gotrue.js"></script>
 <style>
 :root {
   --black: #080808;
@@ -850,10 +849,8 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
 <script>
 (function() {
-  var auth = new GoTrue({
-    APIUrl: window.location.origin + '/.netlify/identity',
-    setCookie: true,
-  });
+  var API = '/.netlify/identity';
+  var STORAGE_KEY = 'nl_session';
 
   var gate = document.getElementById('auth-gate');
   var logoutBtn = document.getElementById('logout-btn');
@@ -875,15 +872,28 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     logoutBtn.style.display = 'none';
   }
 
-  // Si ya hay sesión activa, mostrar el sitio directamente
-  if (auth.currentUser()) { showSite(); }
+  function saveSession(data) {
+    data._expires_at = Date.now() + data.expires_in * 1000;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
 
-  // Detectar token de invitación o recuperación en la URL
+  function hasSession() {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    try {
+      var s = JSON.parse(raw);
+      return s._expires_at && Date.now() < s._expires_at;
+    } catch(e) { return false; }
+  }
+
+  // Si ya hay sesión válida, mostrar el sitio directamente
+  if (hasSession()) { showSite(); }
+
+  // Detectar token de invitación en la URL
   var params = new URLSearchParams(window.location.hash.substring(1));
   var inviteToken = params.get('invite_token');
-  var recoveryToken = params.get('recovery_token');
 
-  if (inviteToken || recoveryToken) {
+  if (inviteToken) {
     emailInput.style.display = 'none';
     hintDiv.textContent = 'Crea tu contraseña para acceder';
     submitBtn.textContent = 'Crear contraseña';
@@ -891,42 +901,46 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
   submitBtn.addEventListener('click', function() {
     var password = passwordInput.value;
+    if (!password) return;
     errorDiv.textContent = '';
     submitBtn.disabled = true;
 
+    var request;
     if (inviteToken) {
-      auth.acceptInvite(inviteToken, password, true)
-        .then(function() { showSite(); })
-        .catch(function(e) {
-          errorDiv.textContent = 'Error al crear la contraseña. Intenta de nuevo.';
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Crear contraseña';
-        });
-    } else if (recoveryToken) {
-      auth.recover(recoveryToken, true)
-        .then(function(user) { return user.update({ password: password }); })
-        .then(function() { showSite(); })
-        .catch(function(e) {
-          errorDiv.textContent = 'Error al recuperar la cuenta.';
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Crear contraseña';
-        });
+      request = fetch(API + '/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: inviteToken, type: 'invite', password: password })
+      });
     } else {
-      auth.login(emailInput.value, password, true)
-        .then(function() { showSite(); })
-        .catch(function() {
-          errorDiv.textContent = 'Correo o contraseña incorrectos.';
-          submitBtn.disabled = false;
-        });
+      var email = emailInput.value;
+      request = fetch(API + '/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'grant_type=password&username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+      });
     }
+
+    request
+      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+      .then(function(res) {
+        if (!res.ok) throw new Error(res.data.error_description || res.data.msg || 'Error');
+        saveSession(res.data);
+        showSite();
+      })
+      .catch(function(e) {
+        errorDiv.textContent = inviteToken ? 'Error al crear la contraseña.' : 'Correo o contraseña incorrectos.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = inviteToken ? 'Crear contraseña' : 'Ingresar';
+      });
   });
 
   passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
   emailInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') passwordInput.focus(); });
 
   logoutBtn.addEventListener('click', function() {
-    var user = auth.currentUser();
-    if (user) { user.logout().then(showGate); }
+    localStorage.removeItem(STORAGE_KEY);
+    showGate();
   });
 })();
 </script>
