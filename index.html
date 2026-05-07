@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js"></script>
+<script src="https://unpkg.com/gotrue-js/dist/gotrue.js"></script>
 <style>
 :root {
   --black: #080808;
@@ -489,8 +489,15 @@ footer {
 #auth-gate.out { opacity:0; pointer-events:none; }
 .auth-title { font-family:'Shippori Mincho',serif; font-size:2rem; letter-spacing:0.22em; color:var(--white); }
 .auth-sub { font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gray-400); }
-.auth-btn { margin-top:20px; padding:13px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:background 0.25s,color 0.25s; }
+#auth-form { display:flex; flex-direction:column; align-items:center; gap:0; margin-top:12px; }
+.auth-input { display:block; width:260px; padding:12px 16px; margin-bottom:10px; background:transparent; border:1px solid var(--gray-600); color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.75rem; letter-spacing:0.05em; outline:none; transition:border-color 0.2s; }
+.auth-input::placeholder { color:var(--gray-600); }
+.auth-input:focus { border-color:var(--gold); }
+.auth-btn { margin-top:10px; padding:13px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:background 0.25s,color 0.25s; width:260px; }
 .auth-btn:hover { background:var(--gold); color:var(--black); }
+.auth-btn:disabled { opacity:0.4; cursor:default; }
+.auth-error { font-size:0.65rem; color:#e88; letter-spacing:0.05em; margin-top:8px; min-height:16px; }
+.auth-hint { font-size:0.65rem; letter-spacing:0.08em; color:var(--gray-400); margin-bottom:8px; text-align:center; }
 #logout-btn { display:none; font-size:0.55rem; letter-spacing:0.18em; text-transform:uppercase; color:white; background:none; border:none; cursor:pointer; opacity:0.5; transition:opacity 0.2s; }
 #logout-btn:hover { opacity:1; }
 </style>
@@ -500,7 +507,13 @@ footer {
 <div id="auth-gate">
   <div class="auth-title">L &amp; B</div>
   <div class="auth-sub">15 · VIII · 2026</div>
-  <button class="auth-btn" id="auth-open-btn">Ingresar</button>
+  <div id="auth-form">
+    <div class="auth-hint" id="auth-hint"></div>
+    <input type="email" id="auth-email" class="auth-input" placeholder="correo@email.com" autocomplete="email" />
+    <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" autocomplete="current-password" />
+    <button class="auth-btn" id="auth-submit-btn">Ingresar</button>
+    <div class="auth-error" id="auth-error"></div>
+  </div>
 </div>
 
 <div class="cursor" id="cursor"></div>
@@ -837,9 +850,18 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
 <script>
 (function() {
+  var auth = new GoTrue({
+    APIUrl: window.location.origin + '/.netlify/identity',
+    setCookie: true,
+  });
+
   var gate = document.getElementById('auth-gate');
-  var openBtn = document.getElementById('auth-open-btn');
   var logoutBtn = document.getElementById('logout-btn');
+  var emailInput = document.getElementById('auth-email');
+  var passwordInput = document.getElementById('auth-password');
+  var submitBtn = document.getElementById('auth-submit-btn');
+  var errorDiv = document.getElementById('auth-error');
+  var hintDiv = document.getElementById('auth-hint');
 
   function showSite() {
     gate.classList.add('out');
@@ -853,19 +875,59 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
     logoutBtn.style.display = 'none';
   }
 
-  netlifyIdentity.on('init', function(user) { if (user) { showSite(); } });
-  netlifyIdentity.on('login', function() { netlifyIdentity.close(); showSite(); });
-  netlifyIdentity.on('logout', function() { showGate(); });
+  // Si ya hay sesión activa, mostrar el sitio directamente
+  if (auth.currentUser()) { showSite(); }
 
-  // Si viene con token de invitación o recuperación, ocultar el gate para que el widget se vea
-  var hash = window.location.hash;
-  if (hash && (hash.indexOf('invite_token') !== -1 || hash.indexOf('recovery_token') !== -1)) {
-    gate.style.display = 'none';
-    netlifyIdentity.open();
+  // Detectar token de invitación o recuperación en la URL
+  var params = new URLSearchParams(window.location.hash.substring(1));
+  var inviteToken = params.get('invite_token');
+  var recoveryToken = params.get('recovery_token');
+
+  if (inviteToken || recoveryToken) {
+    emailInput.style.display = 'none';
+    hintDiv.textContent = 'Crea tu contraseña para acceder';
+    submitBtn.textContent = 'Crear contraseña';
   }
 
-  openBtn.addEventListener('click', function() { netlifyIdentity.open('login'); });
-  logoutBtn.addEventListener('click', function() { netlifyIdentity.logout(); });
+  submitBtn.addEventListener('click', function() {
+    var password = passwordInput.value;
+    errorDiv.textContent = '';
+    submitBtn.disabled = true;
+
+    if (inviteToken) {
+      auth.acceptInvite(inviteToken, password, true)
+        .then(function() { showSite(); })
+        .catch(function(e) {
+          errorDiv.textContent = 'Error al crear la contraseña. Intenta de nuevo.';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Crear contraseña';
+        });
+    } else if (recoveryToken) {
+      auth.recover(recoveryToken, true)
+        .then(function(user) { return user.update({ password: password }); })
+        .then(function() { showSite(); })
+        .catch(function(e) {
+          errorDiv.textContent = 'Error al recuperar la cuenta.';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Crear contraseña';
+        });
+    } else {
+      auth.login(emailInput.value, password, true)
+        .then(function() { showSite(); })
+        .catch(function() {
+          errorDiv.textContent = 'Correo o contraseña incorrectos.';
+          submitBtn.disabled = false;
+        });
+    }
+  });
+
+  passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
+  emailInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') passwordInput.focus(); });
+
+  logoutBtn.addEventListener('click', function() {
+    var user = auth.currentUser();
+    if (user) { user.logout().then(showGate); }
+  });
 })();
 </script>
 </body>
