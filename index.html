@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucía & Benjamín — 15.08.2026</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
@@ -20,13 +21,7 @@
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { background:var(--white); color:var(--black); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
-
-/* ── CURSOR ── */
-.cursor { position:fixed; width:8px; height:8px; background:var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.1s, width 0.3s, height 0.3s, background 0.3s; }
-.cursor-ring { position:fixed; width:36px; height:36px; border:1px solid rgba(0,0,0,0.3); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:transform 0.12s ease-out, width 0.3s, height 0.3s, border-color 0.3s; }
-body.light-section .cursor { background:var(--white); }
-body.light-section .cursor-ring { border-color:rgba(255,255,255,0.4); }
+body { background:var(--white); color:var(--black); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
 
 /* ── NAV ── */
 nav {
@@ -418,7 +413,7 @@ nav {
   transition:all 0.3s;
   white-space:nowrap;
   background:transparent;
-  cursor:none;
+  cursor:pointer;
 }
 .btn:hover { background:white; color:var(--black); border-color:white; }
 
@@ -447,11 +442,11 @@ footer {
 .modal-head { padding:36px 36px 28px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:flex-start; }
 .modal-title { font-family:'Shippori Mincho',serif; font-size:1.8rem; }
 .modal-subtitle { font-size:0.7rem; color:var(--gray-400); margin-top:4px; letter-spacing:0.06em; }
-.modal-close { background:none; border:none; font-size:1.1rem; color:var(--gray-400); cursor:none; padding:4px; line-height:1; margin-left:16px; }
+.modal-close { background:none; border:none; font-size:1.1rem; color:var(--gray-400); cursor:pointer; padding:4px; line-height:1; margin-left:16px; }
 .modal-body { padding:32px 36px; }
 .modal-note { font-size:0.82rem; line-height:1.75; color:var(--gray-600); margin-bottom:20px; }
 .modal-tabs { display:flex; margin-bottom:16px; border:1px solid var(--gray-200); }
-.modal-tab { flex:1; padding:12px; background:none; border:none; border-right:1px solid var(--gray-200); cursor:none; font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-400); transition:all 0.2s; }
+.modal-tab { flex:1; padding:12px; background:none; border:none; border-right:1px solid var(--gray-200); cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-400); transition:all 0.2s; }
 .modal-tab:last-child { border-right:none; }
 .modal-tab.active { background:var(--black); color:white; }
 .bank-panel { display:none; background:var(--gray-100); padding:20px; }
@@ -516,9 +511,6 @@ footer {
   </div>
 </div>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <nav>
   <div class="nav-logo">L & B</div>
   <ul class="nav-links">
@@ -570,7 +562,7 @@ footer {
         <div class="carousel-wrap">
           <div class="carousel" id="carousel">
             <div class="carousel-slide">
-              <img src="img/foto_1.jpg" alt="Lucía y Benjamín" />
+              <img src="img/foto_01.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
               <img src="img/foto_2.jpg" alt="Lucía y Benjamín" />
@@ -578,12 +570,28 @@ footer {
             <div class="carousel-slide">
               <img src="img/foto_3.jpg" alt="Lucía y Benjamín" />
             </div>
+            <div class="carousel-slide">
+              <img src="img/foto_4.jpg" alt="Lucía y Benjamín" />
+            </div>
+            <div class="carousel-slide">
+              <img src="img/foto_5.jpg" alt="Lucía y Benjamín" />
+            </div>
+            <div class="carousel-slide">
+              <img src="img/foto_6.jpg" alt="Lucía y Benjamín" />
+            </div>
+            <div class="carousel-slide">
+              <img src="img/foto_7.jpg" alt="Lucía y Benjamín" />
+            </div>
           </div>
         </div>
         <div class="carousel-dots" id="carouselDots">
           <div class="dot active" onclick="goToSlide(0)"></div>
           <div class="dot" onclick="goToSlide(1)"></div>
           <div class="dot" onclick="goToSlide(2)"></div>
+          <div class="dot" onclick="goToSlide(3)"></div>
+          <div class="dot" onclick="goToSlide(4)"></div>
+          <div class="dot" onclick="goToSlide(5)"></div>
+          <div class="dot" onclick="goToSlide(6)"></div>
         </div>
       </div>
     </div>
@@ -767,13 +775,6 @@ footer {
 </div>
 
 <script>
-// ── CURSOR
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx=0, my=0, rx=0, ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-(function animRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-
 // ── PARALLAX HERO
 const heroImg = document.getElementById('heroImg');
 window.addEventListener('scroll', () => {
@@ -816,7 +817,7 @@ document.addEventListener('mousemove', e => {
 });
 
 // Auto slide
-setInterval(() => goToSlide((current+1) % slides.length), 4000);
+setInterval(() => goToSlide((current+1) % slides.length), 3000);
 
 // ── MODAL
 function openGift(name, desc, price) {
