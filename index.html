@@ -258,7 +258,7 @@ nav {
 .tl-item:hover::before { width:100%; }
 
 .tl-time {
-  font-size:0.72rem; letter-spacing:0.12em;
+  font-size:0.85rem; letter-spacing:0.12em;
   color:rgba(255,255,255,0.25);
   padding-top:4px; font-weight:300;
 }
@@ -267,11 +267,11 @@ nav {
 
 .tl-event {
   font-family:'Shippori Mincho',serif;
-  font-size:1.4rem; color:white; margin-bottom:6px;
+  font-size:1.7rem; color:white; margin-bottom:6px;
 }
 
 .tl-desc {
-  font-size:0.8rem; line-height:1.6;
+  font-size:0.95rem; line-height:1.6;
   color:rgba(255,255,255,0.3);
 }
 
@@ -288,7 +288,7 @@ nav {
 
 .llegar-grid {
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:1px;
   background:var(--gray-200);
   border:1px solid var(--gray-200);
@@ -318,6 +318,63 @@ nav {
 .llegar-card-text {
   font-size:0.8rem; line-height:1.75;
   color:var(--gray-600); transition:color 0.3s;
+}
+
+/* ── DRESS CODE ── */
+#dresscode { background:var(--black); padding:120px 56px; }
+
+.dresscode-layout {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+
+.dresscode-title {
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(2.4rem,4vw,4rem);
+  color:white; font-weight:400;
+  line-height:1.1; margin-bottom:24px;
+}
+.dresscode-title em { font-style:italic; color:rgba(255,255,255,0.3); }
+
+.dresscode-text {
+  font-size:1rem; line-height:1.95;
+  color:rgba(255,255,255,0.4);
+}
+
+.dresscode-palette-label {
+  font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase;
+  color:rgba(255,255,255,0.25); margin-bottom:28px;
+  display:flex; align-items:center; gap:16px;
+}
+.dresscode-palette-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
+
+.palette {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.palette-item {
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+
+.palette-swatch {
+  width:100%; aspect-ratio:1;
+  border-radius:2px;
+}
+
+.palette-name {
+  font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:rgba(255,255,255,0.3); text-align:center; line-height:1.4;
+}
+
+.dresscode-note {
+  margin-top:32px; padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  font-size:0.78rem; color:rgba(255,255,255,0.25);
+  font-style:italic; line-height:1.7;
 }
 
 /* ── REGALOS ── */
@@ -374,11 +431,12 @@ nav {
 .gift-card:hover .gift-desc { color:rgba(255,255,255,0.35); }
 .gift-card:hover .gift-price { color:var(--gold); }
 .gift-card:hover .gift-arrow { color:white; opacity:1; }
+.gift-card:hover .gift-footer { border-top-color:rgba(255,255,255,0.08); }
 
-.gift-icon { font-size:1.4rem; margin-bottom:24px; display:block; filter:grayscale(1); opacity:0.6; }
+.gift-icon { margin-bottom:28px; display:block; }
 .gift-name { font-family:'Shippori Mincho',serif; font-size:1.1rem; color:var(--black); margin-bottom:10px; transition:color 0.3s; }
 .gift-desc { font-size:0.78rem; line-height:1.65; color:var(--gray-600); flex:1; transition:color 0.3s; }
-.gift-footer { display:flex; justify-content:space-between; align-items:center; margin-top:28px; padding-top:16px; border-top:1px solid var(--gray-200); }
+.gift-footer { display:flex; justify-content:space-between; align-items:center; margin-top:28px; padding-top:16px; border-top:1px solid var(--gray-200); transition:border-color 0.3s; }
 .gift-price { font-size:0.68rem; letter-spacing:0.08em; color:var(--gray-400); transition:color 0.3s; }
 .gift-arrow { font-size:1rem; color:var(--gray-400); opacity:0; transition:color 0.3s, opacity 0.3s; }
 
@@ -517,6 +575,7 @@ footer {
     <li><a href="#historia">Historia</a></li>
     <li><a href="#programa">Programa</a></li>
     <li><a href="#llegar">Cómo llegar</a></li>
+    <li><a href="#dresscode">Dress code</a></li>
     <li><a href="#regalos">Regalos</a></li>
     <li><a href="#alergias">Alergias</a></li>
   </ul>
@@ -607,7 +666,7 @@ footer {
     </div>
     <div class="timeline">
       <div class="tl-item fade-up">
-        <div class="tl-time">16:00 hrs</div>
+        <div class="tl-time">16:30 hrs</div>
         <div class="tl-right">
           <div class="tl-event">Llegada de invitados</div>
           <div class="tl-desc">Recepción con algo para tomar mientras todos se instalan.</div>
@@ -621,21 +680,21 @@ footer {
         </div>
       </div>
       <div class="tl-item fade-up delay-2">
-        <div class="tl-time">18:00 hrs</div>
+        <div class="tl-time">17:30 hrs</div>
         <div class="tl-right">
           <div class="tl-event">Cóctel</div>
           <div class="tl-desc">Brindis y conversación mientras el sol se va entre los cerros.</div>
         </div>
       </div>
       <div class="tl-item fade-up delay-3">
-        <div class="tl-time">20:00 hrs</div>
+        <div class="tl-time">19:00 hrs</div>
         <div class="tl-right">
           <div class="tl-event">Cena y fiesta</div>
           <div class="tl-desc">Mesa compartida, música, baile. La noche que estábamos esperando.</div>
         </div>
       </div>
       <div class="tl-item fade-up">
-        <div class="tl-time">00:00 hrs</div>
+        <div class="tl-time">01:00 hrs</div>
         <div class="tl-right">
           <div class="tl-event">Cierre</div>
           <div class="tl-desc">Coordinamos movilización de regreso a Santiago.</div>
@@ -662,13 +721,59 @@ footer {
       </div>
       <div class="llegar-card fade-up delay-2">
         <span class="llegar-num">03</span>
-        <div class="llegar-card-title">Bus desde Santiago</div>
-        <div class="llegar-card-text">Organizaremos un bus de ida y vuelta. Escríbenos para reservar un cupo. Detalles próximamente.</div>
-      </div>
-      <div class="llegar-card fade-up delay-3">
-        <span class="llegar-num">04</span>
         <div class="llegar-card-title">Dónde quedarse</div>
-        <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso. También puedes volver en el bus de regreso.</div>
+        <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRESS CODE -->
+<section id="dresscode">
+  <div class="section-inner">
+    <div class="dresscode-layout">
+      <div class="fade-up">
+        <div class="historia-label" style="color:rgba(255,255,255,0.25);">04 — Dress code</div>
+        <h2 class="dresscode-title">Formal<br><em>elegante</em></h2>
+        <p class="dresscode-text">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
+      </div>
+      <div class="fade-up delay-1">
+        <div class="dresscode-palette-label">Paleta sugerida</div>
+        <div class="palette">
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#1c2b4a;"></div>
+            <span class="palette-name">Azul noche</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#2c4a2e;"></div>
+            <span class="palette-name">Verde botella</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#6b2737;"></div>
+            <span class="palette-name">Burdeos</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#3a3a3a;"></div>
+            <span class="palette-name">Gris carbón</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#c8b99a;"></div>
+            <span class="palette-name">Champagne</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#c9a0a0;"></div>
+            <span class="palette-name">Rosa palo</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#b8a99a;"></div>
+            <span class="palette-name">Nude</span>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#9b8ea8;"></div>
+            <span class="palette-name">Lavanda</span>
+          </div>
+        </div>
+        <p class="dresscode-note">El blanco queda reservado para la novia.</p>
       </div>
     </div>
   </div>
@@ -682,42 +787,95 @@ footer {
       <p class="regalos-intro-text">Lo más bonito que pueden hacer es estar. Pero si quieren sumarse a algo más, preparamos una lista de sueños. Elige lo que quieras y transfiere con los datos que aparecen al hacer clic.</p>
     </div>
     <div class="gifts-grid">
-      <div class="gift-card fade-up" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $50.000 CLP / ARS 50.000')">
-        <span class="gift-icon">🌙</span>
+
+      <div class="gift-card fade-up" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $150.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8 C20 8 11 16 11 28 C11 40 20 48 32 48 C25 48 18 42 18 28 C18 14 25 8 32 8Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="40" cy="13" r="2.5" fill="#c8a96e"/>
+            <circle cx="46" cy="24" r="1.5" fill="#c8a96e"/>
+            <circle cx="42" cy="35" r="1.5" fill="#c8a96e"/>
+          </svg>
+        </span>
         <div class="gift-name">Luna de miel</div>
         <div class="gift-desc">Un par de noches en algún lugar remoto, solo nosotros dos.</div>
-        <div class="gift-footer"><span class="gift-price">desde $50.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-footer"><span class="gift-price">desde $150.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
-      <div class="gift-card fade-up delay-1" onclick="openGift('Una noche de cena','Una salida especial, de esas cenas que se recuerdan siempre.','desde $30.000 CLP / ARS 30.000')">
-        <span class="gift-icon">🍷</span>
+
+      <div class="gift-card fade-up delay-1" onclick="openGift('Una noche de cena','Una salida especial, de esas cenas que se recuerdan siempre.','desde $50.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="20" y1="8" x2="20" y2="48" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="14" y1="8" x2="14" y2="22" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="26" y1="8" x2="26" y2="22" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14 22 Q20 27 26 22" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="36" y1="8" x2="36" y2="48" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M36 8 L45 20 L36 30" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <ellipse cx="28" cy="36" rx="14" ry="3" stroke="#c8a96e" stroke-width="0.75" stroke-dasharray="2 2"/>
+          </svg>
+        </span>
         <div class="gift-name">Una noche de cena</div>
         <div class="gift-desc">Una salida especial, de esas cenas que se recuerdan siempre.</div>
-        <div class="gift-footer"><span class="gift-price">desde $30.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-footer"><span class="gift-price">desde $50.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
-      <div class="gift-card fade-up delay-2" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $40.000 CLP / ARS 40.000')">
-        <span class="gift-icon">🏔️</span>
+
+      <div class="gift-card fade-up delay-2" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $80.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 8 L50 46 L6 46Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M28 8 L34 22 L22 22Z" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round" opacity="0.6"/>
+            <path d="M40 24 L54 46 L26 46" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="46" cy="15" r="5" stroke="#c8a96e" stroke-width="1"/>
+          </svg>
+        </span>
         <div class="gift-name">Aventura en la montaña</div>
         <div class="gift-desc">Una experiencia en la cordillera — senderismo, rafting, lo que venga.</div>
-        <div class="gift-footer"><span class="gift-price">desde $40.000 CLP</span><span class="gift-arrow">→</span></div>
-      </div>
-      <div class="gift-card fade-up" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $20.000 CLP / ARS 20.000')">
-        <span class="gift-icon">🏡</span>
-        <div class="gift-name">Nuestro hogar</div>
-        <div class="gift-desc">Para lo que necesite nuestra casa en esta nueva etapa.</div>
-        <div class="gift-footer"><span class="gift-price">desde $20.000 CLP</span><span class="gift-arrow">→</span></div>
-      </div>
-      <div class="gift-card fade-up delay-1" onclick="openGift('Un viaje','Ese destino que algún día vamos a visitar juntos.','desde $80.000 CLP / ARS 80.000')">
-        <span class="gift-icon">✈️</span>
-        <div class="gift-name">Un viaje</div>
-        <div class="gift-desc">Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar.</div>
         <div class="gift-footer"><span class="gift-price">desde $80.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
+
+      <div class="gift-card fade-up" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $100.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 6 L52 26 L44 26 L44 50 L12 50 L12 26 L4 26Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="22" y="34" width="12" height="16" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round"/>
+            <rect x="14" y="30" width="9" height="9" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round"/>
+            <rect x="33" y="30" width="9" height="9" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="gift-name">Nuestro hogar</div>
+        <div class="gift-desc">Para lo que necesite nuestra casa en esta nueva etapa.</div>
+        <div class="gift-footer"><span class="gift-price">desde $100.000 CLP</span><span class="gift-arrow">→</span></div>
+      </div>
+
+      <div class="gift-card fade-up delay-1" onclick="openGift('Un viaje','Ese destino que algún día vamos a visitar juntos.','desde $250.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="30" cy="28" rx="18" ry="7" stroke="#c8a96e" stroke-width="1.5" transform="rotate(-25 30 28)"/>
+            <path d="M27 21 L15 10 L21 15 L26 20" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M33 35 L45 46 L39 41 L34 36" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M43 22 L50 14 L51 19 L45 24" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 46 Q22 38 36 28" stroke="#c8a96e" stroke-width="0.75" stroke-dasharray="2 3" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="gift-name">Un viaje</div>
+        <div class="gift-desc">Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar.</div>
+        <div class="gift-footer"><span class="gift-price">desde $250.000 CLP</span><span class="gift-arrow">→</span></div>
+      </div>
+
       <div class="gift-card fade-up delay-2" onclick="openGift('Lo que quieran','Todo suma a la nueva vida que estamos construyendo.','monto libre')">
-        <span class="gift-icon">🎁</span>
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 6 L50 22 L28 50 L6 22Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M10 22 L28 10 L46 22" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round" opacity="0.5"/>
+            <line x1="10" y1="22" x2="46" y2="22" stroke="#c8a96e" stroke-width="0.75" opacity="0.5"/>
+            <line x1="28" y1="22" x2="28" y2="50" stroke="#c8a96e" stroke-width="0.75" opacity="0.5"/>
+          </svg>
+        </span>
         <div class="gift-name">Lo que quieran</div>
         <div class="gift-desc">Todo suma a la nueva vida que estamos construyendo juntos.</div>
         <div class="gift-footer"><span class="gift-price">monto libre</span><span class="gift-arrow">→</span></div>
       </div>
+
     </div>
   </div>
 </section>
