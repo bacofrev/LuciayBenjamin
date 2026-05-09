@@ -434,10 +434,10 @@ nav {
 .gift-card:hover .gift-footer { border-top-color:rgba(255,255,255,0.08); }
 
 .gift-icon { margin-bottom:28px; display:block; }
-.gift-name { font-family:'Shippori Mincho',serif; font-size:1.1rem; color:var(--black); margin-bottom:10px; transition:color 0.3s; }
-.gift-desc { font-size:0.78rem; line-height:1.65; color:var(--gray-600); flex:1; transition:color 0.3s; }
+.gift-name { font-family:'Shippori Mincho',serif; font-size:1.35rem; color:var(--black); margin-bottom:10px; transition:color 0.3s; }
+.gift-desc { font-size:0.92rem; line-height:1.65; color:var(--gray-600); flex:1; transition:color 0.3s; }
 .gift-footer { display:flex; justify-content:space-between; align-items:center; margin-top:28px; padding-top:16px; border-top:1px solid var(--gray-200); transition:border-color 0.3s; }
-.gift-price { font-size:0.68rem; letter-spacing:0.08em; color:var(--gray-400); transition:color 0.3s; }
+.gift-price { font-size:0.8rem; letter-spacing:0.08em; color:var(--gray-400); transition:color 0.3s; }
 .gift-arrow { font-size:1rem; color:var(--gray-400); opacity:0; transition:color 0.3s, opacity 0.3s; }
 
 /* ── ALERGIAS ── */
@@ -509,6 +509,10 @@ footer {
 .modal-tab.active { background:var(--black); color:white; }
 .bank-panel { display:none; background:var(--gray-100); padding:20px; }
 .bank-panel.active { display:block; }
+.bank-value { font-size:0.82rem; color:var(--black); font-weight:400; text-align:right; word-break:break-word; max-width:260px; }
+.copy-btn { margin-top:12px; width:100%; padding:13px; background:transparent; border:1px solid var(--gray-200); color:var(--gray-600); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+.copy-btn:hover { background:var(--black); color:white; border-color:var(--black); }
+.copy-btn.copied { background:var(--black); color:white; border-color:var(--black); }
 .bank-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--gray-200); gap:20px; }
 .bank-row:last-child { border-bottom:none; }
 .bank-label { font-size:0.7rem; letter-spacing:0.06em; color:var(--gray-400); min-width:100px; }
@@ -788,21 +792,7 @@ footer {
     </div>
     <div class="gifts-grid">
 
-      <div class="gift-card fade-up" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $150.000 CLP')">
-        <span class="gift-icon">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 8 C20 8 11 16 11 28 C11 40 20 48 32 48 C25 48 18 42 18 28 C18 14 25 8 32 8Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
-            <circle cx="40" cy="13" r="2.5" fill="#c8a96e"/>
-            <circle cx="46" cy="24" r="1.5" fill="#c8a96e"/>
-            <circle cx="42" cy="35" r="1.5" fill="#c8a96e"/>
-          </svg>
-        </span>
-        <div class="gift-name">Luna de miel</div>
-        <div class="gift-desc">Un par de noches en algún lugar remoto, solo nosotros dos.</div>
-        <div class="gift-footer"><span class="gift-price">desde $150.000 CLP</span><span class="gift-arrow">→</span></div>
-      </div>
-
-      <div class="gift-card fade-up delay-1" onclick="openGift('Una noche de cena','Una salida especial, de esas cenas que se recuerdan siempre.','desde $50.000 CLP')">
+      <div class="gift-card fade-up" onclick="openGift('Una noche de cena','Una salida especial, de esas cenas que se recuerdan siempre.','desde $50.000 CLP')">
         <span class="gift-icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="20" y1="8" x2="20" y2="48" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/>
@@ -819,7 +809,7 @@ footer {
         <div class="gift-footer"><span class="gift-price">desde $50.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
-      <div class="gift-card fade-up delay-2" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $80.000 CLP')">
+      <div class="gift-card fade-up delay-1" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $80.000 CLP')">
         <span class="gift-icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M28 8 L50 46 L6 46Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
@@ -833,7 +823,7 @@ footer {
         <div class="gift-footer"><span class="gift-price">desde $80.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
-      <div class="gift-card fade-up" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $100.000 CLP')">
+      <div class="gift-card fade-up delay-2" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $100.000 CLP')">
         <span class="gift-icon">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M28 6 L52 26 L44 26 L44 50 L12 50 L12 26 L4 26Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
@@ -845,6 +835,20 @@ footer {
         <div class="gift-name">Nuestro hogar</div>
         <div class="gift-desc">Para lo que necesite nuestra casa en esta nueva etapa.</div>
         <div class="gift-footer"><span class="gift-price">desde $100.000 CLP</span><span class="gift-arrow">→</span></div>
+      </div>
+
+      <div class="gift-card fade-up" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $150.000 CLP')">
+        <span class="gift-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8 C20 8 11 16 11 28 C11 40 20 48 32 48 C25 48 18 42 18 28 C18 14 25 8 32 8Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="40" cy="13" r="2.5" fill="#c8a96e"/>
+            <circle cx="46" cy="24" r="1.5" fill="#c8a96e"/>
+            <circle cx="42" cy="35" r="1.5" fill="#c8a96e"/>
+          </svg>
+        </span>
+        <div class="gift-name">Luna de miel</div>
+        <div class="gift-desc">Un par de noches en algún lugar remoto, solo nosotros dos.</div>
+        <div class="gift-footer"><span class="gift-price">desde $150.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up delay-1" onclick="openGift('Un viaje','Ese destino que algún día vamos a visitar juntos.','desde $250.000 CLP')">
@@ -909,25 +913,26 @@ footer {
     </div>
     <div class="modal-body">
       <p class="modal-note" id="modalDesc">—</p>
-      <p class="modal-note" style="color:var(--gray-400);font-style:italic;margin-top:-8px;">Elige tu país y transfiere con los datos de abajo.</p>
       <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab(this,'cl')">🇨🇱 Chile</button>
-        <button class="modal-tab" onclick="switchTab(this,'ar')">🇦🇷 Argentina</button>
+        <button class="modal-tab active" onclick="switchTab(this,'clp')">Pesos CLP</button>
+        <button class="modal-tab" onclick="switchTab(this,'usd')">Dólares USD</button>
       </div>
-      <div class="bank-panel active" id="panel-cl">
-        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Tu banco aquí</span></div>
+      <div class="bank-panel active" id="panel-clp">
+        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank</span></div>
         <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
-        <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">0000000000</span></div>
-        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">XX.XXX.XXX-X</span></div>
-        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Apellido</span></div>
-        <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">tu@email.cl</span></div>
+        <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">64877682</span></div>
+        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
+        <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">bacofrev@gmail.com</span></div>
       </div>
-      <div class="bank-panel" id="panel-ar">
-        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Tu banco Argentina</span></div>
-        <div class="bank-row"><span class="bank-label">CBU / Alias</span><span class="bank-value">tu.alias.aqui</span></div>
-        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Apellido</span></div>
-        <div class="bank-row"><span class="bank-label">Concepto</span><span class="bank-value">Regalo L&B</span></div>
+      <div class="bank-panel" id="panel-usd">
+        <div class="bank-row"><span class="bank-label">Beneficiario</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
+        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank Chile</span></div>
+        <div class="bank-row"><span class="bank-label">SWIFT / BIC</span><span class="bank-value">BCOSCHSX</span></div>
+        <div class="bank-row"><span class="bank-label">N° cuenta USD</span><span class="bank-value">000986137866</span></div>
+        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
+        <div class="bank-row"><span class="bank-label">Dirección banco</span><span class="bank-value">Av. Costanera Sur 2710, Piso 10, Torre A, Santiago</span></div>
       </div>
+      <button class="copy-btn" id="copyBtn" onclick="copyBankData()">Copiar datos de depósito</button>
     </div>
   </div>
 </div>
@@ -978,24 +983,49 @@ document.addEventListener('mousemove', e => {
 setInterval(() => goToSlide((current+1) % slides.length), 3000);
 
 // ── MODAL
+const bankData = {
+  clp: 'Banco: Scotiabank\nTipo cuenta: Cuenta corriente\nN° cuenta: 64877682\nRUT: 17.519.582-3\nEmail: bacofrev@gmail.com',
+  usd: 'Beneficiario: Benjamín Alejandro Cofré Valencia\nBanco: Scotiabank Chile\nSWIFT / BIC: BCOSCHSX\nN° cuenta USD: 000986137866\nRUT: 17.519.582-3\nDirección banco: Av. Costanera Sur 2710, Piso 10, Torre A, Santiago'
+};
+let activeTab = 'clp';
+
 function openGift(name, desc, price) {
   document.getElementById('modalTitle').textContent = name;
   document.getElementById('modalDesc').textContent = desc;
   document.getElementById('modalPrice').textContent = price;
-  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bank-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.modal-tab')[0].classList.add('active');
-  document.getElementById('panel-cl').classList.add('active');
+  switchTabById('clp');
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = 'Copiar datos de depósito';
+  btn.classList.remove('copied');
   document.getElementById('giftModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 function closeModal() { document.getElementById('giftModal').classList.remove('active'); document.body.style.overflow=''; }
 function closeOutside(e) { if(e.target.id==='giftModal') closeModal(); }
-function switchTab(btn, c) {
+function switchTab(btn, id) {
   document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.bank-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('panel-'+c).classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  activeTab = id;
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.textContent = 'Copiar datos de depósito';
+  copyBtn.classList.remove('copied');
+}
+function switchTabById(id) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bank-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.modal-tab')[id === 'clp' ? 0 : 1].classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  activeTab = id;
+}
+function copyBankData() {
+  navigator.clipboard.writeText(bankData[activeTab]).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar datos de depósito'; btn.classList.remove('copied'); }, 2500);
+  });
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 </script>
