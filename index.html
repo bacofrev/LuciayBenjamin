@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lucía & Benjamín — 15.08.2026</title>
+<title>Lucía &amp; Benjamín — 15.08.2026</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -424,13 +424,9 @@ nav {
 .gift-arrow { font-size:1rem; color:var(--gray-400); opacity:0; transition:color 0.3s, opacity 0.3s; }
 
 /* ── ALERGIAS ── */
-#alergias {
-  background:var(--black);
-  padding:120px 56px;
-  display:flex; align-items:center; gap:120px;
-}
+#alergias { background:var(--black); padding:120px 56px; }
 
-.alergias-left { flex:1; }
+.alergias-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
 
 .alergias-title {
   font-family:'Shippori Mincho',serif;
@@ -441,6 +437,23 @@ nav {
 .alergias-title em { font-style:italic; color:rgba(255,255,255,0.3); }
 
 .alergias-text { font-size:0.9rem; line-height:1.85; color:rgba(255,255,255,0.4); max-width:400px; }
+
+.alergias-search-wrap { position:relative; margin-bottom:12px; }
+.alergias-input { width:100%; padding:14px 18px; border:1px solid rgba(255,255,255,0.15); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
+.alergias-input:focus { border-color:rgba(255,255,255,0.5); }
+.alergias-input::placeholder { color:rgba(255,255,255,0.3); }
+.alergias-dropdown { position:absolute; top:100%; left:0; right:0; background:#1a1a1a; border:1px solid rgba(255,255,255,0.12); border-top:none; z-index:100; max-height:220px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+.alergias-dropdown.open { display:block; }
+.alergias-option { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 18px; font-size:0.85rem; cursor:pointer; color:rgba(255,255,255,0.8); transition:background 0.15s; }
+.alergias-option:hover { background:rgba(255,255,255,0.07); }
+.alergias-textarea { width:100%; min-height:100px; padding:14px 18px; border:1px solid rgba(255,255,255,0.15); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; resize:vertical; transition:border-color 0.2s; box-sizing:border-box; margin-bottom:12px; }
+.alergias-textarea:focus { border-color:rgba(255,255,255,0.5); }
+.alergias-textarea::placeholder { color:rgba(255,255,255,0.3); }
+.alergias-feedback { margin-top:12px; padding:14px 18px; font-size:0.82rem; display:none; }
+.alergias-feedback.ok { background:rgba(45,122,45,0.2); color:#7ecf7e; border-left:3px solid #2d7a2d; }
+.alergias-feedback.err { background:rgba(122,45,45,0.2); color:#cf7e7e; border-left:3px solid #7a2d2d; }
+.btn-alergias { padding:14px 32px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.2); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+.btn-alergias:hover { background:white; color:var(--black); border-color:white; }
 
 .btn {
   display:inline-flex; align-items:center; gap:16px;
@@ -457,6 +470,31 @@ nav {
   cursor:pointer;
 }
 .btn:hover { background:white; color:var(--black); border-color:white; }
+
+/* ── CONFIRMAR ── */
+#confirmar { background:var(--white); }
+.confirmar-inner { max-width:560px; }
+.confirmar-title { font-family:'Shippori Mincho',serif; font-size:clamp(2rem,3.5vw,3.2rem); color:var(--black); font-weight:400; line-height:1.15; margin-bottom:16px; }
+.confirmar-title em { font-style:italic; color:var(--gray-400); }
+.confirmar-text { font-size:0.88rem; line-height:1.85; color:var(--gray-600); margin-bottom:40px; }
+.confirmar-search-wrap { position:relative; margin-bottom:16px; }
+.confirmar-input { width:100%; padding:16px 20px; border:1px solid var(--gray-200); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--black); outline:none; transition:border-color 0.2s; box-sizing:border-box; }
+.confirmar-input:focus { border-color:var(--black); }
+.confirmar-input::placeholder { color:var(--gray-400); }
+.confirmar-dropdown { position:absolute; top:100%; left:0; right:0; background:white; border:1px solid var(--gray-200); border-top:none; z-index:100; max-height:240px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.confirmar-dropdown.open { display:block; }
+.confirmar-option { padding:13px 20px; font-size:0.85rem; cursor:pointer; color:var(--black); transition:background 0.15s; }
+.confirmar-option { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.confirmar-option:hover { background:var(--gray-100); }
+.confirmar-badge { font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase; white-space:nowrap; padding:3px 8px; border-radius:2px; font-weight:500; opacity:0.9; }
+.confirmar-btns { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-confirmar { padding:16px 36px; background:var(--black); color:white; border:1px solid var(--black); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+.btn-confirmar:hover { background:transparent; color:var(--black); }
+.btn-nopuedo { padding:16px 36px; background:transparent; color:var(--gray-600); border:1px solid var(--gray-200); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+.btn-nopuedo:hover { border-color:var(--black); color:var(--black); }
+.confirmar-feedback { margin-top:24px; padding:16px 20px; font-size:0.82rem; display:none; }
+.confirmar-feedback.ok { background:#f0faf0; color:#2d7a2d; border-left:3px solid #2d7a2d; }
+.confirmar-feedback.err { background:#faf0f0; color:#7a2d2d; border-left:3px solid #7a2d2d; }
 
 /* ── FOOTER ── */
 footer {
@@ -520,7 +558,8 @@ footer {
   .dresscode-layout { grid-template-columns:1fr; gap:48px; }
   .gifts-grid { grid-template-columns:1fr; }
   .regalos-intro-layout { grid-template-columns:1fr; gap:32px; }
-  #alergias { flex-direction:column; gap:40px; padding:80px 24px; }
+  #alergias { padding:80px 24px; }
+  .alergias-layout { grid-template-columns:1fr; gap:48px; }
   footer { flex-direction:column; gap:20px; padding:40px 24px; }
   .footer-right { text-align:left; }
   .tl-item { grid-template-columns:120px 1fr; }
@@ -558,14 +597,15 @@ footer {
 </div>
 
 <nav>
-  <div class="nav-logo">L & B</div>
+  <div class="nav-logo">L &amp; B</div>
   <ul class="nav-links">
     <li><a href="#historia">Historia</a></li>
     <li><a href="#programa">Programa</a></li>
+    <li><a href="#confirmar">Confirmar</a></li>
+    <li><a href="#alergias">Alergias</a></li>
+    <li><a href="#regalos">Regalos</a></li>
     <li><a href="#llegar">Cómo llegar</a></li>
     <li><a href="#dresscode">Dress code</a></li>
-    <li><a href="#regalos">Regalos</a></li>
-    <li><a href="#alergias">Alergias</a></li>
   </ul>
   <button id="logout-btn">Salir</button>
 </nav>
@@ -692,44 +732,45 @@ footer {
   </div>
 </section>
 
-<!-- LLEGAR -->
-<section id="llegar" class="section">
+<!-- CONFIRMAR -->
+<section id="confirmar" class="section">
   <div class="section-inner">
-    <h2 class="llegar-title fade-up">Cómo <em>llegar</em></h2>
-    <div class="llegar-grid">
-      <div class="llegar-card fade-up">
-        <span class="llegar-num">01</span>
-        <div class="llegar-card-title">San José de Maipo</div>
-        <div class="llegar-card-text">A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado.</div>
+    <div class="confirmar-inner fade-up">
+      <div class="historia-label" style="color:var(--gray-400);">03 — Confirmación</div>
+      <h2 class="confirmar-title">¿Vas a <em>estar?</em></h2>
+      <p class="confirmar-text">Busca tu nombre en la lista y confirma tu asistencia. Nos ayuda mucho para coordinar todo con el lugar.</p>
+      <div class="confirmar-search-wrap">
+        <input type="text" class="confirmar-input" id="confirmarInput" placeholder="Escribe tu nombre…" autocomplete="off" />
+        <div class="confirmar-dropdown" id="confirmarDropdown"></div>
       </div>
-      <div class="llegar-card fade-up delay-1">
-        <span class="llegar-num">02</span>
-        <div class="llegar-card-title">En auto</div>
-        <div class="llegar-card-text">Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. ~1 hora desde el centro. Estacionamiento en el lugar.</div>
+      <div class="confirmar-btns" id="confirmarBtns" style="display:none">
+        <button class="btn-confirmar" onclick="confirmarAsistencia('Confirmado')">Confirmo asistencia</button>
+        <button class="btn-nopuedo" onclick="confirmarAsistencia('No puede')">No puedo asistir</button>
       </div>
-      <div class="llegar-card fade-up delay-2">
-        <span class="llegar-num">03</span>
-        <div class="llegar-card-title">Dónde quedarse</div>
-        <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
-      </div>
+      <div class="confirmar-feedback" id="confirmarFeedback"></div>
     </div>
   </div>
 </section>
 
-<!-- DRESS CODE -->
-<section id="dresscode">
+<!-- ALERGIAS -->
+<section id="alergias">
   <div class="section-inner">
-    <div class="dresscode-layout">
+    <div class="alergias-layout">
       <div class="fade-up">
-        <div class="historia-label" style="color:rgba(255,255,255,0.25);">04 — Dress code</div>
-        <h2 class="dresscode-title">Formal<br><em>elegante</em></h2>
-        <p class="dresscode-text">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
+        <div class="historia-label" style="color:rgba(255,255,255,0.25);">04 — Alimentación</div>
+        <h2 class="alergias-title">¿Tienes alguna<br>restricción <em>alimentaria?</em></h2>
+        <p class="alergias-text">Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering.</p>
       </div>
       <div class="fade-up delay-1">
-        <div class="dresscode-img-wrap">
-          <img src="img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
+        <div class="alergias-search-wrap">
+          <input type="text" class="alergias-input" id="alergiasInput" placeholder="Busca tu nombre…" autocomplete="off" />
+          <div class="alergias-dropdown" id="alergiasDropdown"></div>
         </div>
-        <p class="dresscode-note">El blanco queda reservado para la novia.</p>
+        <div id="alergiasForm" style="display:none">
+          <textarea class="alergias-textarea" id="alergiasTextarea" placeholder="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…"></textarea>
+          <button class="btn-alergias" onclick="guardarAlergia()">Guardar restricción</button>
+        </div>
+        <div class="alergias-feedback" id="alergiaseFeedback"></div>
       </div>
     </div>
   </div>
@@ -836,20 +877,54 @@ footer {
   </div>
 </section>
 
-<!-- ALERGIAS -->
-<section id="alergias">
-  <div class="alergias-left fade-up">
-    <h2 class="alergias-title">¿Tienes alguna<br>restricción <em>alimentaria?</em></h2>
-    <p class="alergias-text">Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering.</p>
+
+<!-- LLEGAR -->
+<section id="llegar" class="section">
+  <div class="section-inner">
+    <h2 class="llegar-title fade-up">Cómo <em>llegar</em></h2>
+    <div class="llegar-grid">
+      <div class="llegar-card fade-up">
+        <span class="llegar-num">01</span>
+        <div class="llegar-card-title">San José de Maipo</div>
+        <div class="llegar-card-text">A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado.</div>
+      </div>
+      <div class="llegar-card fade-up delay-1">
+        <span class="llegar-num">02</span>
+        <div class="llegar-card-title">En auto</div>
+        <div class="llegar-card-text">Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. ~1 hora desde el centro. Estacionamiento en el lugar.</div>
+      </div>
+      <div class="llegar-card fade-up delay-2">
+        <span class="llegar-num">03</span>
+        <div class="llegar-card-title">Dónde quedarse</div>
+        <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
+      </div>
+    </div>
   </div>
-  <div class="fade-up delay-1">
-    <a href="https://airtable.com" target="_blank" class="btn">Indicar mi restricción &nbsp;→</a>
+</section>
+
+
+<!-- DRESS CODE -->
+<section id="dresscode">
+  <div class="section-inner">
+    <div class="dresscode-layout">
+      <div class="fade-up">
+        <div class="historia-label" style="color:rgba(255,255,255,0.25);">05 — Dress code</div>
+        <h2 class="dresscode-title">Formal<br><em>elegante</em></h2>
+        <p class="dresscode-text">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
+      </div>
+      <div class="fade-up delay-1">
+        <div class="dresscode-img-wrap">
+          <img src="img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
+        </div>
+        <p class="dresscode-note">El blanco queda reservado para la novia.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-names">Lucía & Benjamín</div>
+  <div class="footer-names">Lucía &amp; Benjamín</div>
   <div class="footer-right">
     <div class="footer-date">15 · VIII · 2026</div>
     <div class="footer-loc">San José de Maipo, Chile</div>
@@ -981,6 +1056,185 @@ function copyBankData() {
   });
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ── RSVP ──
+const AT_URL = '/.netlify/functions/airtable';
+let guests = [];
+let selectedGuest = null;
+
+const STATUS_META = {
+  'Confirmado': { label: 'Confirmado',       color: '#1a5c1a', bg: '#d4edda' },
+  'No puede':   { label: 'No puede asistir', color: '#7a2d2d', bg: '#f5d0d0' },
+  'Pendiente':  { label: 'Pendiente',        color: '#555',    bg: '#e8e8e8' },
+};
+
+async function loadGuests() {
+  try {
+    const res = await fetch(AT_URL);
+    const data = await res.json();
+    guests = (data.records || [])
+      .map(r => ({
+        id: r.id,
+        name: r.fields.Name || '',
+        status: r.fields['Confirmación'] || null,
+        alergia: r.fields['Restricción alimentaria'] || ''
+      }))
+      .filter(g => g.name)
+      .sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  } catch(e) { console.error('Error cargando invitados', e); }
+}
+
+function renderDropdown(query) {
+  const dd = document.getElementById('confirmarDropdown');
+  if (!dd) return;
+  const q = query.toLowerCase();
+  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  dd.innerHTML = '';
+  if (!filtered.length) { dd.classList.remove('open'); return; }
+  filtered.slice(0, 12).forEach(g => {
+    const el = document.createElement('div');
+    el.className = 'confirmar-option';
+    const meta = g.status ? STATUS_META[g.status] : null;
+    el.innerHTML = `<span>${g.name}</span>${meta ? `<span class="confirmar-badge" style="color:${meta.color};background:${meta.bg}">${meta.label}</span>` : ''}`;
+    el.addEventListener('mousedown', e => { e.preventDefault(); selectGuest(g); });
+    dd.appendChild(el);
+  });
+  dd.classList.add('open');
+}
+
+function selectGuest(g) {
+  selectedGuest = g;
+  document.getElementById('confirmarInput').value = g.name;
+  document.getElementById('confirmarDropdown').classList.remove('open');
+  const fb = document.getElementById('confirmarFeedback');
+  if (g.status) {
+    const meta = STATUS_META[g.status];
+    fb.textContent = `Estado actual: ${meta ? meta.label : g.status}. Puedes cambiar tu respuesta.`;
+    fb.className = 'confirmar-feedback ok';
+    fb.style.display = 'block';
+  } else {
+    fb.style.display = 'none';
+  }
+  document.getElementById('confirmarBtns').style.display = 'flex';
+}
+
+async function confirmarAsistencia(status) {
+  if (!selectedGuest) return;
+  const fb = document.getElementById('confirmarFeedback');
+  try {
+    const res = await fetch(AT_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recordId: selectedGuest.id, fields: { 'Confirmación': status } })
+    });
+    if (!res.ok) throw new Error();
+    const g = guests.find(x => x.id === selectedGuest.id);
+    if (g) g.status = status;
+    fb.textContent = status === 'Confirmado'
+      ? '¡Perfecto! Tu asistencia quedó confirmada.'
+      : 'Gracias por avisarnos. Te vamos a extrañar.';
+    fb.className = 'confirmar-feedback ok';
+    fb.style.display = 'block';
+    document.getElementById('confirmarBtns').style.display = 'none';
+    document.getElementById('confirmarInput').value = '';
+    selectedGuest = null;
+  } catch {
+    fb.textContent = 'Hubo un error al guardar. Intenta de nuevo.';
+    fb.className = 'confirmar-feedback err';
+    fb.style.display = 'block';
+  }
+}
+
+// ── ALERGIAS ──
+let selectedAlergia = null;
+
+function renderAlergiasDropdown(query) {
+  const dd = document.getElementById('alergiasDropdown');
+  if (!dd) return;
+  const q = query.toLowerCase();
+  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  dd.innerHTML = '';
+  if (!filtered.length) { dd.classList.remove('open'); return; }
+  filtered.slice(0, 12).forEach(g => {
+    const el = document.createElement('div');
+    el.className = 'alergias-option';
+    const hasAlergia = g.alergia && g.alergia.trim();
+    el.innerHTML = `<span>${g.name}</span>${hasAlergia ? `<span class="confirmar-badge" style="color:#a07020;background:#fef3cd">Tiene restricción</span>` : ''}`;
+    el.addEventListener('mousedown', e => { e.preventDefault(); selectAlergia(g); });
+    dd.appendChild(el);
+  });
+  dd.classList.add('open');
+}
+
+function selectAlergia(g) {
+  selectedAlergia = g;
+  document.getElementById('alergiasInput').value = g.name;
+  document.getElementById('alergiasDropdown').classList.remove('open');
+  const textarea = document.getElementById('alergiasTextarea');
+  textarea.value = g.alergia || '';
+  document.getElementById('alergiasForm').style.display = 'block';
+  document.getElementById('alergiaseFeedback').style.display = 'none';
+}
+
+async function guardarAlergia() {
+  if (!selectedAlergia) return;
+  const texto = document.getElementById('alergiasTextarea').value.trim();
+  const fb = document.getElementById('alergiaseFeedback');
+  try {
+    const res = await fetch(AT_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recordId: selectedAlergia.id, fields: { 'Restricción alimentaria': texto } })
+    });
+    if (!res.ok) throw new Error();
+    const g = guests.find(x => x.id === selectedAlergia.id);
+    if (g) g.alergia = texto;
+    fb.textContent = texto ? 'Restricción guardada. ¡Lo coordinamos con el catering!' : 'Restricción eliminada.';
+    fb.className = 'alergias-feedback ok';
+    fb.style.display = 'block';
+    document.getElementById('alergiasForm').style.display = 'none';
+    document.getElementById('alergiasInput').value = '';
+    selectedAlergia = null;
+  } catch {
+    fb.textContent = 'Hubo un error al guardar. Intenta de nuevo.';
+    fb.className = 'alergias-feedback err';
+    fb.style.display = 'block';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadGuests();
+  const input = document.getElementById('confirmarInput');
+  if (!input) return;
+  input.addEventListener('input', () => {
+    selectedGuest = null;
+    document.getElementById('confirmarBtns').style.display = 'none';
+    document.getElementById('confirmarFeedback').style.display = 'none';
+    renderDropdown(input.value);
+  });
+  input.addEventListener('blur', () => setTimeout(() => {
+    document.getElementById('confirmarDropdown').classList.remove('open');
+  }, 150));
+  input.addEventListener('focus', () => {
+    if (input.value.length >= 2) renderDropdown(input.value);
+  });
+
+  // Alergias
+  const aInput = document.getElementById('alergiasInput');
+  if (!aInput) return;
+  aInput.addEventListener('input', () => {
+    selectedAlergia = null;
+    document.getElementById('alergiasForm').style.display = 'none';
+    document.getElementById('alergiaseFeedback').style.display = 'none';
+    renderAlergiasDropdown(aInput.value);
+  });
+  aInput.addEventListener('blur', () => setTimeout(() => {
+    document.getElementById('alergiasDropdown').classList.remove('open');
+  }, 150));
+  aInput.addEventListener('focus', () => {
+    if (aInput.value.length >= 2) renderAlergiasDropdown(aInput.value);
+  });
+});
 </script>
 
 <script>
