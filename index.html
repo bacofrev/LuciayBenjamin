@@ -229,11 +229,11 @@ nav {
   color:white; font-weight:400;
 }
 
-.programa-title em { font-style:italic; color:rgba(255,255,255,0.3); }
+.programa-title em { font-style:italic; color:rgba(255,255,255,0.55); }
 
 .programa-date {
   font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.25);
+  color:rgba(255,255,255,0.55);
 }
 
 .timeline { display:flex; flex-direction:column; }
@@ -258,8 +258,8 @@ nav {
 .tl-item:hover::before { width:100%; }
 
 .tl-time {
-  font-size:0.85rem; letter-spacing:0.12em;
-  color:rgba(255,255,255,0.25);
+  font-size:1.1rem; letter-spacing:0.12em;
+  color:rgba(255,255,255,0.55);
   padding-top:4px; font-weight:300;
 }
 
@@ -272,7 +272,7 @@ nav {
 
 .tl-desc {
   font-size:0.95rem; line-height:1.6;
-  color:rgba(255,255,255,0.3);
+  color:rgba(255,255,255,0.55);
 }
 
 /* ── LLEGAR ── */
@@ -340,40 +340,25 @@ nav {
 
 .dresscode-text {
   font-size:1rem; line-height:1.95;
-  color:rgba(255,255,255,0.4);
+  color:rgba(255,255,255,0.65);
 }
 
-.dresscode-palette-label {
-  font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase;
-  color:rgba(255,255,255,0.25); margin-bottom:28px;
-  display:flex; align-items:center; gap:16px;
+.dresscode-img-wrap {
+  width:65%; margin:0 auto;
+  aspect-ratio:1/0.9;
+  overflow:hidden;
 }
-.dresscode-palette-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
-
-.palette {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-}
-
-.palette-item {
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-}
-
-.palette-swatch {
-  width:100%; aspect-ratio:1;
-  border-radius:2px;
-}
-
-.palette-name {
-  font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
-  color:rgba(255,255,255,0.3); text-align:center; line-height:1.4;
+.dresscode-img {
+  width:100%;
+  display:block;
+  filter:invert(1);
+  mix-blend-mode:screen;
 }
 
 .dresscode-note {
   margin-top:32px; padding-top:24px;
-  border-top:1px solid rgba(255,255,255,0.08);
-  font-size:0.78rem; color:rgba(255,255,255,0.25);
+  border-top:1px solid rgba(255,255,255,0.15);
+  font-size:0.78rem; color:rgba(255,255,255,0.55);
   font-style:italic; line-height:1.7;
 }
 
@@ -742,40 +727,8 @@ footer {
         <p class="dresscode-text">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
       </div>
       <div class="fade-up delay-1">
-        <div class="dresscode-palette-label">Paleta sugerida</div>
-        <div class="palette">
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#1c2b4a;"></div>
-            <span class="palette-name">Azul noche</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#2c4a2e;"></div>
-            <span class="palette-name">Verde botella</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#6b2737;"></div>
-            <span class="palette-name">Burdeos</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#3a3a3a;"></div>
-            <span class="palette-name">Gris carbón</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#c8b99a;"></div>
-            <span class="palette-name">Champagne</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#c9a0a0;"></div>
-            <span class="palette-name">Rosa palo</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#b8a99a;"></div>
-            <span class="palette-name">Nude</span>
-          </div>
-          <div class="palette-item">
-            <div class="palette-swatch" style="background:#9b8ea8;"></div>
-            <span class="palette-name">Lavanda</span>
-          </div>
+        <div class="dresscode-img-wrap">
+          <img src="img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
         </div>
         <p class="dresscode-note">El blanco queda reservado para la novia.</p>
       </div>
@@ -914,10 +867,11 @@ footer {
     <div class="modal-body">
       <p class="modal-note" id="modalDesc">—</p>
       <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab(this,'clp')">Pesos CLP</button>
-        <button class="modal-tab" onclick="switchTab(this,'usd')">Dólares USD</button>
+        <button class="modal-tab active" onclick="switchTab(this,'clp')">🇨🇱 Pesos CLP</button>
+        <button class="modal-tab" onclick="switchTab(this,'usd')">💵 Dólares USD</button>
       </div>
       <div class="bank-panel active" id="panel-clp">
+        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
         <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank</span></div>
         <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
         <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">64877682</span></div>
@@ -984,7 +938,7 @@ setInterval(() => goToSlide((current+1) % slides.length), 3000);
 
 // ── MODAL
 const bankData = {
-  clp: 'Banco: Scotiabank\nTipo cuenta: Cuenta corriente\nN° cuenta: 64877682\nRUT: 17.519.582-3\nEmail: bacofrev@gmail.com',
+  clp: 'Titular: Benjamín Alejandro Cofré Valencia\nBanco: Scotiabank\nTipo cuenta: Cuenta corriente\nN° cuenta: 64877682\nRUT: 17.519.582-3\nEmail: bacofrev@gmail.com',
   usd: 'Beneficiario: Benjamín Alejandro Cofré Valencia\nBanco: Scotiabank Chile\nSWIFT / BIC: BCOSCHSX\nN° cuenta USD: 000986137866\nRUT: 17.519.582-3\nDirección banco: Av. Costanera Sur 2710, Piso 10, Torre A, Santiago'
 };
 let activeTab = 'clp';
