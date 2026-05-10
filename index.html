@@ -1088,7 +1088,7 @@ function renderDropdown(query) {
   const dd = document.getElementById('confirmarDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 3 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
@@ -1152,7 +1152,7 @@ function renderAlergiasDropdown(query) {
   const dd = document.getElementById('alergiasDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 3 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
@@ -1216,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('confirmarDropdown').classList.remove('open');
   }, 150));
   input.addEventListener('focus', () => {
-    if (input.value.length >= 2) renderDropdown(input.value);
+    if (input.value.length >= 3) renderDropdown(input.value);
   });
 
   // Alergias
