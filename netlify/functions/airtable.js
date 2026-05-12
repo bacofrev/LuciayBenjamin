@@ -24,6 +24,7 @@ exports.handler = async (event) => {
         url.searchParams.append('fields[]', 'Name');
         url.searchParams.append('fields[]', 'Confirmación');
         url.searchParams.append('fields[]', 'Restricción alimentaria');
+        url.searchParams.set('filterByFormula', "OR({Invitaciones} = 'Save the date sent', {Invitaciones} = 'Invitation sent')");
         url.searchParams.set('pageSize', '100');
         if (offset) url.searchParams.set('offset', offset);
 

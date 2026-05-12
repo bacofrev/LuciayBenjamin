@@ -320,6 +320,88 @@ nav {
   color:var(--gray-600); transition:color 0.3s;
 }
 
+/* ── LLEGAR EXTRAS ── */
+.llegar-venue {
+  margin-top:48px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.llegar-address {
+  font-size:0.88rem; line-height:1.8; color:var(--gray-600);
+}
+.llegar-link {
+  font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--black); text-decoration:none;
+  border-bottom:1px solid var(--black); padding-bottom:2px;
+  align-self:flex-start; transition:opacity 0.2s;
+}
+.llegar-link:hover { opacity:0.45; }
+.llegar-media {
+  margin-top:40px;
+  display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;
+}
+.llegar-map {
+  width:100%; height:100%; min-height:360px;
+  border:none; border-radius:2px; display:block;
+}
+.llegar-photos { height:100%; }
+.llegar-carousel-wrap { position:relative; overflow:hidden; border-radius:2px; height:100%; }
+.llegar-carousel {
+  display:flex; height:100%; cursor:grab; user-select:none; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.llegar-carousel.grabbing { cursor:grabbing; }
+.llegar-carousel-slide {
+  min-width:100%; height:100%;
+  background:var(--gray-100); overflow:hidden; flex-shrink:0; position:relative;
+}
+.llegar-carousel-slide img {
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; pointer-events:none;
+}
+.llegar-dots-inside {
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  display:flex; gap:8px; z-index:2; margin-top:0;
+}
+.llegar-dots-inside .dot { background:rgba(255,255,255,0.35); }
+.llegar-dots-inside .dot.active { background:white; width:40px; }
+.llegar-expand-btn {
+  position:absolute; top:12px; right:12px; z-index:2;
+  width:34px; height:34px; border:none; border-radius:2px;
+  background:rgba(0,0,0,0.35); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; opacity:0; transition:opacity 0.2s, background 0.2s;
+}
+.llegar-carousel-wrap:hover .llegar-expand-btn { opacity:1; }
+.llegar-expand-btn:hover { background:rgba(0,0,0,0.6); }
+
+/* Lightbox */
+.lightbox {
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,0.92);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity 0.25s ease;
+}
+.lightbox.open { opacity:1; pointer-events:all; }
+.lightbox img {
+  max-width:90vw; max-height:90vh; object-fit:contain;
+  border-radius:2px; user-select:none;
+}
+.lightbox-close {
+  position:absolute; top:24px; right:28px;
+  font-size:1.5rem; color:rgba(255,255,255,0.6);
+  cursor:pointer; line-height:1; background:none; border:none;
+  transition:color 0.2s;
+}
+.lightbox-close:hover { color:white; }
+.lightbox-prev, .lightbox-next {
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:1.8rem; color:rgba(255,255,255,0.5);
+  cursor:pointer; background:none; border:none;
+  padding:12px; transition:color 0.2s;
+}
+.lightbox-prev:hover, .lightbox-next:hover { color:white; }
+.lightbox-prev { left:16px; }
+.lightbox-next { right:16px; }
+
 /* ── DRESS CODE ── */
 #dresscode { background:var(--black); padding:120px 56px; }
 
@@ -434,25 +516,25 @@ nav {
   color:white; font-weight:400;
   line-height:1.15; margin-bottom:24px;
 }
-.alergias-title em { font-style:italic; color:rgba(255,255,255,0.3); }
+.alergias-title em { font-style:italic; color:rgba(255,255,255,0.55); }
 
-.alergias-text { font-size:0.9rem; line-height:1.85; color:rgba(255,255,255,0.4); max-width:400px; }
+.alergias-text { font-size:0.9rem; line-height:1.85; color:rgba(255,255,255,0.55); max-width:400px; }
 
 .alergias-search-wrap { position:relative; margin-bottom:12px; }
-.alergias-input { width:100%; padding:14px 18px; border:1px solid rgba(255,255,255,0.15); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
-.alergias-input:focus { border-color:rgba(255,255,255,0.5); }
-.alergias-input::placeholder { color:rgba(255,255,255,0.3); }
-.alergias-dropdown { position:absolute; top:100%; left:0; right:0; background:#1a1a1a; border:1px solid rgba(255,255,255,0.12); border-top:none; z-index:100; max-height:220px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+.alergias-input { width:100%; padding:14px 18px; border:1px solid rgba(255,255,255,0.08); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
+.alergias-input:focus { border-color:rgba(255,255,255,0.3); }
+.alergias-input::placeholder { color:rgba(255,255,255,0.55); }
+.alergias-dropdown { position:absolute; top:100%; left:0; right:0; background:#1a1a1a; border:1px solid rgba(255,255,255,0.08); border-top:none; z-index:100; max-height:220px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
 .alergias-dropdown.open { display:block; }
 .alergias-option { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 18px; font-size:0.85rem; cursor:pointer; color:rgba(255,255,255,0.8); transition:background 0.15s; }
-.alergias-option:hover { background:rgba(255,255,255,0.07); }
-.alergias-textarea { width:100%; min-height:100px; padding:14px 18px; border:1px solid rgba(255,255,255,0.15); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; resize:vertical; transition:border-color 0.2s; box-sizing:border-box; margin-bottom:12px; }
-.alergias-textarea:focus { border-color:rgba(255,255,255,0.5); }
-.alergias-textarea::placeholder { color:rgba(255,255,255,0.3); }
+.alergias-option:hover { background:rgba(255,255,255,0.03); }
+.alergias-textarea { width:100%; min-height:100px; padding:14px 18px; border:1px solid rgba(255,255,255,0.08); background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:white; outline:none; resize:vertical; transition:border-color 0.2s; box-sizing:border-box; margin-bottom:12px; }
+.alergias-textarea:focus { border-color:rgba(255,255,255,0.3); }
+.alergias-textarea::placeholder { color:rgba(255,255,255,0.55); }
 .alergias-feedback { margin-top:12px; padding:14px 18px; font-size:0.82rem; display:none; }
 .alergias-feedback.ok { background:rgba(45,122,45,0.2); color:#7ecf7e; border-left:3px solid #2d7a2d; }
 .alergias-feedback.err { background:rgba(122,45,45,0.2); color:#cf7e7e; border-left:3px solid #7a2d2d; }
-.btn-alergias { padding:14px 32px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.2); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+.btn-alergias { padding:14px 32px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.08); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
 .btn-alergias:hover { background:white; color:var(--black); border-color:white; }
 
 .btn {
@@ -555,6 +637,9 @@ footer {
   .section { padding:80px 24px; }
   .historia-layout { grid-template-columns:1fr; gap:48px; }
   .llegar-grid { grid-template-columns:1fr; }
+  .llegar-media { grid-template-columns:1fr; }
+  .llegar-media .llegar-photos { order:2; }
+  .llegar-media .llegar-map { order:1; min-height:280px; aspect-ratio:16/9; height:auto; }
   .dresscode-layout { grid-template-columns:1fr; gap:48px; }
   .gifts-grid { grid-template-columns:1fr; }
   .regalos-intro-layout { grid-template-columns:1fr; gap:32px; }
@@ -640,7 +725,7 @@ footer {
         <h2 class="historia-title">Dos caminos<br>que se <em>encontraron</em></h2>
         <div class="historia-text">
           <p>Hay historias que empiezan sin anunciarse, en conversaciones ordinarias que sin querer se vuelven extraordinarias. La nuestra es así.</p>
-          <p>Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más queremos.</p>
+          <p>Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más amamos.</p>
           <p>El 15 de agosto de 2026, en medio de las montañas de San José de Maipo, vamos a decir que sí frente a ustedes.</p>
           <p>Gracias por estar acá.</p>
         </div>
@@ -899,6 +984,46 @@ footer {
         <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
       </div>
     </div>
+
+    <!-- Dirección y link -->
+    <div class="llegar-venue fade-up">
+      <div class="llegar-address">Los Almendros 3689, Las Vertientes<br>San José de Maipo, RM.</div>
+      <a href="https://casonasanjose.cl/" target="_blank" rel="noopener" class="llegar-link">Casona San José &rarr;</a>
+    </div>
+
+    <!-- Mapa + Carrusel lado a lado -->
+    <div class="llegar-media fade-up">
+
+      <!-- Carrusel fotos lugar -->
+      <div class="llegar-photos">
+        <div class="llegar-carousel-wrap">
+          <div class="llegar-carousel" id="llegarCarousel">
+            <div class="llegar-carousel-slide"><img src="https://casonasanjose.cl/wp-content/uploads/2025/05/graduaciones-casona-san-jose_0001_Layer-5.jpg" alt="Casona San José" /></div>
+            <div class="llegar-carousel-slide"><img src="https://casonasanjose.cl/wp-content/uploads/2025/12/Entorno-2-1024x686.jpg" alt="Casona San José" /></div>
+            <div class="llegar-carousel-slide"><img src="https://casonasanjose.cl/wp-content/uploads/2025/12/Entorno-3.jpg" alt="Casona San José" /></div>
+            <div class="llegar-carousel-slide"><img src="http://casonasanjose.cl/wp-content/uploads/2025/05/matrimonios-casona-san-jose_0005_Layer-1.jpg" alt="Casona San José" /></div>
+            <div class="llegar-carousel-slide"><img src="https://casonasanjose.cl/wp-content/uploads/2025/05/graduaciones-casona-san-jose_0002_Layer-4.jpg" alt="Casona San José" /></div>
+            <div class="llegar-carousel-slide"><img src="https://casonasanjose.cl/wp-content/uploads/2025/12/espacios-4-1024x686.jpg" alt="Casona San José" /></div>
+          </div>
+          <div class="carousel-dots llegar-dots-inside" id="llegarDots">
+            <div class="dot active" onclick="goToLlegarSlide(0)"></div>
+            <div class="dot" onclick="goToLlegarSlide(1)"></div>
+            <div class="dot" onclick="goToLlegarSlide(2)"></div>
+            <div class="dot" onclick="goToLlegarSlide(3)"></div>
+            <div class="dot" onclick="goToLlegarSlide(4)"></div>
+            <div class="dot" onclick="goToLlegarSlide(5)"></div>
+          </div>
+          <button class="llegar-expand-btn" id="llegarExpandBtn" aria-label="Ver en pantalla completa">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9 2h4v4M6 13H2V9M13 2l-5 5M2 13l5-5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mapa -->
+      <iframe class="llegar-map" src="https://maps.google.com/maps?q=Los+Almendros+3689+San+Jose+de+Maipo+Chile&output=embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Ubicación Casona San José"></iframe>
+
+    </div>
+
   </div>
 </section>
 
@@ -965,6 +1090,14 @@ footer {
   </div>
 </div>
 
+<!-- LIGHTBOX FOTOS LUGAR -->
+<div class="lightbox" id="llegarLightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+  <img id="llegarLightboxImg" src="" alt="" />
+  <button class="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+</div>
+
 <script>
 // ── PARALLAX HERO
 const heroImg = document.getElementById('heroImg');
@@ -1010,10 +1143,75 @@ document.addEventListener('mousemove', e => {
 // Auto slide
 setInterval(() => goToSlide((current+1) % slides.length), 3000);
 
+// ── CARRUSEL LUGAR
+let llegarCurrent = 0;
+const llegarCarousel = document.getElementById('llegarCarousel');
+const llegarSlides = llegarCarousel.querySelectorAll('.llegar-carousel-slide');
+const llegarDots = document.querySelectorAll('#llegarDots .dot');
+let llegarStartX = 0, llegarDragging = false, llegarWasDragged = false;
+const llegarTotal = llegarSlides.length;
+
+function goToLlegarSlide(n) {
+  llegarCurrent = ((n % llegarTotal) + llegarTotal) % llegarTotal;
+  llegarCarousel.style.transform = `translateX(-${llegarCurrent * 100}%)`;
+  llegarCarousel.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
+  llegarDots.forEach((d,i) => d.classList.toggle('active', i === llegarCurrent));
+}
+
+// Autoplay
+let llegarTimer = setInterval(() => goToLlegarSlide(llegarCurrent + 1), 3000);
+function resetLlegarTimer() {
+  clearInterval(llegarTimer);
+  llegarTimer = setInterval(() => goToLlegarSlide(llegarCurrent + 1), 3000);
+}
+
+llegarCarousel.addEventListener('mousedown', e => { llegarDragging=true; llegarWasDragged=false; llegarStartX=e.clientX; llegarCarousel.classList.add('grabbing'); llegarCarousel.style.transition='none'; });
+document.addEventListener('mouseup', e => {
+  if(!llegarDragging) return; llegarDragging=false; llegarCarousel.classList.remove('grabbing');
+  const diff = e.clientX - llegarStartX;
+  if(Math.abs(diff) >= 5) {
+    llegarWasDragged = true;
+    if(diff < -50) goToLlegarSlide(llegarCurrent + 1);
+    else if(diff > 50) goToLlegarSlide(llegarCurrent - 1);
+    else goToLlegarSlide(llegarCurrent);
+    resetLlegarTimer();
+  }
+});
+document.addEventListener('mousemove', e => {
+  if(!llegarDragging) return;
+  llegarCarousel.style.transform = `translateX(calc(-${llegarCurrent*100}% + ${e.clientX - llegarStartX}px))`;
+});
+
+// Botón expand → lightbox
+const llegarLightbox = document.getElementById('llegarLightbox');
+const llegarLightboxImg = document.getElementById('llegarLightboxImg');
+document.getElementById('llegarExpandBtn').addEventListener('click', () => {
+  llegarLightboxImg.src = llegarSlides[llegarCurrent].querySelector('img').src;
+  llegarLightbox.classList.add('open');
+});
+
+function closeLightbox() {
+  llegarLightbox.classList.remove('open');
+}
+function lightboxNav(dir) {
+  goToLlegarSlide(llegarCurrent + dir);
+  llegarLightboxImg.src = llegarSlides[llegarCurrent].querySelector('img').src;
+  resetLlegarTimer();
+}
+llegarLightbox.addEventListener('click', e => {
+  if(e.target === llegarLightbox) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if(!llegarLightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowRight') lightboxNav(1);
+  if(e.key === 'ArrowLeft') lightboxNav(-1);
+});
+
 // ── MODAL
 const bankData = {
-  clp: 'Titular: Benjamín Alejandro Cofré Valencia\nBanco: Scotiabank\nTipo cuenta: Cuenta corriente\nN° cuenta: 64877682\nRUT: 17.519.582-3\nEmail: bacofrev@gmail.com',
-  usd: 'Beneficiario: Benjamín Alejandro Cofré Valencia\nBanco: Scotiabank Chile\nSWIFT / BIC: BCOSCHSX\nN° cuenta USD: 000986137866\nRUT: 17.519.582-3\nDirección banco: Av. Costanera Sur 2710, Piso 10, Torre A, Santiago'
+  clp: 'Benjamín Alejandro Cofré Valencia\n17519582-3\nScotiabank\nCuenta corriente\n64877682\nbacofrev@gmail.com',
+  usd: 'Benjamín Alejandro Cofré Valencia\n17519582-3\nScotiabank Chile\nBCOSCHSX\n000986137866\nAv. Costanera Sur 2710, Piso 10, Torre A, Santiago'
 };
 let activeTab = 'clp';
 
@@ -1088,7 +1286,7 @@ function renderDropdown(query) {
   const dd = document.getElementById('confirmarDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 3 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 4 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
@@ -1152,7 +1350,7 @@ function renderAlergiasDropdown(query) {
   const dd = document.getElementById('alergiasDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 3 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 4 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
@@ -1216,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('confirmarDropdown').classList.remove('open');
   }, 150));
   input.addEventListener('focus', () => {
-    if (input.value.length >= 3) renderDropdown(input.value);
+    if (input.value.length >= 4) renderDropdown(input.value);
   });
 
   // Alergias
@@ -1232,7 +1430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('alergiasDropdown').classList.remove('open');
   }, 150));
   aInput.addEventListener('focus', () => {
-    if (aInput.value.length >= 2) renderAlergiasDropdown(aInput.value);
+    if (aInput.value.length >= 4) renderAlergiasDropdown(aInput.value);
   });
 });
 </script>
@@ -1280,5 +1478,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 </script>
+
 </body>
 </html>
