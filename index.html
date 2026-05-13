@@ -598,7 +598,7 @@ footer {
   backdrop-filter:blur(4px);
 }
 .modal-overlay.active { display:flex; }
-.modal { background:var(--white); max-width:460px; width:100%; animation:modalIn 0.3s ease; }
+.modal { background:var(--white); max-width:460px; width:100%; animation:modalIn 0.3s ease; max-height:calc(100vh - 40px); overflow-y:auto; }
 @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 .modal-head { padding:36px 36px 28px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:flex-start; }
 .modal-title { font-family:'Shippori Mincho',serif; font-size:1.8rem; }
@@ -620,6 +620,49 @@ footer {
 .bank-row:last-child { border-bottom:none; }
 .bank-label { font-size:0.7rem; letter-spacing:0.06em; color:var(--gray-400); min-width:100px; }
 .bank-value { font-size:0.82rem; color:var(--black); font-weight:400; text-align:right; }
+
+/* ── GIFT WIZARD ── */
+.gift-steps-bar { display:flex; align-items:center; padding:18px 36px; border-bottom:1px solid var(--gray-200); }
+.gift-step-dot { font-size:0.58rem; letter-spacing:0.18em; color:var(--gray-400); transition:color 0.2s; }
+.gift-step-dot.active { color:var(--black); font-weight:400; }
+.gift-step-line { flex:1; height:1px; background:var(--gray-200); margin:0 10px; }
+.gift-step { display:block; }
+.gift-step.hidden { display:none; }
+.modal-step-label { font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gray-400); }
+.modal-field { margin-bottom:14px; }
+.modal-field label { display:block; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray-400); margin-bottom:7px; }
+.modal-field input { width:100%; padding:11px 14px; border:1px solid var(--gray-200); background:var(--white); font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:300; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
+.modal-field input:focus { border-color:var(--black); }
+.modal-field-error { font-size:0.78rem; color:#b84040; margin-bottom:12px; display:none; }
+.modal-field-error.show { display:block; }
+.btn-gift-primary { width:100%; padding:15px; background:var(--black); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:opacity 0.2s; margin-top:20px; display:block; }
+.btn-gift-primary:hover { opacity:0.75; }
+.btn-gift-primary:disabled { opacity:0.35; cursor:default; }
+.btn-gift-back { width:100%; padding:11px; background:transparent; color:var(--gray-400); border:none; font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; margin-top:8px; display:block; transition:color 0.2s; }
+.btn-gift-back:hover { color:var(--black); }
+.gift-summary-box { border:1px solid var(--gray-200); padding:20px; margin-bottom:16px; }
+.gift-summary-line { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+.gift-summary-name { font-family:'Shippori Mincho',serif; font-size:1.3rem; color:var(--black); }
+.gift-summary-price { font-size:0.78rem; color:var(--gray-400); white-space:nowrap; }
+.gift-summary-from { font-size:0.8rem; color:var(--gray-600); }
+.gift-summary-from strong { color:var(--black); font-weight:400; }
+.payment-note { font-size:0.82rem; line-height:1.75; color:var(--gray-600); margin-bottom:16px; }
+.gift-feedback { margin-top:14px; padding:13px 16px; font-size:0.82rem; display:none; }
+.gift-feedback.ok { display:block; background:rgba(45,122,45,0.08); color:#2d7a2d; border-left:3px solid #2d7a2d; }
+.gift-feedback.err { display:block; background:rgba(184,64,64,0.08); color:#b84040; border-left:3px solid #b84040; }
+.gift-confirm { position:relative; min-height:520px; display:flex; }
+.gift-confirm-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+.gift-confirm-overlay {
+  position:relative; z-index:1; width:100%;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:40px 36px 36px;
+  background:linear-gradient(to top, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.35) 55%, transparent 100%);
+}
+.gift-confirm-label { font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:10px; }
+.gift-confirm-name { font-family:'Shippori Mincho',serif; font-size:1.9rem; color:white; font-weight:400; line-height:1.15; margin-bottom:10px; }
+.gift-confirm-text { font-size:0.85rem; line-height:1.7; color:rgba(255,255,255,0.65); margin-bottom:28px; }
+.gift-confirm-btn { align-self:flex-start; padding:13px 28px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.35); font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
+.gift-confirm-btn:hover { background:white; color:var(--black); border-color:white; }
 
 /* ── SCROLL ANIMATIONS ── */
 .fade-up { opacity:0; transform:translateY(40px); transition:opacity 0.9s ease, transform 0.9s ease; }
@@ -1059,34 +1102,119 @@ footer {
 <!-- MODAL -->
 <div class="modal-overlay" id="giftModal" onclick="closeOutside(event)">
   <div class="modal">
-    <div class="modal-head">
-      <div><div class="modal-title" id="modalTitle">—</div><div class="modal-subtitle" id="modalPrice">—</div></div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- Indicador de pasos -->
+    <div class="gift-steps-bar">
+      <span class="gift-step-dot active" id="stepDot1">01 · Tus datos</span>
+      <span class="gift-step-line"></span>
+      <span class="gift-step-dot" id="stepDot2">02 · Resumen</span>
+      <span class="gift-step-line"></span>
+      <span class="gift-step-dot" id="stepDot3">03 · Pago</span>
     </div>
-    <div class="modal-body">
-      <p class="modal-note" id="modalDesc">—</p>
-      <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab(this,'clp')">🇨🇱 Pesos CLP</button>
-        <button class="modal-tab" onclick="switchTab(this,'usd')">💵 Dólares USD</button>
+
+    <!-- PASO 1: Datos personales -->
+    <div class="gift-step" id="giftStep1">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" id="giftName">—</div>
+          <div class="modal-subtitle" id="giftPriceLabel">—</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
-      <div class="bank-panel active" id="panel-clp">
-        <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
-        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank</span></div>
-        <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
-        <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">64877682</span></div>
-        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
-        <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">bacofrev@gmail.com</span></div>
+      <div class="modal-body">
+        <p class="modal-note" id="giftDesc">—</p>
+        <div class="modal-field">
+          <label for="giftNombre">Nombre completo</label>
+          <input type="text" id="giftNombre" placeholder="Tu nombre" autocomplete="name" />
+        </div>
+        <div class="modal-field">
+          <label for="giftEmail">Email</label>
+          <input type="email" id="giftEmail" placeholder="tu@email.com" autocomplete="email" />
+        </div>
+        <div class="modal-field">
+          <label for="giftTelefono">Teléfono <span style="color:var(--gray-400);font-size:0.85em">(opcional)</span></label>
+          <input type="tel" id="giftTelefono" placeholder="+56 9 ..." autocomplete="tel" />
+        </div>
+        <div class="modal-field" id="giftMontoWrap" style="display:none">
+          <label for="giftMonto">Monto a transferir (CLP)</label>
+          <input type="text" id="giftMonto" placeholder="Ej: 50.000" inputmode="numeric" />
+        </div>
+        <div class="modal-field">
+          <label for="giftMensaje">Mensaje <span style="color:var(--gray-400);font-size:0.85em">(opcional)</span></label>
+          <textarea id="giftMensaje" placeholder="Un mensaje para los novios..." rows="3" style="width:100%;padding:11px 14px;border:1px solid var(--gray-200);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;outline:none;resize:vertical;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--gray-200)'"></textarea>
+        </div>
+        <div class="modal-field-error" id="giftStep1Error"></div>
+        <button class="btn-gift-primary" onclick="giftGoStep2()">Continuar →</button>
       </div>
-      <div class="bank-panel" id="panel-usd">
-        <div class="bank-row"><span class="bank-label">Beneficiario</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
-        <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank Chile</span></div>
-        <div class="bank-row"><span class="bank-label">SWIFT / BIC</span><span class="bank-value">BCOSCHSX</span></div>
-        <div class="bank-row"><span class="bank-label">N° cuenta USD</span><span class="bank-value">000986137866</span></div>
-        <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
-        <div class="bank-row"><span class="bank-label">Dirección banco</span><span class="bank-value">Av. Costanera Sur 2710, Piso 10, Torre A, Santiago</span></div>
-      </div>
-      <button class="copy-btn" id="copyBtn" onclick="copyBankData()">Copiar datos de depósito</button>
     </div>
+
+    <!-- PASO 2: Resumen -->
+    <div class="gift-step hidden" id="giftStep2">
+      <div class="modal-head">
+        <div><div class="modal-step-label">Resumen del regalo</div></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="gift-summary-box">
+          <div class="gift-summary-line">
+            <span class="gift-summary-name" id="summaryGiftName">—</span>
+            <span class="gift-summary-price" id="summaryGiftPrice">—</span>
+          </div>
+        </div>
+        <p class="gift-summary-from">Regalo de <strong id="summaryNombre">—</strong></p>
+        <button class="btn-gift-primary" onclick="giftGoStep3()">Ir al pago →</button>
+        <button class="btn-gift-back" onclick="giftGoStep(1)">← Volver</button>
+      </div>
+    </div>
+
+    <!-- PASO 3: Pago -->
+    <div class="gift-step hidden" id="giftStep3">
+      <div class="modal-head">
+        <div><div class="modal-step-label">Transferencia bancaria</div></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">Realizá la transferencia desde tu banco con los datos de abajo y luego confirmá acá.</p>
+        <div class="modal-tabs">
+          <button class="modal-tab active" onclick="switchTab(this,'clp')">🇨🇱 Pesos CLP</button>
+          <button class="modal-tab" onclick="switchTab(this,'usd')">💵 Dólares USD</button>
+        </div>
+        <div class="bank-panel active" id="panel-clp">
+          <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
+          <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank</span></div>
+          <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
+          <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">64877682</span></div>
+          <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
+          <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">bacofrev@gmail.com</span></div>
+        </div>
+        <div class="bank-panel" id="panel-usd">
+          <div class="bank-row"><span class="bank-label">Beneficiario</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
+          <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank Chile</span></div>
+          <div class="bank-row"><span class="bank-label">SWIFT / BIC</span><span class="bank-value">BCOSCHSX</span></div>
+          <div class="bank-row"><span class="bank-label">N° cuenta USD</span><span class="bank-value">000986137866</span></div>
+          <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
+          <div class="bank-row"><span class="bank-label">Dirección banco</span><span class="bank-value">Av. Costanera Sur 2710, Piso 10, Torre A, Santiago</span></div>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyBankData()">Copiar datos de depósito</button>
+        <button class="btn-gift-primary" id="confirmPayBtn" onclick="confirmGiftPayment()">Ya pagué ✓</button>
+        <div class="gift-feedback" id="giftFeedback"></div>
+        <button class="btn-gift-back" onclick="giftGoStep(2)">← Volver</button>
+      </div>
+    </div>
+
+    <!-- PASO 4: Confirmación -->
+    <div class="gift-step hidden" id="giftStep4">
+      <div class="gift-confirm">
+        <img class="gift-confirm-img" id="giftConfirmImg" src="" alt="" />
+        <div class="gift-confirm-overlay">
+          <p class="gift-confirm-label">¡Gracias por tu regalo!</p>
+          <p class="gift-confirm-name" id="giftConfirmGift">—</p>
+          <p class="gift-confirm-text">Lucía y Benjamín te lo agradecen de corazón.<br>Nos vemos el 15 de agosto.</p>
+          <button class="gift-confirm-btn" onclick="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1208,25 +1336,143 @@ document.addEventListener('keydown', e => {
   if(e.key === 'ArrowLeft') lightboxNav(-1);
 });
 
-// ── MODAL
+// ── GIFT WIZARD
 const bankData = {
   clp: 'Benjamín Alejandro Cofré Valencia\n17519582-3\nScotiabank\nCuenta corriente\n64877682\nbacofrev@gmail.com',
   usd: 'Benjamín Alejandro Cofré Valencia\n17519582-3\nScotiabank Chile\nBCOSCHSX\n000986137866\nAv. Costanera Sur 2710, Piso 10, Torre A, Santiago'
 };
 let activeTab = 'clp';
+let currentGift = { name: '', desc: '', price: '', isFree: false };
+
+const giftPhotos = {
+  'Una noche de cena':       'img/regalo_cena.jpg',
+  'Aventura en la montaña':  'img/regalo_aventura.png',
+  'Nuestro hogar':           'img/regalo_hogar.jpg',
+  'Luna de miel':            'img/regalo_luna.jpg',
+  'Un viaje':                'img/regalo_viaje.jpg',
+  'Lo que quieran':          'img/regalo_libre.jpg'
+};
+
+function parsePrecio(priceStr) {
+  const match = priceStr.match(/[\d.]+/);
+  if (!match) return null;
+  return parseInt(match[0].replace(/\./g, ''), 10);
+}
 
 function openGift(name, desc, price) {
-  document.getElementById('modalTitle').textContent = name;
-  document.getElementById('modalDesc').textContent = desc;
-  document.getElementById('modalPrice').textContent = price;
+  const isFree = price === 'monto libre';
+  currentGift = { name, desc, price, isFree };
+  document.getElementById('giftName').textContent = name;
+  document.getElementById('giftPriceLabel').textContent = price;
+  document.getElementById('giftDesc').textContent = desc;
+  document.getElementById('giftNombre').value = '';
+  document.getElementById('giftEmail').value = '';
+  document.getElementById('giftTelefono').value = '';
+  document.getElementById('giftMonto').value = '';
+  document.getElementById('giftMensaje').value = '';
+  document.getElementById('giftMontoWrap').style.display = isFree ? 'block' : 'none';
+  const montoInput = document.getElementById('giftMonto');
+  montoInput.oninput = () => formatMontoInput(montoInput);
+  const err = document.getElementById('giftStep1Error');
+  err.textContent = ''; err.classList.remove('show');
   switchTabById('clp');
-  const btn = document.getElementById('copyBtn');
-  btn.textContent = 'Copiar datos de depósito';
-  btn.classList.remove('copied');
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.textContent = 'Copiar datos de depósito';
+  copyBtn.classList.remove('copied');
+  const fb = document.getElementById('giftFeedback');
+  fb.className = 'gift-feedback'; fb.textContent = '';
+  const payBtn = document.getElementById('confirmPayBtn');
+  payBtn.disabled = false; payBtn.textContent = 'Ya pagué ✓';
+  giftGoStep(1);
   document.getElementById('giftModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-function closeModal() { document.getElementById('giftModal').classList.remove('active'); document.body.style.overflow=''; }
+
+function giftGoStep(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('giftStep'+i).classList.toggle('hidden', i !== n);
+    if (i <= 3) document.getElementById('stepDot'+i).classList.toggle('active', i === n);
+  });
+  document.querySelector('.gift-steps-bar').style.display = n === 4 ? 'none' : 'flex';
+  document.getElementById('giftModal').querySelector('.modal').scrollTop = 0;
+}
+
+function formatMontoInput(input) {
+  const raw = input.value.replace(/\D/g, '');
+  input.value = raw ? parseInt(raw).toLocaleString('es-CL') : '';
+}
+
+function getMontoNum() {
+  const raw = document.getElementById('giftMonto').value.replace(/\D/g, '');
+  return raw ? parseInt(raw) : 0;
+}
+
+function giftGoStep2() {
+  const nombre = document.getElementById('giftNombre').value.trim();
+  const email = document.getElementById('giftEmail').value.trim();
+  const err = document.getElementById('giftStep1Error');
+  if (!nombre || !email) {
+    err.textContent = 'Nombre y email son obligatorios.';
+    err.classList.add('show');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    err.textContent = 'El email no es válido.';
+    err.classList.add('show');
+    return;
+  }
+  if (currentGift.isFree && getMontoNum() < 1) {
+    err.textContent = 'Ingresá el monto que vas a transferir.';
+    err.classList.add('show');
+    return;
+  }
+  err.textContent = ''; err.classList.remove('show');
+  const precioDisplay = currentGift.isFree
+    ? `$${getMontoNum().toLocaleString('es-CL')} CLP`
+    : currentGift.price;
+  document.getElementById('summaryGiftName').textContent = currentGift.name;
+  document.getElementById('summaryGiftPrice').textContent = precioDisplay;
+  document.getElementById('summaryNombre').textContent = nombre;
+  giftGoStep(2);
+}
+
+function giftGoStep3() { giftGoStep(3); }
+
+async function confirmGiftPayment() {
+  const btn = document.getElementById('confirmPayBtn');
+  const fb = document.getElementById('giftFeedback');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+  try {
+    const res = await fetch('/.netlify/functions/regalos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: document.getElementById('giftNombre').value.trim(),
+        email: document.getElementById('giftEmail').value.trim(),
+        telefono: document.getElementById('giftTelefono').value.trim(),
+        regalo: currentGift.name,
+        precio: currentGift.isFree ? getMontoNum() : parsePrecio(currentGift.price),
+        mensaje: document.getElementById('giftMensaje').value.trim() || null
+      })
+    });
+    if (res.ok) {
+      fb.className = 'gift-feedback ok';
+      fb.textContent = '¡Gracias! Ya registramos tu regalo. Lucía y Benjamín te lo agradecen.';
+      btn.textContent = '¡Enviado!';
+      setTimeout(() => closeModal(), 3000);
+    } else {
+      throw new Error('Error al registrar');
+    }
+  } catch {
+    fb.className = 'gift-feedback err';
+    fb.textContent = 'Hubo un problema al registrar. Podés intentarlo de nuevo.';
+    btn.disabled = false;
+    btn.textContent = 'Ya pagué ✓';
+  }
+}
+
+function closeModal() { document.getElementById('giftModal').classList.remove('active'); document.body.style.overflow = ''; }
 function closeOutside(e) { if(e.target.id==='giftModal') closeModal(); }
 function switchTab(btn, id) {
   document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
