@@ -1207,9 +1207,8 @@ footer {
       <div class="gift-confirm">
         <img class="gift-confirm-img" id="giftConfirmImg" src="" alt="" />
         <div class="gift-confirm-overlay">
-          <p class="gift-confirm-label">¡Gracias por tu regalo!</p>
-          <p class="gift-confirm-name" id="giftConfirmGift">—</p>
-          <p class="gift-confirm-text">Lucía y Benjamín te lo agradecen de corazón.<br>Nos vemos el 15 de agosto.</p>
+          <p class="gift-confirm-name" id="giftConfirmTitle">—</p>
+          <p class="gift-confirm-text">Te lo agradecemos de corazón.<br>Nos vemos el 15 de agosto.</p>
           <button class="gift-confirm-btn" onclick="closeModal()">Cerrar</button>
         </div>
       </div>
@@ -1345,12 +1344,12 @@ let activeTab = 'clp';
 let currentGift = { name: '', desc: '', price: '', isFree: false };
 
 const giftPhotos = {
-  'Una noche de cena':       'img/regalo_cena.jpg',
-  'Aventura en la montaña':  'img/regalo_aventura.png',
-  'Nuestro hogar':           'img/regalo_hogar.jpg',
-  'Luna de miel':            'img/regalo_luna.jpg',
-  'Un viaje':                'img/regalo_viaje.jpg',
-  'Lo que quieran':          'img/regalo_libre.jpg'
+  'Una noche de cena':       'img/dinner.png',
+  'Aventura en la montaña':  'img/Mountain.png',
+  'Nuestro hogar':           'img/home.png',
+  'Luna de miel':            'img/honeymoon.jpg',
+  'Un viaje':                'img/trip.jpg',
+  'Lo que quieran':          'img/anything.jpeg'
 };
 
 function parsePrecio(priceStr) {
@@ -1457,10 +1456,18 @@ async function confirmGiftPayment() {
       })
     });
     if (res.ok) {
-      fb.className = 'gift-feedback ok';
-      fb.textContent = '¡Gracias! Ya registramos tu regalo. Lucía y Benjamín te lo agradecen.';
-      btn.textContent = '¡Enviado!';
-      setTimeout(() => closeModal(), 3000);
+      document.getElementById('giftConfirmImg').src = giftPhotos[currentGift.name] || 'img/anything.jpeg';
+      const giftTitles = {
+        'Una noche de cena':      'Gracias por esta noche de cena.',
+        'Aventura en la montaña': 'Gracias por esta aventura en la montaña.',
+        'Nuestro hogar':          'Gracias por aportar a nuestro hogar.',
+        'Luna de miel':           'Gracias por esta luna de miel.',
+        'Un viaje':               'Gracias por este viaje.',
+        'Lo que quieran':         'Gracias por este regalo.'
+      };
+      const titulo = giftTitles[currentGift.name] || 'Gracias por este regalo.';
+      document.getElementById('giftConfirmTitle').textContent = titulo;
+      giftGoStep(4);
     } else {
       throw new Error('Error al registrar');
     }
