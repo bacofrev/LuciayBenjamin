@@ -748,6 +748,8 @@ footer {
 .auth-hint { font-size:0.65rem; letter-spacing:0.08em; color:var(--gray-400); margin-bottom:8px; text-align:center; }
 #logout-btn { display:none; font-size:0.55rem; letter-spacing:0.18em; text-transform:uppercase; color:white; background:none; border:none; cursor:pointer; opacity:0.5; transition:opacity 0.2s; }
 #logout-btn:hover { opacity:1; }
+#lang-btn { font-size:0.55rem; letter-spacing:0.18em; text-transform:uppercase; color:white; background:none; border:1px solid rgba(255,255,255,0.3); cursor:pointer; opacity:0.7; transition:opacity 0.2s,border-color 0.2s; padding:4px 10px; }
+#lang-btn:hover { opacity:1; border-color:rgba(255,255,255,0.7); }
 </style>
 </head>
 <body>
@@ -757,14 +759,14 @@ footer {
   <div class="auth-sub">15 · VIII · 2026</div>
   <div id="auth-form">
     <div class="auth-input-wrap">
-      <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" autocomplete="current-password" />
+      <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" data-ph-es="Contraseña" data-ph-en="Password" autocomplete="current-password" />
       <button class="auth-eye" id="auth-eye-btn" type="button" onclick="toggleAuthPassword()" aria-label="Mostrar contraseña">
         <svg id="auth-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
         </svg>
       </button>
     </div>
-    <button class="auth-btn" id="auth-submit-btn">Ingresar</button>
+    <button class="auth-btn" id="auth-submit-btn" data-es="Ingresar" data-en="Enter">Ingresar</button>
     <div class="auth-error" id="auth-error"></div>
   </div>
 </div>
@@ -772,15 +774,16 @@ footer {
 <nav>
   <div class="nav-logo">L &amp; B</div>
   <ul class="nav-links">
-    <li><a href="#historia">Historia</a></li>
-    <li><a href="#programa">Programa</a></li>
-    <li><a href="#confirmar">Confirmar</a></li>
-    <li><a href="#alergias">Alergias</a></li>
-    <li><a href="#regalos">Regalos</a></li>
-    <li><a href="#llegar">Cómo llegar</a></li>
-    <li><a href="#dresscode">Dress code</a></li>
+    <li><a href="#historia" data-es="Historia" data-en="Our Story">Historia</a></li>
+    <li><a href="#programa" data-es="Programa" data-en="Schedule">Programa</a></li>
+    <li><a href="#confirmar" data-es="Confirmar" data-en="RSVP">Confirmar</a></li>
+    <li><a href="#alergias" data-es="Alergias" data-en="Dietary">Alergias</a></li>
+    <li><a href="#regalos" data-es="Regalos" data-en="Gifts">Regalos</a></li>
+    <li><a href="#llegar" data-es="Cómo llegar" data-en="Getting there">Cómo llegar</a></li>
+    <li><a href="#dresscode" data-es="Dress code" data-en="Dress code">Dress code</a></li>
   </ul>
-  <button id="logout-btn">Salir</button>
+  <button id="logout-btn" data-es="Salir" data-en="Log out">Salir</button>
+  <button id="lang-btn" onclick="toggleLang()">EN</button>
 </nav>
 
 <!-- HERO -->
@@ -804,7 +807,7 @@ footer {
     </div>
   </div>
   <div class="hero-scroll">
-    <span>Bajar</span>
+    <span data-es="Bajar" data-en="Scroll">Bajar</span>
     <div class="scroll-line"></div>
   </div>
 </section>
@@ -814,13 +817,13 @@ footer {
   <div class="section-inner">
     <div class="historia-layout">
       <div class="fade-up">
-        <div class="historia-label">01 — Nuestra historia</div>
-        <h2 class="historia-title">Dos caminos<br>que se <em>encontraron</em></h2>
+        <div class="historia-label" data-es="01 — Nuestra historia" data-en="01 — Our story">01 — Nuestra historia</div>
+        <h2 class="historia-title" data-es="Dos caminos<br>que se <em>encontraron</em>" data-en="Two paths<br>that <em>found each other</em>">Dos caminos<br>que se <em>encontraron</em></h2>
         <div class="historia-text">
-          <p>Hay historias que empiezan sin anunciarse, en conversaciones ordinarias que sin querer se vuelven extraordinarias. La nuestra es así.</p>
-          <p>Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más amamos.</p>
-          <p>El 15 de agosto de 2026, en medio de las montañas de San José de Maipo, vamos a decir que sí frente a ustedes.</p>
-          <p>Gracias por estar acá.</p>
+          <p data-es="Hay historias que empiezan sin anunciarse, en conversaciones ordinarias que sin querer se vuelven extraordinarias. La nuestra es así." data-en="There are stories that begin without announcement, in ordinary conversations that unexpectedly become extraordinary. Ours is one of them.">Hay historias que empiezan sin anunciarse, en conversaciones ordinarias que sin querer se vuelven extraordinarias. La nuestra es así.</p>
+          <p data-es="Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más amamos." data-en="We met, fell in love slowly, and built a life together that today we want to celebrate surrounded by the people we love most.">Nos conocimos, nos enamoramos despacio y construimos juntos una vida que hoy queremos celebrar rodeados de las personas que más amamos.</p>
+          <p data-es="El 15 de agosto de 2026, en medio de las montañas de San José de Maipo, vamos a decir que sí frente a ustedes." data-en="On August 15, 2026, in the mountains of San José de Maipo, we will say yes in front of you.">El 15 de agosto de 2026, en medio de las montañas de San José de Maipo, vamos a decir que sí frente a ustedes.</p>
+          <p data-es="Gracias por estar acá." data-en="Thank you for being here.">Gracias por estar acá.</p>
         </div>
       </div>
       <div class="fade-up delay-1">
@@ -867,49 +870,49 @@ footer {
 <section id="programa">
   <div class="section-inner">
     <div class="programa-header fade-up">
-      <h2 class="programa-title">Programa <em>del día</em></h2>
-      <span class="programa-date">Sábado 15 · VIII · 2026</span>
+      <h2 class="programa-title" data-es="Programa <em>del día</em>" data-en="Day <em>Schedule</em>">Programa <em>del día</em></h2>
+      <span class="programa-date" data-es="Sábado 15 · VIII · 2026" data-en="Saturday 15 · VIII · 2026">Sábado 15 · VIII · 2026</span>
     </div>
     <div class="countdown fade-up" id="countdown">
-      <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">días</span></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label">horas</span></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-label">minutos</span></div>
-      <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-label">segundos</span></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label" data-es="días" data-en="days">días</span></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label" data-es="horas" data-en="hours">horas</span></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-label" data-es="minutos" data-en="minutes">minutos</span></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-label" data-es="segundos" data-en="seconds">segundos</span></div>
     </div>
     <div class="timeline">
       <div class="tl-item fade-up">
         <div class="tl-time">16:30 hrs</div>
         <div class="tl-right">
-          <div class="tl-event">Llegada de invitados</div>
-          <div class="tl-desc">Recepción con algo para tomar mientras todos se instalan.</div>
+          <div class="tl-event" data-es="Llegada de invitados" data-en="Guest arrival">Llegada de invitados</div>
+          <div class="tl-desc" data-es="Recepción con algo para tomar mientras todos se instalan." data-en="Reception with drinks while everyone settles in.">Recepción con algo para tomar mientras todos se instalan.</div>
         </div>
       </div>
       <div class="tl-item fade-up delay-1">
         <div class="tl-time">17:00 hrs</div>
         <div class="tl-right">
-          <div class="tl-event">Ceremonia</div>
-          <div class="tl-desc">Al aire libre, con la cordillera de fondo.</div>
+          <div class="tl-event" data-es="Ceremonia" data-en="Ceremony">Ceremonia</div>
+          <div class="tl-desc" data-es="Al aire libre, con la cordillera de fondo." data-en="Outdoors, with the Andes as a backdrop.">Al aire libre, con la cordillera de fondo.</div>
         </div>
       </div>
       <div class="tl-item fade-up delay-2">
         <div class="tl-time">17:30 hrs</div>
         <div class="tl-right">
-          <div class="tl-event">Cóctel</div>
-          <div class="tl-desc">Brindis y conversación mientras el sol se va entre los cerros.</div>
+          <div class="tl-event" data-es="Cóctel" data-en="Cocktail hour">Cóctel</div>
+          <div class="tl-desc" data-es="Brindis y conversación mientras el sol se va entre los cerros." data-en="Toasts and conversation as the sun sets over the hills.">Brindis y conversación mientras el sol se va entre los cerros.</div>
         </div>
       </div>
       <div class="tl-item fade-up delay-3">
         <div class="tl-time">19:00 hrs</div>
         <div class="tl-right">
-          <div class="tl-event">Cena y fiesta</div>
-          <div class="tl-desc">Mesa compartida, música, baile. La noche que estábamos esperando.</div>
+          <div class="tl-event" data-es="Cena y fiesta" data-en="Dinner &amp; party">Cena y fiesta</div>
+          <div class="tl-desc" data-es="Mesa compartida, música, baile. La noche que estábamos esperando." data-en="Shared table, music, dancing. The night we've been waiting for.">Mesa compartida, música, baile. La noche que estábamos esperando.</div>
         </div>
       </div>
       <div class="tl-item fade-up">
         <div class="tl-time">01:00 hrs</div>
         <div class="tl-right">
-          <div class="tl-event">Cierre</div>
-          <div class="tl-desc">Coordinamos movilización de regreso a Santiago.</div>
+          <div class="tl-event" data-es="Cierre" data-en="Farewell">Cierre</div>
+          <div class="tl-desc" data-es="Coordinamos movilización de regreso a Santiago." data-en="We coordinate transportation back to Santiago.">Coordinamos movilización de regreso a Santiago.</div>
         </div>
       </div>
     </div>
@@ -920,16 +923,16 @@ footer {
 <section id="confirmar" class="section">
   <div class="section-inner">
     <div class="confirmar-inner fade-up">
-      <div class="historia-label" style="color:var(--gray-400);">03 — Confirmación</div>
-      <h2 class="confirmar-title">¿Vas a <em>estar?</em></h2>
-      <p class="confirmar-text">Busca tu nombre en la lista y confirma tu asistencia. Nos ayuda mucho para coordinar todo con el lugar.</p>
+      <div class="historia-label" style="color:var(--gray-400);" data-es="03 — Confirmación" data-en="03 — RSVP">03 — Confirmación</div>
+      <h2 class="confirmar-title" data-es="¿Vas a <em>estar?</em>" data-en="Will you <em>be there?</em>">¿Vas a <em>estar?</em></h2>
+      <p class="confirmar-text" data-es="Busca tu nombre en la lista y confirma tu asistencia. Nos ayuda mucho para coordinar todo con el lugar." data-en="Find your name in the list and confirm your attendance. It helps us greatly to coordinate everything with the venue.">Busca tu nombre en la lista y confirma tu asistencia. Nos ayuda mucho para coordinar todo con el lugar.</p>
       <div class="confirmar-search-wrap">
-        <input type="text" class="confirmar-input" id="confirmarInput" placeholder="Escribe tu nombre…" autocomplete="off" />
+        <input type="text" class="confirmar-input" id="confirmarInput" placeholder="Escribe tu nombre…" data-ph-es="Escribe tu nombre…" data-ph-en="Type your name…" autocomplete="off" />
         <div class="confirmar-dropdown" id="confirmarDropdown"></div>
       </div>
       <div class="confirmar-btns" id="confirmarBtns" style="display:none">
-        <button class="btn-confirmar" onclick="confirmarAsistencia('Confirmado')">Confirmo asistencia</button>
-        <button class="btn-nopuedo" onclick="confirmarAsistencia('No puede')">No puedo asistir</button>
+        <button class="btn-confirmar" onclick="confirmarAsistencia('Confirmado')" data-es="Confirmo asistencia" data-en="I'll be there">Confirmo asistencia</button>
+        <button class="btn-nopuedo" onclick="confirmarAsistencia('No puede')" data-es="No puedo asistir" data-en="Can't make it">No puedo asistir</button>
       </div>
       <div class="confirmar-feedback" id="confirmarFeedback"></div>
     </div>
@@ -941,18 +944,18 @@ footer {
   <div class="section-inner">
     <div class="alergias-layout">
       <div class="fade-up">
-        <div class="historia-label" style="color:rgba(255,255,255,0.25);">04 — Alimentación</div>
-        <h2 class="alergias-title">¿Tienes alguna<br>restricción <em>alimentaria?</em></h2>
-        <p class="alergias-text">Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering.</p>
+        <div class="historia-label" style="color:rgba(255,255,255,0.25);" data-es="04 — Alimentación" data-en="04 — Dietary needs">04 — Alimentación</div>
+        <h2 class="alergias-title" data-es="¿Tienes alguna<br>restricción <em>alimentaria?</em>" data-en="Do you have any<br>dietary <em>restrictions?</em>">¿Tienes alguna<br>restricción <em>alimentaria?</em></h2>
+        <p class="alergias-text" data-es="Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering." data-en="We want everyone to eat well and without worries. If you have any allergy, intolerance, or restriction, let us know in advance so we can coordinate with the catering team.">Queremos que todos coman rico y sin preocupaciones. Si tienes alguna alergia, intolerancia o restricción, cuéntanos con tiempo para coordinarlo con el catering.</p>
       </div>
       <div class="fade-up delay-1">
         <div class="alergias-search-wrap">
-          <input type="text" class="alergias-input" id="alergiasInput" placeholder="Busca tu nombre…" autocomplete="off" />
+          <input type="text" class="alergias-input" id="alergiasInput" placeholder="Busca tu nombre…" data-ph-es="Busca tu nombre…" data-ph-en="Find your name…" autocomplete="off" />
           <div class="alergias-dropdown" id="alergiasDropdown"></div>
         </div>
         <div id="alergiasForm" style="display:none">
-          <textarea class="alergias-textarea" id="alergiasTextarea" placeholder="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…"></textarea>
-          <button class="btn-alergias" onclick="guardarAlergia()">Guardar restricción</button>
+          <textarea class="alergias-textarea" id="alergiasTextarea" placeholder="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…" data-ph-es="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…" data-ph-en="E.g.: gluten-free, lactose intolerant, shellfish allergy…"></textarea>
+          <button class="btn-alergias" onclick="guardarAlergia()" data-es="Guardar restricción" data-en="Save restriction">Guardar restricción</button>
         </div>
         <div class="alergias-feedback" id="alergiaseFeedback"></div>
       </div>
@@ -964,8 +967,8 @@ footer {
 <section id="regalos" class="section">
   <div class="section-inner">
     <div class="regalos-intro-layout fade-up">
-      <h2 class="regalos-title">Si quieren<br><em>regalarnos algo</em></h2>
-      <p class="regalos-intro-text">Lo más bonito que pueden hacer es estar. Pero si quieren sumarse a algo más, preparamos una lista de sueños. Elige lo que quieras y transfiere con los datos que aparecen al hacer clic.</p>
+      <h2 class="regalos-title" data-es="Si quieren<br><em>regalarnos algo</em>" data-en="If you'd like to<br><em>give us a gift</em>">Si quieren<br><em>regalarnos algo</em></h2>
+      <p class="regalos-intro-text" data-es="Lo más bonito que pueden hacer es estar. Pero si quieren sumarse a algo más, preparamos una lista de sueños. Elige lo que quieras y transfiere con los datos que aparecen al hacer clic." data-en="The most beautiful thing you can do is be there. But if you'd like to contribute something more, we've put together a dream list. Choose what you'd like and transfer using the details that appear when you click.">Lo más bonito que pueden hacer es estar. Pero si quieren sumarse a algo más, preparamos una lista de sueños. Elige lo que quieras y transfiere con los datos que aparecen al hacer clic.</p>
     </div>
     <div class="gifts-grid">
 
@@ -981,9 +984,9 @@ footer {
             <ellipse cx="28" cy="36" rx="14" ry="3" stroke="#c8a96e" stroke-width="0.75" stroke-dasharray="2 2"/>
           </svg>
         </span>
-        <div class="gift-name">Una noche de cena</div>
-        <div class="gift-desc">Una salida especial, de esas cenas que se recuerdan siempre.</div>
-        <div class="gift-footer"><span class="gift-price">desde $50.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Una noche de cena" data-en="A dinner night">Una noche de cena</div>
+        <div class="gift-desc" data-es="Una salida especial, de esas cenas que se recuerdan siempre." data-en="A special night out, the kind of dinner you always remember.">Una salida especial, de esas cenas que se recuerdan siempre.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="desde $50.000 CLP" data-en="from $50,000 CLP">desde $50.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up delay-1" onclick="openGift('Aventura en la montaña','Una experiencia en la cordillera — senderismo, rafting, lo que venga.','desde $80.000 CLP')">
@@ -995,9 +998,9 @@ footer {
             <circle cx="46" cy="15" r="5" stroke="#c8a96e" stroke-width="1"/>
           </svg>
         </span>
-        <div class="gift-name">Aventura en la montaña</div>
-        <div class="gift-desc">Una experiencia en la cordillera — senderismo, rafting, lo que venga.</div>
-        <div class="gift-footer"><span class="gift-price">desde $80.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Aventura en la montaña" data-en="Mountain adventure">Aventura en la montaña</div>
+        <div class="gift-desc" data-es="Una experiencia en la cordillera — senderismo, rafting, lo que venga." data-en="An experience in the Andes — hiking, rafting, whatever comes.">Una experiencia en la cordillera — senderismo, rafting, lo que venga.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="desde $80.000 CLP" data-en="from $80,000 CLP">desde $80.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up delay-2" onclick="openGift('Nuestro hogar','Para lo que necesite nuestra casa en esta nueva etapa.','desde $100.000 CLP')">
@@ -1009,9 +1012,9 @@ footer {
             <rect x="33" y="30" width="9" height="9" stroke="#c8a96e" stroke-width="1" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="gift-name">Nuestro hogar</div>
-        <div class="gift-desc">Para lo que necesite nuestra casa en esta nueva etapa.</div>
-        <div class="gift-footer"><span class="gift-price">desde $100.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Nuestro hogar" data-en="Our home">Nuestro hogar</div>
+        <div class="gift-desc" data-es="Para lo que necesite nuestra casa en esta nueva etapa." data-en="For whatever our home needs in this new chapter.">Para lo que necesite nuestra casa en esta nueva etapa.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="desde $100.000 CLP" data-en="from $100,000 CLP">desde $100.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up" onclick="openGift('Luna de miel','Un par de noches en algún lugar remoto, solo nosotros dos.','desde $150.000 CLP')">
@@ -1023,9 +1026,9 @@ footer {
             <circle cx="42" cy="35" r="1.5" fill="#c8a96e"/>
           </svg>
         </span>
-        <div class="gift-name">Luna de miel</div>
-        <div class="gift-desc">Un par de noches en algún lugar remoto, solo nosotros dos.</div>
-        <div class="gift-footer"><span class="gift-price">desde $150.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Luna de miel" data-en="Honeymoon">Luna de miel</div>
+        <div class="gift-desc" data-es="Un par de noches en algún lugar remoto, solo nosotros dos." data-en="A few nights somewhere remote, just the two of us.">Un par de noches en algún lugar remoto, solo nosotros dos.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="desde $150.000 CLP" data-en="from $150,000 CLP">desde $150.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up delay-1" onclick="openGift('Un viaje','Ese destino que algún día vamos a visitar juntos.','desde $250.000 CLP')">
@@ -1038,9 +1041,9 @@ footer {
             <path d="M8 46 Q22 38 36 28" stroke="#c8a96e" stroke-width="0.75" stroke-dasharray="2 3" stroke-linecap="round"/>
           </svg>
         </span>
-        <div class="gift-name">Un viaje</div>
-        <div class="gift-desc">Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar.</div>
-        <div class="gift-footer"><span class="gift-price">desde $250.000 CLP</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Un viaje" data-en="A trip">Un viaje</div>
+        <div class="gift-desc" data-es="Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar." data-en="That destination we'll visit together someday. We don't know when, but it will happen.">Ese destino que algún día vamos a visitar juntos. No sabemos cuándo, pero va a pasar.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="desde $250.000 CLP" data-en="from $250,000 CLP">desde $250.000 CLP</span><span class="gift-arrow">→</span></div>
       </div>
 
       <div class="gift-card fade-up delay-2" onclick="openGift('Lo que quieran','Todo suma a la nueva vida que estamos construyendo.','monto libre')">
@@ -1052,9 +1055,9 @@ footer {
             <line x1="28" y1="22" x2="28" y2="50" stroke="#c8a96e" stroke-width="0.75" opacity="0.5"/>
           </svg>
         </span>
-        <div class="gift-name">Lo que quieran</div>
-        <div class="gift-desc">Todo suma a la nueva vida que estamos construyendo juntos.</div>
-        <div class="gift-footer"><span class="gift-price">monto libre</span><span class="gift-arrow">→</span></div>
+        <div class="gift-name" data-es="Lo que quieran" data-en="Whatever you'd like">Lo que quieran</div>
+        <div class="gift-desc" data-es="Todo suma a la nueva vida que estamos construyendo juntos." data-en="Everything adds up to the new life we're building together.">Todo suma a la nueva vida que estamos construyendo juntos.</div>
+        <div class="gift-footer"><span class="gift-price" data-es="monto libre" data-en="open amount">monto libre</span><span class="gift-arrow">→</span></div>
       </div>
 
     </div>
@@ -1065,22 +1068,22 @@ footer {
 <!-- LLEGAR -->
 <section id="llegar" class="section">
   <div class="section-inner">
-    <h2 class="llegar-title fade-up">Cómo <em>llegar</em></h2>
+    <h2 class="llegar-title fade-up" data-es="Cómo <em>llegar</em>" data-en="How to <em>get there</em>">Cómo <em>llegar</em></h2>
     <div class="llegar-grid">
       <div class="llegar-card fade-up">
         <span class="llegar-num">01</span>
         <div class="llegar-card-title">San José de Maipo</div>
-        <div class="llegar-card-text">A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado.</div>
+        <div class="llegar-card-text" data-es="A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado." data-en="50 km southeast of Santiago via Route G-25. Paved road access.">A 50 km al sureste de Santiago por la Ruta G-25. Acceso por camino pavimentado.</div>
       </div>
       <div class="llegar-card fade-up delay-1">
         <span class="llegar-num">02</span>
-        <div class="llegar-card-title">En auto</div>
-        <div class="llegar-card-text">Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. ~1 hora desde el centro. Estacionamiento en el lugar.</div>
+        <div class="llegar-card-title" data-es="En auto" data-en="By car">En auto</div>
+        <div class="llegar-card-text" data-es="Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. ~1 hora desde el centro. Estacionamiento en el lugar." data-en="Av. Vicuña Mackenna sur → Route G-25 toward Cajón del Maipo. ~1 hour from the city center. Parking on site.">Av. Vicuña Mackenna sur → Ruta G-25 hacia el Cajón del Maipo. ~1 hora desde el centro. Estacionamiento en el lugar.</div>
       </div>
       <div class="llegar-card fade-up delay-2">
         <span class="llegar-num">03</span>
-        <div class="llegar-card-title">Dónde quedarse</div>
-        <div class="llegar-card-text">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
+        <div class="llegar-card-title" data-es="Dónde quedarse" data-en="Where to stay">Dónde quedarse</div>
+        <div class="llegar-card-text" data-es="Hay cabañas en San José de Maipo, Pirque y San Alfonso." data-en="There are cabins in San José de Maipo, Pirque, and San Alfonso.">Hay cabañas en San José de Maipo, Pirque y San Alfonso.</div>
       </div>
     </div>
 
@@ -1132,15 +1135,15 @@ footer {
   <div class="section-inner">
     <div class="dresscode-layout">
       <div class="fade-up">
-        <div class="historia-label" style="color:rgba(255,255,255,0.25);">05 — Dress code</div>
-        <h2 class="dresscode-title">Formal<br><em>elegante</em></h2>
-        <p class="dresscode-text">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
+        <div class="historia-label" style="color:rgba(255,255,255,0.25);" data-es="05 — Dress code" data-en="05 — Dress code">05 — Dress code</div>
+        <h2 class="dresscode-title" data-es="Formal<br><em>elegante</em>" data-en="Formal<br><em>elegant</em>">Formal<br><em>elegante</em></h2>
+        <p class="dresscode-text" data-es="Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera." data-en="We look forward to seeing you dressed for a special evening. We're going for a formal and elegant look, fitting for the mountain setting and the night ahead.">Los esperamos vestidos para una noche especial. Apuntamos a un look formal y elegante, acorde con el entorno de montaña y la noche que nos espera.</p>
       </div>
       <div class="fade-up delay-1">
         <div class="dresscode-img-wrap">
           <img src="img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
         </div>
-        <p class="dresscode-note">El blanco queda reservado para la novia.</p>
+        <p class="dresscode-note" data-es="El blanco queda reservado para la novia." data-en="White is reserved for the bride.">El blanco queda reservado para la novia.</p>
       </div>
     </div>
   </div>
@@ -1161,11 +1164,11 @@ footer {
 
     <!-- Indicador de pasos -->
     <div class="gift-steps-bar">
-      <span class="gift-step-dot active" id="stepDot1">01 · Tus datos</span>
+      <span class="gift-step-dot active" id="stepDot1" data-es="01 · Tus datos" data-en="01 · Your info">01 · Tus datos</span>
       <span class="gift-step-line"></span>
-      <span class="gift-step-dot" id="stepDot2">02 · Resumen</span>
+      <span class="gift-step-dot" id="stepDot2" data-es="02 · Resumen" data-en="02 · Summary">02 · Resumen</span>
       <span class="gift-step-line"></span>
-      <span class="gift-step-dot" id="stepDot3">03 · Pago</span>
+      <span class="gift-step-dot" id="stepDot3" data-es="03 · Pago" data-en="03 · Payment">03 · Pago</span>
     </div>
 
     <!-- PASO 1: Datos personales -->
@@ -1180,34 +1183,34 @@ footer {
       <div class="modal-body">
         <p class="modal-note" id="giftDesc">—</p>
         <div class="modal-field">
-          <label for="giftNombre">Nombre completo</label>
-          <input type="text" id="giftNombre" placeholder="Tu nombre" autocomplete="name" />
+          <label for="giftNombre" data-es="Nombre completo" data-en="Full name">Nombre completo</label>
+          <input type="text" id="giftNombre" placeholder="Tu nombre" data-ph-es="Tu nombre" data-ph-en="Your name" autocomplete="name" />
         </div>
         <div class="modal-field">
           <label for="giftEmail">Email</label>
           <input type="email" id="giftEmail" placeholder="tu@email.com" autocomplete="email" />
         </div>
         <div class="modal-field">
-          <label for="giftTelefono">Teléfono <span style="color:var(--gray-400);font-size:0.85em">(opcional)</span></label>
+          <label for="giftTelefono"><span data-es="Teléfono" data-en="Phone">Teléfono</span> <span style="color:var(--gray-400);font-size:0.85em" data-es="(opcional)" data-en="(optional)">(opcional)</span></label>
           <input type="tel" id="giftTelefono" placeholder="+56 9 ..." autocomplete="tel" />
         </div>
         <div class="modal-field" id="giftMontoWrap" style="display:none">
-          <label for="giftMonto">Monto a transferir (CLP)</label>
+          <label for="giftMonto" data-es="Monto a transferir (CLP)" data-en="Amount to transfer (CLP)">Monto a transferir (CLP)</label>
           <input type="text" id="giftMonto" placeholder="Ej: 50.000" inputmode="numeric" />
         </div>
         <div class="modal-field">
-          <label for="giftMensaje">Mensaje <span style="color:var(--gray-400);font-size:0.85em">(opcional)</span></label>
-          <textarea id="giftMensaje" placeholder="Un mensaje para los novios..." rows="3" style="width:100%;padding:11px 14px;border:1px solid var(--gray-200);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;outline:none;resize:vertical;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--gray-200)'"></textarea>
+          <label for="giftMensaje"><span data-es="Mensaje" data-en="Message">Mensaje</span> <span style="color:var(--gray-400);font-size:0.85em" data-es="(opcional)" data-en="(optional)">(opcional)</span></label>
+          <textarea id="giftMensaje" placeholder="Un mensaje para los novios..." data-ph-es="Un mensaje para los novios..." data-ph-en="A message for the couple..." rows="3" style="width:100%;padding:11px 14px;border:1px solid var(--gray-200);background:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;outline:none;resize:vertical;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--gray-200)'"></textarea>
         </div>
         <div class="modal-field-error" id="giftStep1Error"></div>
-        <button class="btn-gift-primary" onclick="giftGoStep2()">Continuar →</button>
+        <button class="btn-gift-primary" onclick="giftGoStep2()" data-es="Continuar →" data-en="Continue →">Continuar →</button>
       </div>
     </div>
 
     <!-- PASO 2: Resumen -->
     <div class="gift-step hidden" id="giftStep2">
       <div class="modal-head">
-        <div><div class="modal-step-label">Resumen del regalo</div></div>
+        <div><div class="modal-step-label" data-es="Resumen del regalo" data-en="Gift summary">Resumen del regalo</div></div>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body">
@@ -1217,39 +1220,39 @@ footer {
             <span class="gift-summary-price" id="summaryGiftPrice">—</span>
           </div>
         </div>
-        <p class="gift-summary-from">Regalo de <strong id="summaryNombre">—</strong></p>
-        <button class="btn-gift-primary" onclick="giftGoStep3()">Ir al pago →</button>
-        <button class="btn-gift-back" onclick="giftGoStep(1)">← Volver</button>
+        <p class="gift-summary-from"><span data-es="Regalo de" data-en="Gift from">Regalo de</span> <strong id="summaryNombre">—</strong></p>
+        <button class="btn-gift-primary" onclick="giftGoStep3()" data-es="Ir al pago →" data-en="Proceed to payment →">Ir al pago →</button>
+        <button class="btn-gift-back" onclick="giftGoStep(1)" data-es="← Volver" data-en="← Back">← Volver</button>
       </div>
     </div>
 
     <!-- PASO 3: Pago -->
     <div class="gift-step hidden" id="giftStep3">
       <div class="modal-head">
-        <div><div class="modal-step-label">Transferencia bancaria</div></div>
+        <div><div class="modal-step-label" data-es="Transferencia bancaria" data-en="Bank transfer">Transferencia bancaria</div></div>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body">
-        <p class="modal-note">Realizá la transferencia desde tu banco con los datos de abajo y luego confirmá acá.</p>
+        <p class="modal-note" data-es="Realizá la transferencia desde tu banco con los datos de abajo y luego confirmá acá." data-en="Make the transfer from your bank using the details below, then confirm here.">Realizá la transferencia desde tu banco con los datos de abajo y luego confirmá acá.</p>
         <div class="modal-tabs">
           <button class="modal-tab active" onclick="switchTab(this,'clp')">🇨🇱 Pesos CLP</button>
           <button class="modal-tab" onclick="switchTab(this,'usd')">💵 Dólares USD</button>
         </div>
         <div class="bank-panel active" id="panel-clp">
-          <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
-          <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank</span></div>
-          <div class="bank-row"><span class="bank-label">Tipo cuenta</span><span class="bank-value">Cuenta corriente</span></div>
-          <div class="bank-row"><span class="bank-label">N° cuenta</span><span class="bank-value">64877682</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Titular" data-en="Account holder">Titular</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Banco" data-en="Bank">Banco</span><span class="bank-value">Scotiabank</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Tipo cuenta" data-en="Account type">Tipo cuenta</span><span class="bank-value" data-es="Cuenta corriente" data-en="Checking account">Cuenta corriente</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="N° cuenta" data-en="Account no.">N° cuenta</span><span class="bank-value">64877682</span></div>
           <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
           <div class="bank-row"><span class="bank-label">Email</span><span class="bank-value">bacofrev@gmail.com</span></div>
         </div>
         <div class="bank-panel" id="panel-usd">
-          <div class="bank-row"><span class="bank-label">Beneficiario</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
-          <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-value">Scotiabank Chile</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Beneficiario" data-en="Beneficiary">Beneficiario</span><span class="bank-value">Benjamín Alejandro Cofré Valencia</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Banco" data-en="Bank">Banco</span><span class="bank-value">Scotiabank Chile</span></div>
           <div class="bank-row"><span class="bank-label">SWIFT / BIC</span><span class="bank-value">BCOSCHSX</span></div>
-          <div class="bank-row"><span class="bank-label">N° cuenta USD</span><span class="bank-value">000986137866</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="N° cuenta USD" data-en="USD account no.">N° cuenta USD</span><span class="bank-value">000986137866</span></div>
           <div class="bank-row"><span class="bank-label">RUT</span><span class="bank-value">17.519.582-3</span></div>
-          <div class="bank-row"><span class="bank-label">Dirección banco</span><span class="bank-value">Av. Costanera Sur 2710, Piso 10, Torre A, Santiago</span></div>
+          <div class="bank-row"><span class="bank-label" data-es="Dirección banco" data-en="Bank address">Dirección banco</span><span class="bank-value">Av. Costanera Sur 2710, Piso 10, Torre A, Santiago</span></div>
         </div>
         <button class="copy-btn" id="copyBtn" onclick="copyBankData()">Copiar datos de depósito</button>
         <button class="btn-gift-primary" id="confirmPayBtn" onclick="confirmGiftPayment()">Ya pagué ✓</button>
@@ -1264,8 +1267,8 @@ footer {
         <img class="gift-confirm-img" id="giftConfirmImg" src="" alt="" />
         <div class="gift-confirm-overlay">
           <p class="gift-confirm-name" id="giftConfirmTitle">—</p>
-          <p class="gift-confirm-text">Te lo agradecemos de corazón.<br>Nos vemos el 15 de agosto.</p>
-          <button class="gift-confirm-btn" onclick="closeModal()">Cerrar</button>
+          <p class="gift-confirm-text" data-es="Te lo agradecemos de corazón.<br>Nos vemos el 15 de agosto." data-en="We are truly grateful.<br>See you on August 15.">Te lo agradecemos de corazón.<br>Nos vemos el 15 de agosto.</p>
+          <button class="gift-confirm-btn" onclick="closeModal()" data-es="Cerrar" data-en="Close">Cerrar</button>
         </div>
       </div>
     </div>
@@ -1282,6 +1285,73 @@ footer {
 </div>
 
 <script>
+// ── LANGUAGE
+var currentLang = localStorage.getItem('lang') || 'es';
+var uiT = {
+  es: {
+    copyBtn: 'Copiar datos de depósito', copyDone: '¡Copiado!',
+    payBtn: 'Ya pagué ✓', sending: 'Enviando…',
+    errRequired: 'Nombre y email son obligatorios.',
+    errEmail: 'El email no es válido.',
+    errAmount: 'Ingresá el monto que vas a transferir.',
+    errRegister: 'Hubo un problema al registrar. Podés intentarlo de nuevo.',
+    fbConfirm: '¡Perfecto! Tu asistencia quedó confirmada.',
+    fbDecline: 'Gracias por avisarnos. Te vamos a extrañar.',
+    fbError: 'Hubo un error al guardar. Intenta de nuevo.',
+    fbAlergia: 'Restricción guardada. ¡Lo coordinamos con el catering!',
+    fbAlergiaRemoved: 'Restricción eliminada.',
+    giftTitles: {
+      'Una noche de cena': 'Gracias por esta noche de cena.',
+      'Aventura en la montaña': 'Gracias por esta aventura en la montaña.',
+      'Nuestro hogar': 'Gracias por aportar a nuestro hogar.',
+      'Luna de miel': 'Gracias por esta luna de miel.',
+      'Un viaje': 'Gracias por este viaje.',
+      'Lo que quieran': 'Gracias por este regalo.'
+    }
+  },
+  en: {
+    copyBtn: 'Copy deposit details', copyDone: 'Copied!',
+    payBtn: "I've paid ✓", sending: 'Sending…',
+    errRequired: 'Name and email are required.',
+    errEmail: 'Invalid email address.',
+    errAmount: "Please enter the amount you'll transfer.",
+    errRegister: 'There was an issue registering. Please try again.',
+    fbConfirm: 'Perfect! Your attendance is confirmed.',
+    fbDecline: "Thanks for letting us know. We'll miss you.",
+    fbError: 'There was an error saving. Please try again.',
+    fbAlergia: 'Restriction saved. We\'ll coordinate with the catering team!',
+    fbAlergiaRemoved: 'Restriction removed.',
+    giftTitles: {
+      'Una noche de cena': 'Thank you for this dinner night.',
+      'Aventura en la montaña': 'Thank you for this mountain adventure.',
+      'Nuestro hogar': 'Thank you for contributing to our home.',
+      'Luna de miel': 'Thank you for this honeymoon.',
+      'Un viaje': 'Thank you for this trip.',
+      'Lo que quieran': 'Thank you for this gift.'
+    }
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('[data-es]').forEach(el => {
+    el.innerHTML = el.dataset[lang];
+  });
+  document.querySelectorAll('[data-ph-es]').forEach(el => {
+    el.placeholder = lang === 'es' ? el.dataset.phEs : el.dataset.phEn;
+  });
+  var btn = document.getElementById('lang-btn');
+  if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
+}
+
+function toggleLang() {
+  setLang(currentLang === 'es' ? 'en' : 'es');
+}
+
+// Apply saved language on load
+if (currentLang !== 'es') setLang(currentLang);
+
 // ── HERO CAROUSEL
 (function() {
   var photos = document.querySelectorAll('#heroPhotos .hero-photo');
@@ -1463,12 +1533,12 @@ function openGift(name, desc, price) {
   err.textContent = ''; err.classList.remove('show');
   switchTabById('clp');
   const copyBtn = document.getElementById('copyBtn');
-  copyBtn.textContent = 'Copiar datos de depósito';
+  copyBtn.textContent = uiT[currentLang].copyBtn;
   copyBtn.classList.remove('copied');
   const fb = document.getElementById('giftFeedback');
   fb.className = 'gift-feedback'; fb.textContent = '';
   const payBtn = document.getElementById('confirmPayBtn');
-  payBtn.disabled = false; payBtn.textContent = 'Ya pagué ✓';
+  payBtn.disabled = false; payBtn.textContent = uiT[currentLang].payBtn;
   giftGoStep(1);
   document.getElementById('giftModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -1498,17 +1568,17 @@ function giftGoStep2() {
   const email = document.getElementById('giftEmail').value.trim();
   const err = document.getElementById('giftStep1Error');
   if (!nombre || !email) {
-    err.textContent = 'Nombre y email son obligatorios.';
+    err.textContent = uiT[currentLang].errRequired;
     err.classList.add('show');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    err.textContent = 'El email no es válido.';
+    err.textContent = uiT[currentLang].errEmail;
     err.classList.add('show');
     return;
   }
   if (currentGift.isFree && getMontoNum() < 1) {
-    err.textContent = 'Ingresá el monto que vas a transferir.';
+    err.textContent = uiT[currentLang].errAmount;
     err.classList.add('show');
     return;
   }
@@ -1528,7 +1598,7 @@ async function confirmGiftPayment() {
   const btn = document.getElementById('confirmPayBtn');
   const fb = document.getElementById('giftFeedback');
   btn.disabled = true;
-  btn.textContent = 'Enviando…';
+  btn.textContent = uiT[currentLang].sending;
   try {
     const res = await fetch('/.netlify/functions/regalos', {
       method: 'POST',
@@ -1544,25 +1614,17 @@ async function confirmGiftPayment() {
     });
     if (res.ok) {
       document.getElementById('giftConfirmImg').src = giftPhotos[currentGift.name] || 'img/anything.jpeg';
-      const giftTitles = {
-        'Una noche de cena':      'Gracias por esta noche de cena.',
-        'Aventura en la montaña': 'Gracias por esta aventura en la montaña.',
-        'Nuestro hogar':          'Gracias por aportar a nuestro hogar.',
-        'Luna de miel':           'Gracias por esta luna de miel.',
-        'Un viaje':               'Gracias por este viaje.',
-        'Lo que quieran':         'Gracias por este regalo.'
-      };
-      const titulo = giftTitles[currentGift.name] || 'Gracias por este regalo.';
+      const titulo = (uiT[currentLang].giftTitles[currentGift.name]) || uiT[currentLang].giftTitles['Lo que quieran'];
       document.getElementById('giftConfirmTitle').textContent = titulo;
       giftGoStep(4);
     } else {
-      throw new Error('Error al registrar');
+      throw new Error();
     }
   } catch {
     fb.className = 'gift-feedback err';
-    fb.textContent = 'Hubo un problema al registrar. Podés intentarlo de nuevo.';
+    fb.textContent = uiT[currentLang].errRegister;
     btn.disabled = false;
-    btn.textContent = 'Ya pagué ✓';
+    btn.textContent = uiT[currentLang].payBtn;
   }
 }
 
@@ -1575,7 +1637,7 @@ function switchTab(btn, id) {
   document.getElementById('panel-'+id).classList.add('active');
   activeTab = id;
   const copyBtn = document.getElementById('copyBtn');
-  copyBtn.textContent = 'Copiar datos de depósito';
+  copyBtn.textContent = uiT[currentLang].copyBtn;
   copyBtn.classList.remove('copied');
 }
 function switchTabById(id) {
@@ -1588,9 +1650,9 @@ function switchTabById(id) {
 function copyBankData() {
   navigator.clipboard.writeText(bankData[activeTab]).then(() => {
     const btn = document.getElementById('copyBtn');
-    btn.textContent = '¡Copiado!';
+    btn.textContent = uiT[currentLang].copyDone;
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copiar datos de depósito'; btn.classList.remove('copied'); }, 2500);
+    setTimeout(() => { btn.textContent = uiT[currentLang].copyBtn; btn.classList.remove('copied'); }, 2500);
   });
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
@@ -1606,9 +1668,10 @@ const STATUS_META = {
   'Pendiente':  { label: 'Pendiente',        color: '#555',    bg: '#e8e8e8' },
 };
 
-async function loadGuests() {
+async function loadGuests(pass) {
   try {
-    const res = await fetch(AT_URL);
+    const url = pass ? `${AT_URL}?pass=${encodeURIComponent(pass)}` : AT_URL;
+    const res = await fetch(url);
     const data = await res.json();
     guests = (data.records || [])
       .map(r => ({
@@ -1619,7 +1682,8 @@ async function loadGuests() {
       }))
       .filter(g => g.name)
       .sort((a, b) => a.name.localeCompare(b.name, 'es'));
-  } catch(e) { console.error('Error cargando invitados', e); }
+    return guests.length;
+  } catch(e) { console.error('Error cargando invitados', e); return 0; }
 }
 
 function renderDropdown(query) {
@@ -1669,15 +1733,15 @@ async function confirmarAsistencia(status) {
     const g = guests.find(x => x.id === selectedGuest.id);
     if (g) g.status = status;
     fb.textContent = status === 'Confirmado'
-      ? '¡Perfecto! Tu asistencia quedó confirmada.'
-      : 'Gracias por avisarnos. Te vamos a extrañar.';
+      ? uiT[currentLang].fbConfirm
+      : uiT[currentLang].fbDecline;
     fb.className = 'confirmar-feedback ok';
     fb.style.display = 'block';
     document.getElementById('confirmarBtns').style.display = 'none';
     document.getElementById('confirmarInput').value = '';
     selectedGuest = null;
   } catch {
-    fb.textContent = 'Hubo un error al guardar. Intenta de nuevo.';
+    fb.textContent = uiT[currentLang].fbError;
     fb.className = 'confirmar-feedback err';
     fb.style.display = 'block';
   }
@@ -1727,21 +1791,20 @@ async function guardarAlergia() {
     if (!res.ok) throw new Error();
     const g = guests.find(x => x.id === selectedAlergia.id);
     if (g) g.alergia = texto;
-    fb.textContent = texto ? 'Restricción guardada. ¡Lo coordinamos con el catering!' : 'Restricción eliminada.';
+    fb.textContent = texto ? uiT[currentLang].fbAlergia : uiT[currentLang].fbAlergiaRemoved;
     fb.className = 'alergias-feedback ok';
     fb.style.display = 'block';
     document.getElementById('alergiasForm').style.display = 'none';
     document.getElementById('alergiasInput').value = '';
     selectedAlergia = null;
   } catch {
-    fb.textContent = 'Hubo un error al guardar. Intenta de nuevo.';
+    fb.textContent = uiT[currentLang].fbError;
     fb.className = 'alergias-feedback err';
     fb.style.display = 'block';
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  loadGuests();
   const input = document.getElementById('confirmarInput');
   if (!input) return;
   input.addEventListener('input', () => {
@@ -1788,8 +1851,7 @@ function toggleAuthPassword() {
 
 <script>
 (function() {
-  var PASSWORD = 'luyben2026';
-  var KEY = 'wedding_auth';
+  var KEY = 'wedding_pass';
 
   var gate = document.getElementById('auth-gate');
   var logoutBtn = document.getElementById('logout-btn');
@@ -1808,23 +1870,45 @@ function toggleAuthPassword() {
     gate.classList.remove('out');
     logoutBtn.style.display = 'none';
     passwordInput.value = '';
+    errorDiv.textContent = '';
+    submitBtn.disabled = false;
+    submitBtn.textContent = submitBtn.dataset.es || 'Ingresar';
   }
 
-  if (localStorage.getItem(KEY) === PASSWORD) { showSite(); }
-
-  submitBtn.addEventListener('click', function() {
-    if (passwordInput.value === PASSWORD) {
-      localStorage.setItem(KEY, PASSWORD);
+  async function tryLogin(pass) {
+    var count = await loadGuests(pass);
+    if (count > 0) {
+      localStorage.setItem(KEY, pass);
       showSite();
     } else {
-      errorDiv.textContent = 'Contraseña incorrecta.';
+      errorDiv.textContent = currentLang === 'en' ? 'Incorrect password.' : 'Contraseña incorrecta.';
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = submitBtn.dataset[currentLang] || 'Ingresar';
     }
+  }
+
+  var storedPass = localStorage.getItem(KEY);
+  if (storedPass) {
+    loadGuests(storedPass).then(function(count) {
+      if (count > 0) showSite();
+      else { localStorage.removeItem(KEY); }
+    });
+  }
+
+  submitBtn.addEventListener('click', function() {
+    var pass = passwordInput.value.trim();
+    if (!pass) return;
+    errorDiv.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = currentLang === 'en' ? 'Checking…' : 'Verificando…';
+    tryLogin(pass);
   });
 
   passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
 
   logoutBtn.addEventListener('click', function() {
     localStorage.removeItem(KEY);
+    guests = [];
     showGate();
   });
 })();

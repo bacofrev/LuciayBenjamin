@@ -18,13 +18,20 @@ exports.handler = async (event) => {
 
   try {
     if (event.httpMethod === 'GET') {
+      const passParam = (event.queryStringParameters || {}).pass || '';
+      const safePass = passParam.replace(/'/g, "''");
+      const baseFormula = "OR({Invitaciones} = 'Save the date sent', {Invitaciones} = 'Invitation sent')";
+      const formula = safePass
+        ? `AND(${baseFormula}, {pass} = '${safePass}')`
+        : baseFormula;
+
       let all = [], offset = null;
       do {
         const url = new URL(BASE_URL);
         url.searchParams.append('fields[]', 'Name');
         url.searchParams.append('fields[]', 'Confirmación');
         url.searchParams.append('fields[]', 'Restricción alimentaria');
-        url.searchParams.set('filterByFormula', "OR({Invitaciones} = 'Save the date sent', {Invitaciones} = 'Invitation sent')");
+        url.searchParams.set('filterByFormula', formula);
         url.searchParams.set('pageSize', '100');
         if (offset) url.searchParams.set('offset', offset);
 
