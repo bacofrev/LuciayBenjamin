@@ -41,13 +41,26 @@ nav {
 .hero {
   height:75vh; position:relative; overflow:hidden;
   display:flex; align-items:flex-end;
+  background:#080808;
 }
 
-.hero-img {
+.hero-photos {
+  position:absolute; right:0; top:0; bottom:0; width:50%;
+}
+.hero-photo {
   position:absolute; inset:0;
-  background: #1a1a1a url('img/hero.svg') center center / cover no-repeat;
-  transform:scale(1.0);
-  will-change:transform;
+  opacity:0; transition:opacity 0.9s ease;
+}
+.hero-photo.active { opacity:1; }
+.hero-photo img {
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  display:block;
+}
+.hero-fade {
+  position:absolute; top:0; bottom:0;
+  left:50%; width:12%;
+  background:linear-gradient(to right, #080808 0%, transparent 100%);
+  z-index:2; pointer-events:none;
 }
 
 .hero-overlay {
@@ -675,13 +688,17 @@ footer {
 @media(max-width:900px){
   nav { padding:20px 24px; }
   .nav-links { display:none; }
+  .hero-photos { right:0; left:0; width:100%; }
+  .hero-fade { display:none; }
   .hero-content { padding:0 24px 56px; flex-direction:column; align-items:flex-start; gap:24px; }
   .hero-meta { text-align:left; }
   .section { padding:80px 24px; }
   .historia-layout { grid-template-columns:1fr; gap:48px; }
   .llegar-grid { grid-template-columns:1fr; }
   .llegar-media { grid-template-columns:1fr; }
-  .llegar-media .llegar-photos { order:2; }
+  .llegar-media .llegar-photos { order:2; height:auto; }
+  .llegar-media .llegar-carousel-wrap { height:auto; }
+  .llegar-media .llegar-carousel-slide { aspect-ratio:4/3; height:auto; }
   .llegar-media .llegar-map { order:1; min-height:280px; aspect-ratio:16/9; height:auto; }
   .dresscode-layout { grid-template-columns:1fr; gap:48px; }
   .gifts-grid { grid-template-columns:1fr; }
@@ -700,9 +717,12 @@ footer {
 .auth-title { font-family:'Shippori Mincho',serif; font-size:2rem; letter-spacing:0.22em; color:var(--white); }
 .auth-sub { font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gray-400); }
 #auth-form { display:flex; flex-direction:column; align-items:center; gap:0; margin-top:12px; }
-.auth-input { display:block; width:260px; padding:12px 16px; margin-bottom:10px; background:transparent; border:1px solid var(--gray-600); color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.75rem; letter-spacing:0.05em; outline:none; transition:border-color 0.2s; }
+.auth-input-wrap { position:relative; width:260px; margin-bottom:10px; }
+.auth-input { display:block; width:100%; padding:12px 40px 12px 16px; background:transparent; border:1px solid var(--gray-600); color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.75rem; letter-spacing:0.05em; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
 .auth-input::placeholder { color:var(--gray-600); }
 .auth-input:focus { border-color:var(--gold); }
+.auth-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:0; color:var(--gray-600); transition:color 0.2s; line-height:0; }
+.auth-eye:hover { color:var(--white); }
 .auth-btn { margin-top:10px; padding:13px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:background 0.25s,color 0.25s; width:260px; }
 .auth-btn:hover { background:var(--gold); color:var(--black); }
 .auth-btn:disabled { opacity:0.4; cursor:default; }
@@ -718,7 +738,14 @@ footer {
   <div class="auth-title">L &amp; B</div>
   <div class="auth-sub">15 · VIII · 2026</div>
   <div id="auth-form">
-    <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" autocomplete="current-password" />
+    <div class="auth-input-wrap">
+      <input type="password" id="auth-password" class="auth-input" placeholder="Contraseña" autocomplete="current-password" />
+      <button class="auth-eye" id="auth-eye-btn" type="button" onclick="toggleAuthPassword()" aria-label="Mostrar contraseña">
+        <svg id="auth-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
     <button class="auth-btn" id="auth-submit-btn">Ingresar</button>
     <div class="auth-error" id="auth-error"></div>
   </div>
@@ -740,7 +767,12 @@ footer {
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-img" id="heroImg"></div>
+  <div class="hero-photos" id="heroPhotos">
+    <div class="hero-photo active"><img src="img/Hero_1.svg" alt="" /></div>
+    <div class="hero-photo"><img src="img/Hero_2.svg" alt="" /></div>
+    <div class="hero-photo"><img src="img/Hero_3.svg" alt="" /></div>
+  </div>
+  <div class="hero-fade"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-names">
@@ -1226,12 +1258,17 @@ footer {
 </div>
 
 <script>
-// ── PARALLAX HERO
-const heroImg = document.getElementById('heroImg');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  heroImg.style.transform = `scale(1.08) translateY(${y * 0.3}px)`;
-});
+// ── HERO CAROUSEL
+(function() {
+  var photos = document.querySelectorAll('#heroPhotos .hero-photo');
+  var current = 0;
+  var total = photos.length;
+  setInterval(function() {
+    photos[current].classList.remove('active');
+    current = (current + 1) % total;
+    photos[current].classList.add('active');
+  }, 3000);
+})();
 
 // ── SCROLL REVEAL
 const obs = new IntersectionObserver(es => es.forEach(e => {
@@ -1686,6 +1723,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (aInput.value.length >= 4) renderAlergiasDropdown(aInput.value);
   });
 });
+</script>
+
+<script>
+function toggleAuthPassword() {
+  var input = document.getElementById('auth-password');
+  var isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  document.getElementById('auth-eye-icon').innerHTML = isHidden
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
 </script>
 
 <script>
