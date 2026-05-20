@@ -608,6 +608,14 @@ nav {
 .btn-nopuedo { padding:16px 36px; background:transparent; color:var(--gray-600); border:1px solid var(--gray-200); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
 .btn-nopuedo:hover { border-color:var(--black); color:var(--black); }
 .confirmar-feedback { margin-top:24px; padding:16px 20px; font-size:0.82rem; display:none; }
+.confirmar-alergia-label { font-size:0.85rem; color:var(--gray-600); margin:24px 0 12px; letter-spacing:0.02em; }
+#confirmarAlergiaWrap .alergias-textarea { border-color:var(--gray-200); color:var(--black); background:var(--white); }
+#confirmarAlergiaWrap .alergias-textarea:focus { border-color:var(--gray-600); }
+#confirmarAlergiaWrap .alergias-textarea::placeholder { color:var(--gray-400); }
+#confirmarAlergiaWrap .btn-alergias { color:var(--black); border-color:var(--gray-200); }
+#confirmarAlergiaWrap .btn-alergias:hover { background:var(--black); color:var(--white); border-color:var(--black); }
+#confirmarAlergiaWrap .btn-alergias-none { color:var(--gray-400); border-color:var(--gray-200); }
+#confirmarAlergiaWrap .btn-alergias-none:hover { color:var(--gray-600); border-color:var(--gray-400); }
 .confirmar-feedback.ok { background:#f0faf0; color:#2d7a2d; border-left:3px solid #2d7a2d; }
 .confirmar-feedback.err { background:#faf0f0; color:#7a2d2d; border-left:3px solid #7a2d2d; }
 
@@ -935,6 +943,12 @@ footer {
       <div class="confirmar-btns" id="confirmarBtns" style="display:none">
         <button class="btn-confirmar" onclick="confirmarAsistencia('Confirmado')" data-es="Confirmo asistencia" data-en="I'll be there">Confirmo asistencia</button>
         <button class="btn-nopuedo" onclick="confirmarAsistencia('No puede')" data-es="No puedo asistir" data-en="Can't make it">No puedo asistir</button>
+      </div>
+      <div id="confirmarAlergiaWrap" style="display:none">
+        <p class="confirmar-alergia-label" data-es="¿Tienes alguna restricción alimentaria?" data-en="Do you have any dietary restrictions?">¿Tienes alguna restricción alimentaria?</p>
+        <textarea class="alergias-textarea" id="confirmarAlergiaTextarea" placeholder="Ej: celíaco, intolerante a la lactosa…" data-ph-es="Ej: celíaco, intolerante a la lactosa…" data-ph-en="E.g.: gluten-free, lactose intolerant…" rows="3"></textarea>
+        <button class="btn-alergias" onclick="guardarAlergiaDesdeConfirmar()" data-es="Guardar restricción" data-en="Save restriction">Guardar restricción</button>
+        <button class="btn-alergias-none" onclick="declararSinAlergiaDesdeConfirmar()" data-es="Sin restricción alimentaria" data-en="No dietary restrictions">Sin restricción alimentaria</button>
       </div>
       <div class="confirmar-feedback" id="confirmarFeedback"></div>
     </div>
@@ -1725,6 +1739,8 @@ function selectGuest(g) {
   document.getElementById('confirmarBtns').style.display = 'flex';
 }
 
+var confirmedGuest = null;
+
 async function confirmarAsistencia(status) {
   if (!selectedGuest) return;
   const fb = document.getElementById('confirmarFeedback');
@@ -1737,19 +1753,55 @@ async function confirmarAsistencia(status) {
     if (!res.ok) throw new Error();
     const g = guests.find(x => x.id === selectedGuest.id);
     if (g) g.status = status;
-    fb.textContent = status === 'Confirmado'
-      ? uiT[currentLang].fbConfirm
-      : uiT[currentLang].fbDecline;
-    fb.className = 'confirmar-feedback ok';
-    fb.style.display = 'block';
     document.getElementById('confirmarBtns').style.display = 'none';
-    document.getElementById('confirmarInput').value = '';
-    selectedGuest = null;
+    if (status === 'Confirmado') {
+      confirmedGuest = selectedGuest;
+      selectedGuest = null;
+      document.getElementById('confirmarAlergiaTextarea').value = '';
+      document.getElementById('confirmarAlergiaWrap').style.display = 'block';
+    } else {
+      selectedGuest = null;
+      document.getElementById('confirmarInput').value = '';
+      fb.textContent = uiT[currentLang].fbDecline;
+      fb.className = 'confirmar-feedback ok';
+      fb.style.display = 'block';
+    }
   } catch {
     fb.textContent = uiT[currentLang].fbError;
     fb.className = 'confirmar-feedback err';
     fb.style.display = 'block';
   }
+}
+
+async function guardarAlergiaDesdeConfirmar() {
+  if (!confirmedGuest) return;
+  const texto = document.getElementById('confirmarAlergiaTextarea').value.trim();
+  const fb = document.getElementById('confirmarFeedback');
+  try {
+    const res = await fetch(AT_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recordId: confirmedGuest.id, fields: { 'Restricción alimentaria': texto || 'Ninguna' } })
+    });
+    if (!res.ok) throw new Error();
+    const g = guests.find(x => x.id === confirmedGuest.id);
+    if (g) g.alergia = texto || 'Ninguna';
+    confirmedGuest = null;
+    document.getElementById('confirmarAlergiaWrap').style.display = 'none';
+    document.getElementById('confirmarInput').value = '';
+    fb.textContent = uiT[currentLang].fbConfirm;
+    fb.className = 'confirmar-feedback ok';
+    fb.style.display = 'block';
+  } catch {
+    fb.textContent = uiT[currentLang].fbError;
+    fb.className = 'confirmar-feedback err';
+    fb.style.display = 'block';
+  }
+}
+
+async function declararSinAlergiaDesdeConfirmar() {
+  document.getElementById('confirmarAlergiaTextarea').value = '';
+  await guardarAlergiaDesdeConfirmar();
 }
 
 // ── ALERGIAS ──
@@ -1765,8 +1817,13 @@ function renderAlergiasDropdown(query) {
   filtered.slice(0, 12).forEach(g => {
     const el = document.createElement('div');
     el.className = 'alergias-option';
-    const hasAlergia = g.alergia && g.alergia.trim();
-    el.innerHTML = `<span>${g.name}</span>${hasAlergia ? `<span class="confirmar-badge" style="color:#a07020;background:#fef3cd">Tiene restricción</span>` : ''}`;
+    const alergia = g.alergia && g.alergia.trim();
+    const badge = alergia === 'Ninguna'
+      ? `<span class="confirmar-badge" style="color:#1a5c1a;background:#d4edda">${currentLang === 'en' ? 'No restrictions' : 'Sin restricción'}</span>`
+      : alergia
+        ? `<span class="confirmar-badge" style="color:#a07020;background:#fef3cd">${currentLang === 'en' ? 'Has restriction' : 'Tiene restricción'}</span>`
+        : '';
+    el.innerHTML = `<span>${g.name}</span>${badge}`;
     el.addEventListener('mousedown', e => { e.preventDefault(); selectAlergia(g); });
     dd.appendChild(el);
   });
