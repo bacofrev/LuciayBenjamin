@@ -1695,7 +1695,7 @@ function renderDropdown(query) {
   const dd = document.getElementById('confirmarDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 4 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
@@ -1759,7 +1759,7 @@ function renderAlergiasDropdown(query) {
   const dd = document.getElementById('alergiasDropdown');
   if (!dd) return;
   const q = query.toLowerCase();
-  const filtered = query.length < 4 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
+  const filtered = query.length < 2 ? [] : guests.filter(g => g.name.toLowerCase().includes(q));
   dd.innerHTML = '';
   if (!filtered.length) { dd.classList.remove('open'); return; }
   filtered.slice(0, 12).forEach(g => {
