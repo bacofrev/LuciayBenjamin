@@ -567,6 +567,8 @@ nav {
 .alergias-feedback.err { background:rgba(122,45,45,0.2); color:#cf7e7e; border-left:3px solid #7a2d2d; }
 .btn-alergias { padding:14px 32px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.08); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
 .btn-alergias:hover { background:white; color:var(--black); border-color:white; }
+.btn-alergias-none { margin-top:10px; padding:11px 32px; background:transparent; color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08); font-family:'DM Sans',sans-serif; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; display:block; }
+.btn-alergias-none:hover { color:white; border-color:rgba(255,255,255,0.3); }
 
 .btn {
   display:inline-flex; align-items:center; gap:16px;
@@ -956,6 +958,7 @@ footer {
         <div id="alergiasForm" style="display:none">
           <textarea class="alergias-textarea" id="alergiasTextarea" placeholder="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…" data-ph-es="Ej: soy celíaco, intolerante a la lactosa, alérgico al mariscos…" data-ph-en="E.g.: gluten-free, lactose intolerant, shellfish allergy…"></textarea>
           <button class="btn-alergias" onclick="guardarAlergia()" data-es="Guardar restricción" data-en="Save restriction">Guardar restricción</button>
+          <button class="btn-alergias-none" onclick="declararSinAlergia()" data-es="Sin restricción alimentaria" data-en="No dietary restrictions">Sin restricción alimentaria</button>
         </div>
         <div class="alergias-feedback" id="alergiaseFeedback"></div>
       </div>
@@ -1300,6 +1303,7 @@ var uiT = {
     fbError: 'Hubo un error al guardar. Intenta de nuevo.',
     fbAlergia: 'Restricción guardada. ¡Lo coordinamos con el catering!',
     fbAlergiaRemoved: 'Restricción eliminada.',
+    fbAlergiaNone: 'Perfecto, quedó registrado que no tienes restricciones.',
     giftTitles: {
       'Una noche de cena': 'Gracias por esta noche de cena.',
       'Aventura en la montaña': 'Gracias por esta aventura en la montaña.',
@@ -1321,6 +1325,7 @@ var uiT = {
     fbError: 'There was an error saving. Please try again.',
     fbAlergia: 'Restriction saved. We\'ll coordinate with the catering team!',
     fbAlergiaRemoved: 'Restriction removed.',
+    fbAlergiaNone: 'Got it — noted that you have no dietary restrictions.',
     giftTitles: {
       'Una noche de cena': 'Thank you for this dinner night.',
       'Aventura en la montaña': 'Thank you for this mountain adventure.',
@@ -1792,6 +1797,31 @@ async function guardarAlergia() {
     const g = guests.find(x => x.id === selectedAlergia.id);
     if (g) g.alergia = texto;
     fb.textContent = texto ? uiT[currentLang].fbAlergia : uiT[currentLang].fbAlergiaRemoved;
+    fb.className = 'alergias-feedback ok';
+    fb.style.display = 'block';
+    document.getElementById('alergiasForm').style.display = 'none';
+    document.getElementById('alergiasInput').value = '';
+    selectedAlergia = null;
+  } catch {
+    fb.textContent = uiT[currentLang].fbError;
+    fb.className = 'alergias-feedback err';
+    fb.style.display = 'block';
+  }
+}
+
+async function declararSinAlergia() {
+  if (!selectedAlergia) return;
+  const fb = document.getElementById('alergiaseFeedback');
+  try {
+    const res = await fetch(AT_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recordId: selectedAlergia.id, fields: { 'Restricción alimentaria': 'Ninguna' } })
+    });
+    if (!res.ok) throw new Error();
+    const g = guests.find(x => x.id === selectedAlergia.id);
+    if (g) g.alergia = 'Ninguna';
+    fb.textContent = uiT[currentLang].fbAlergiaNone;
     fb.className = 'alergias-feedback ok';
     fb.style.display = 'block';
     document.getElementById('alergiasForm').style.display = 'none';
