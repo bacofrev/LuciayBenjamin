@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.airtable.com/v0/applBlg6Sd7YlTunP/tbldkI6GmWlsyuoU0';
+const BASE_URL = 'https://api.airtable.com/v0/applUruwOQ6E5AhN2/tbldkI6GmWlsyuoU0';
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -20,16 +20,12 @@ exports.handler = async (event) => {
     if (event.httpMethod === 'GET') {
       const passParam = (event.queryStringParameters || {}).pass || '';
       const safePass = passParam.replace(/'/g, "''");
-      const baseFormula = "OR({Invitaciones} = 'Save the date sent', {Invitaciones} = 'Invitation sent')";
-      const formula = safePass
-        ? `AND(${baseFormula}, {pass} = '${safePass}')`
-        : baseFormula;
+      const formula = safePass ? `{pass} = '${safePass}'` : "{pass} = ''";
 
       let all = [], offset = null;
       do {
         const url = new URL(BASE_URL);
         url.searchParams.append('fields[]', 'Name');
-        url.searchParams.append('fields[]', 'Confirmación');
         url.searchParams.append('fields[]', 'Restricción alimentaria');
         url.searchParams.set('filterByFormula', formula);
         url.searchParams.set('pageSize', '100');
