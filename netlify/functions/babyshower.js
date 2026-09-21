@@ -1,5 +1,5 @@
 const GIFTS_URL = 'https://api.airtable.com/v0/applUruwOQ6E5AhN2/tblOL2CThh0eFtP6x';
-const GUESTS_URL = 'https://api.airtable.com/v0/applBlg6Sd7YlTunP/tbldkI6GmWlsyuoU0';
+const GUESTS_URL = 'https://api.airtable.com/v0/applUruwOQ6E5AhN2/tbldkI6GmWlsyuoU0';
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
