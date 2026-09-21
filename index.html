@@ -818,6 +818,7 @@ footer {
 .filter-chip:hover { border-color:var(--black); color:var(--black); }
 .filter-chip.active { background:var(--black); color:white; border-color:var(--black); }
 .gallery-loading, .gallery-empty { padding:48px 0; text-align:center; font-size:0.85rem; color:var(--gray-400); }
+.gallery-loading.gallery-error { color:#b84040; }
 .gift-card.disabled { cursor:default; opacity:0.5; }
 .gift-card.disabled:hover { background:var(--white); }
 .gift-card.disabled:hover .gift-name { color:var(--black); }
@@ -2292,15 +2293,21 @@ function showGallery() {
 async function loadBabyGifts() {
   const loading = document.getElementById('galleryLoading');
   loading.style.display = 'block';
+  loading.classList.remove('gallery-error');
   try {
     const res = await fetch(`${BABY_URL}?resource=gifts`);
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`(${res.status}) ${data.error || 'Error desconocido'}`);
+    }
     babyGifts = data.gifts || [];
     babyGiftsLoaded = true;
     renderBabyGifts();
     loading.style.display = 'none';
   } catch (e) {
-    loading.textContent = currentLang === 'en' ? 'Could not load gifts.' : 'No se pudieron cargar los regalos.';
+    console.error('Error cargando regalos:', e);
+    loading.classList.add('gallery-error');
+    loading.textContent = (currentLang === 'en' ? 'Could not load gifts: ' : 'No se pudieron cargar los regalos: ') + e.message;
   }
 }
 
