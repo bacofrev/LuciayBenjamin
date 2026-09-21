@@ -2232,7 +2232,7 @@ function showGallery() {
   document.getElementById('hubNav').style.display = 'flex';
   document.getElementById('hubBackBtn').style.display = 'inline-block';
   window.scrollTo(0, 0);
-  if (!babyGiftsLoaded) loadBabyGifts();
+  loadBabyGifts();
 }
 
 async function loadBabyGifts() {
@@ -2273,7 +2273,7 @@ function renderBabyGifts() {
 }
 
 function giftCardHTML(g) {
-  const disponible = g.estado === 'Disponible' && g.cantidad > 0;
+  const disponible = g.estado === 'Disponible';
   const icon = CATEGORY_ICONS[g.categoria] || CATEGORY_ICONS.default;
   const statusMeta = STATUS_LABELS[g.estado] || STATUS_LABELS['Disponible'];
   const statusLabel = currentLang === 'en' ? statusMeta.en : statusMeta.es;

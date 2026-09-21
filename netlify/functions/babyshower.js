@@ -129,13 +129,15 @@ exports.handler = async (event) => {
         return { statusCode: giftRes.status, headers: cors, body: JSON.stringify({ ok: false, error: gift.error?.message || 'Regalo no encontrado' }) };
       }
 
-      const cantidadActual = typeof gift.fields['Cantidad'] === 'number' ? gift.fields['Cantidad'] : 1;
+      const cantidadRaw = typeof gift.fields['Cantidad'] === 'number' ? gift.fields['Cantidad'] : 1;
       const estadoActual = gift.fields['Estado'] || 'Disponible';
 
-      if (estadoActual !== 'Disponible' || cantidadActual <= 0) {
+      if (estadoActual !== 'Disponible') {
         return { statusCode: 409, headers: cors, body: JSON.stringify({ ok: false, error: 'NOT_AVAILABLE' }) };
       }
 
+      // Si el estado se reactivó a mano en Airtable sin subir la cantidad, se asume 1 disponible.
+      const cantidadActual = cantidadRaw > 0 ? cantidadRaw : 1;
       const nuevaCantidad = cantidadActual - 1;
       const nuevoEstado = nuevaCantidad <= 0 ? 'Reservado' : estadoActual;
       const vinculosExistentes = (gift.fields['Quién lo regala'] || []);
