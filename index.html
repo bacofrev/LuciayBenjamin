@@ -838,8 +838,16 @@ footer {
 .gift-status-badge.reservado { color:#a07020; background:#fef3cd; }
 .gift-status-badge.comprado { color:#555; background:#e8e8e8; }
 
+/* ── MODAL REGALO: LAYOUT E-COMMERCE (foto izquierda, info derecha) ── */
+#reserveModal .modal { max-width:760px; }
+.reserve-layout { display:flex; align-items:stretch; }
+.reserve-info { flex:1; min-width:0; display:flex; flex-direction:column; }
+.reserve-info .modal-body { flex:1; }
+.reserve-qty { font-size:0.78rem; letter-spacing:0.04em; color:var(--gray-600); margin-bottom:14px; }
+.reserve-qty strong { color:var(--black); font-weight:500; }
+
 /* ── MODAL REGALO: CARRUSEL DE FOTOS ── */
-.reserve-media { position:relative; width:100%; aspect-ratio:1/1; background:var(--gray-100); overflow:hidden; }
+.reserve-media { position:relative; width:45%; flex-shrink:0; aspect-ratio:1/1; background:var(--gray-100); overflow:hidden; }
 .reserve-media-track { position:relative; width:100%; height:100%; }
 .reserve-media-track img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.3s ease; }
 .reserve-media-track img.active { opacity:1; }
@@ -857,6 +865,11 @@ footer {
   .hub-cards { grid-template-columns:1fr; }
   .hub-nav { padding:16px 24px; }
   .gallery-section { padding-top:120px; }
+}
+@media(max-width:640px){
+  #reserveModal .modal { max-width:460px; }
+  .reserve-layout { flex-direction:column; }
+  .reserve-media { width:100%; }
 }
 </style>
 </head>
@@ -1406,7 +1419,6 @@ footer {
   <div class="nav-logo" onclick="showHub()">L &amp; B</div>
   <button class="hub-nav-back" id="hubBackBtn" style="display:none;" onclick="showHub()" data-es="← Inicio" data-en="← Home">← Inicio</button>
   <div class="hub-nav-right">
-    <button id="hub-logout-btn" data-es="Salir" data-en="Log out">Salir</button>
     <button id="hub-lang-btn" onclick="toggleLang()">EN</button>
   </div>
 </nav>
@@ -1420,7 +1432,7 @@ footer {
   <div class="hub-content">
     <div class="hub-heading fade-up visible">
       <div class="hub-eyebrow" data-es="Bienvenidos" data-en="Welcome">Bienvenidos</div>
-      <h1 class="hub-title" data-es="¿Qué querés<br><em>ver hoy?</em>" data-en="What would you<br>like to <em>see?</em>">¿Qué querés<br><em>ver hoy?</em></h1>
+      <h1 class="hub-title" data-es="¿Qué quieres<br><em>ver hoy?</em>" data-en="What would you<br>like to <em>see?</em>">¿Qué quieres<br><em>ver hoy?</em></h1>
     </div>
     <div class="hub-cards">
       <div class="hub-card fade-up visible" onclick="showGallery()">
@@ -1486,29 +1498,34 @@ footer {
     </div>
 
     <div class="gift-step" id="reserveStep1">
-      <div class="reserve-media" id="reserveMedia" style="display:none;">
-        <div class="reserve-media-track" id="reserveMediaTrack"></div>
-        <button class="reserve-media-prev" id="reserveMediaPrev" style="display:none;" onclick="reserveMediaNav(-1)">&#8592;</button>
-        <button class="reserve-media-next" id="reserveMediaNext" style="display:none;" onclick="reserveMediaNav(1)">&#8594;</button>
-        <div class="reserve-media-dots" id="reserveMediaDots"></div>
-      </div>
-      <div class="modal-head">
-        <div>
-          <div class="modal-title" id="reserveGiftName">—</div>
-          <div class="modal-subtitle" id="reserveGiftCategoria">—</div>
+      <div class="reserve-layout">
+        <div class="reserve-media" id="reserveMedia" style="display:none;">
+          <div class="reserve-media-track" id="reserveMediaTrack"></div>
+          <button class="reserve-media-prev" id="reserveMediaPrev" style="display:none;" onclick="reserveMediaNav(-1)">&#8592;</button>
+          <button class="reserve-media-next" id="reserveMediaNext" style="display:none;" onclick="reserveMediaNav(1)">&#8594;</button>
+          <div class="reserve-media-dots" id="reserveMediaDots"></div>
         </div>
-        <button class="modal-close" onclick="closeReserveModal()">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-note" id="reserveGiftDetalle"></p>
-        <a class="reserve-link" id="reserveGiftLink" href="#" target="_blank" rel="noopener" style="display:none;" data-es="Ver dónde comprarlo →" data-en="See where to buy it →">Ver dónde comprarlo →</a>
-        <div class="modal-field" style="position:relative;">
-          <label for="reserveNombreInput" data-es="Tu nombre" data-en="Your name">Tu nombre</label>
-          <input type="text" id="reserveNombreInput" placeholder="Escribe tu nombre…" data-ph-es="Escribe tu nombre…" data-ph-en="Type your name…" autocomplete="off" />
-          <div class="confirmar-dropdown" id="reserveDropdown"></div>
+        <div class="reserve-info">
+          <div class="modal-head">
+            <div>
+              <div class="modal-title" id="reserveGiftName">—</div>
+              <div class="modal-subtitle" id="reserveGiftCategoria">—</div>
+            </div>
+            <button class="modal-close" onclick="closeReserveModal()">✕</button>
+          </div>
+          <div class="modal-body">
+            <div class="reserve-qty" id="reserveQty"></div>
+            <p class="modal-note" id="reserveGiftDetalle"></p>
+            <a class="reserve-link" id="reserveGiftLink" href="#" target="_blank" rel="noopener" style="display:none;" data-es="Ver dónde comprarlo →" data-en="See where to buy it →">Ver dónde comprarlo →</a>
+            <div class="modal-field" style="position:relative;">
+              <label for="reserveNombreInput" data-es="Tu nombre" data-en="Your name">Tu nombre</label>
+              <input type="text" id="reserveNombreInput" placeholder="Escribe tu nombre…" data-ph-es="Escribe tu nombre…" data-ph-en="Type your name…" autocomplete="off" />
+              <div class="confirmar-dropdown" id="reserveDropdown"></div>
+            </div>
+            <div class="modal-field-error" id="reserveError"></div>
+            <button class="btn-gift-primary" id="reserveConfirmBtn" onclick="confirmReserve()" data-es="Confirmar que yo lo traigo" data-en="Confirm I'll bring it">Confirmar que yo lo traigo</button>
+          </div>
         </div>
-        <div class="modal-field-error" id="reserveError"></div>
-        <button class="btn-gift-primary" id="reserveConfirmBtn" onclick="confirmReserve()" data-es="Confirmar que yo lo traigo" data-en="Confirm I'll bring it">Confirmar que yo lo traigo</button>
       </div>
     </div>
 
@@ -2163,81 +2180,9 @@ function toggleAuthPassword() {
 </script>
 
 <script>
-(function() {
-  var KEY = 'wedding_pass';
-
-  var gate = document.getElementById('auth-gate');
-  var logoutBtn = document.getElementById('logout-btn');
-  var passwordInput = document.getElementById('auth-password');
-  var submitBtn = document.getElementById('auth-submit-btn');
-  var errorDiv = document.getElementById('auth-error');
-
-  function showSite() {
-    gate.classList.add('out');
-    setTimeout(function() { gate.style.display = 'none'; }, 500);
-    logoutBtn.style.display = 'inline-block';
-    showHub();
-  }
-
-  function showGate() {
-    gate.style.display = 'flex';
-    gate.classList.remove('out');
-    logoutBtn.style.display = 'none';
-    passwordInput.value = '';
-    errorDiv.textContent = '';
-    submitBtn.disabled = false;
-    submitBtn.textContent = submitBtn.dataset.es || 'Ingresar';
-    document.getElementById('hubNav').style.display = 'none';
-    document.getElementById('hubView').style.display = 'none';
-    document.getElementById('galleryView').style.display = 'none';
-  }
-
-  async function tryLogin(pass) {
-    var count = await loadGuests(pass);
-    if (count > 0) {
-      localStorage.setItem(KEY, pass);
-      showSite();
-    } else {
-      errorDiv.textContent = currentLang === 'en' ? 'Incorrect password.' : 'Contraseña incorrecta.';
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = submitBtn.dataset[currentLang] || 'Ingresar';
-    }
-  }
-
-  var storedPass = localStorage.getItem(KEY);
-  if (storedPass) {
-    loadGuests(storedPass).then(function(count) {
-      if (count > 0) showSite();
-      else { localStorage.removeItem(KEY); }
-    });
-  }
-
-  submitBtn.addEventListener('click', function() {
-    var pass = passwordInput.value.trim();
-    if (!pass) return;
-    errorDiv.textContent = '';
-    submitBtn.disabled = true;
-    submitBtn.textContent = currentLang === 'en' ? 'Checking…' : 'Verificando…';
-    tryLogin(pass);
-  });
-
-  passwordInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBtn.click(); });
-
-  logoutBtn.addEventListener('click', function() {
-    localStorage.removeItem(KEY);
-    guests = [];
-    showGate();
-  });
-
-  var hubLogoutBtn = document.getElementById('hub-logout-btn');
-  if (hubLogoutBtn) {
-    hubLogoutBtn.addEventListener('click', function() {
-      localStorage.removeItem(KEY);
-      guests = [];
-      showGate();
-    });
-  }
-})();
+// Acceso abierto: se sacó la pantalla de contraseña, cualquiera entra directo al hub.
+document.getElementById('auth-gate').style.display = 'none';
+document.addEventListener('DOMContentLoaded', function () { showHub(); });
 </script>
 
 <script>
@@ -2408,6 +2353,9 @@ function openReserveModal(giftId) {
   selectedBabyGuest = null;
   document.getElementById('reserveGiftName').textContent = currentReserveGift.nombre;
   document.getElementById('reserveGiftCategoria').textContent = currentReserveGift.categoria || '';
+  document.getElementById('reserveQty').innerHTML = currentLang === 'en'
+    ? `Available quantity: <strong>${currentReserveGift.cantidad}</strong>`
+    : `Cantidad disponible: <strong>${currentReserveGift.cantidad}</strong>`;
   document.getElementById('reserveGiftDetalle').textContent = currentReserveGift.detalle || '';
   const linkEl = document.getElementById('reserveGiftLink');
   if (currentReserveGift.link) {
