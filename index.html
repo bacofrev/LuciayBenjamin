@@ -813,6 +813,7 @@ footer {
 
 /* ── GALERÍA REGALOS BABY SHOWER ── */
 .gallery-section { padding-top:160px; }
+.gallery-search-wrap { max-width:420px; margin-bottom:20px; }
 .gallery-filters { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px; }
 .filter-chip { padding:9px 18px; background:transparent; border:1px solid var(--gray-200); color:var(--gray-600); font-family:'DM Sans',sans-serif; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
 .filter-chip:hover { border-color:var(--black); color:var(--black); }
@@ -1474,6 +1475,9 @@ footer {
       <div class="regalos-intro-layout fade-up visible">
         <h2 class="regalos-title" data-es="Regalos para<br><em>Amelia</em>" data-en="Gifts for<br><em>Amelia</em>">Regalos para<br><em>Amelia</em></h2>
         <p class="regalos-intro-text" data-es="Elige lo que quieras traer y anótate con tu nombre. Restamos la cantidad automáticamente para que no se repitan los regalos." data-en="Pick what you'd like to bring and sign up with your name. We update the quantity automatically so gifts don't get duplicated.">Elige lo que quieras traer y anótate con tu nombre. Restamos la cantidad automáticamente para que no se repitan los regalos.</p>
+      </div>
+      <div class="gallery-search-wrap fade-up visible">
+        <input type="text" class="confirmar-input" id="gallerySearchInput" placeholder="Buscar un regalo…" data-ph-es="Buscar un regalo…" data-ph-en="Search a gift…" autocomplete="off" oninput="setSearchQuery(this.value)" />
       </div>
       <div class="gallery-filters fade-up visible" id="galleryFilters">
         <button class="filter-chip active" data-cat="Todos" onclick="setCategory('Todos')" data-es="Todos" data-en="All">Todos</button>
@@ -2199,6 +2203,7 @@ let babyGuests = [];
 let babyGuestsLoaded = false;
 let babyGiftsLoaded = false;
 let activeCategory = 'Todos';
+let searchQuery = '';
 let currentReserveGift = null;
 let selectedBabyGuest = null;
 
@@ -2270,10 +2275,19 @@ function setCategory(cat) {
   renderBabyGifts();
 }
 
+function setSearchQuery(value) {
+  searchQuery = value.trim().toLowerCase();
+  renderBabyGifts();
+}
+
 function renderBabyGifts() {
   const grid = document.getElementById('babyGiftsGrid');
   const empty = document.getElementById('galleryEmpty');
-  const filtered = activeCategory === 'Todos' ? babyGifts : babyGifts.filter(g => g.categoria === activeCategory);
+  let filtered = activeCategory === 'Todos' ? babyGifts.slice() : babyGifts.filter(g => g.categoria === activeCategory);
+  if (searchQuery) {
+    filtered = filtered.filter(g => g.nombre.toLowerCase().includes(searchQuery));
+  }
+  filtered.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
   grid.innerHTML = filtered.map(giftCardHTML).join('');
   empty.style.display = filtered.length ? 'none' : 'block';
 }
