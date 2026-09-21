@@ -840,7 +840,17 @@ footer {
 
 /* ── MODAL REGALO: LAYOUT E-COMMERCE (foto izquierda, info derecha) ── */
 #reserveModal .modal { max-width:760px; }
-.reserve-layout { display:flex; align-items:stretch; }
+.reserve-layout { display:flex; align-items:stretch; position:relative; }
+.reserve-close {
+  position:absolute; top:14px; right:14px; z-index:20;
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(255,255,255,0.85); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
+  border:none; color:var(--black); font-size:1rem; line-height:1;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+.reserve-close:hover { background:white; }
 .reserve-info { flex:1; min-width:0; display:flex; flex-direction:column; }
 .reserve-info .modal-body { flex:1; }
 .reserve-qty { font-size:0.78rem; letter-spacing:0.04em; color:var(--gray-600); margin-bottom:14px; }
@@ -1499,6 +1509,7 @@ footer {
 
     <div class="gift-step" id="reserveStep1">
       <div class="reserve-layout">
+        <button class="reserve-close" onclick="closeReserveModal()">✕</button>
         <div class="reserve-media" id="reserveMedia" style="display:none;">
           <div class="reserve-media-track" id="reserveMediaTrack"></div>
           <button class="reserve-media-prev" id="reserveMediaPrev" style="display:none;" onclick="reserveMediaNav(-1)">&#8592;</button>
@@ -1511,7 +1522,6 @@ footer {
               <div class="modal-title" id="reserveGiftName">—</div>
               <div class="modal-subtitle" id="reserveGiftCategoria">—</div>
             </div>
-            <button class="modal-close" onclick="closeReserveModal()">✕</button>
           </div>
           <div class="modal-body">
             <div class="reserve-qty" id="reserveQty"></div>
