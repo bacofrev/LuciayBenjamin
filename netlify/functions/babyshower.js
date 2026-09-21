@@ -121,12 +121,9 @@ exports.handler = async (event) => {
 
       const resolvedGuestId = await findOrCreateGuest(token, guestId, guestName);
 
-      const giftRes = await fetch(
-        `${GIFTS_URL}/${regaloId}?${['Cantidad', 'Estado', 'Quién lo regala']
-          .map((f) => `fields[]=${encodeURIComponent(f)}`)
-          .join('&')}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const giftRes = await fetch(`${GIFTS_URL}/${regaloId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const gift = await giftRes.json();
       if (!giftRes.ok) {
         return { statusCode: giftRes.status, headers: cors, body: JSON.stringify({ ok: false, error: gift.error?.message || 'Regalo no encontrado' }) };
