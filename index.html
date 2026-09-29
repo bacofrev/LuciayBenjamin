@@ -865,6 +865,33 @@ footer {
 .reserve-link { display:inline-block; margin:-8px 0 20px; font-size:0.78rem; letter-spacing:0.04em; color:var(--black); text-decoration:none; border-bottom:1px solid var(--black); padding-bottom:2px; transition:opacity 0.2s; }
 .reserve-link:hover { opacity:0.5; }
 
+/* ── FOTOS DEL MATRIMONIO ── */
+.photos-video { position:relative; display:block; width:100%; aspect-ratio:16/9; background:var(--black); margin-bottom:64px; overflow:hidden; }
+.photos-video img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.75; transition:opacity 0.3s, transform 0.6s; }
+.photos-video:hover img { opacity:0.6; transform:scale(1.02); }
+.photos-video-play { position:absolute; top:50%; left:50%; width:84px; height:84px; transform:translate(-50%,-50%); border:1px solid rgba(255,255,255,0.8); border-radius:50%; background:rgba(8,8,8,0.35); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); transition:border-color 0.3s, background 0.3s; }
+.photos-video-play::after { content:''; position:absolute; top:50%; left:54%; transform:translate(-50%,-50%); border-style:solid; border-width:12px 0 12px 20px; border-color:transparent transparent transparent white; }
+.photos-video:hover .photos-video-play { border-color:var(--gold); background:rgba(8,8,8,0.55); }
+.photos-video-label { position:absolute; left:50%; bottom:28px; transform:translateX(-50%); white-space:nowrap; color:white; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; }
+.photos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.photos-item { display:block; width:100%; aspect-ratio:3/2; overflow:hidden; background:var(--gray-100); cursor:zoom-in; border:none; padding:0; }
+.photos-item img { display:block; width:100%; height:100%; object-fit:cover; transition:opacity 0.3s; }
+.photos-item:hover img { opacity:0.85; }
+.photos-lightbox-download {
+  position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+  font-family:'DM Sans',sans-serif; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:white; text-decoration:none; border:1px solid rgba(255,255,255,0.35); padding:10px 18px;
+  transition:border-color 0.2s;
+}
+.photos-lightbox-download:hover { border-color:white; }
+.photos-lightbox-count { position:absolute; top:28px; left:28px; font-size:0.7rem; letter-spacing:0.14em; color:rgba(255,255,255,0.6); }
+
+@media(max-width:900px){
+  .photos-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .photos-video { margin-bottom:40px; }
+  .photos-video-play { width:64px; height:64px; }
+  .photos-video-label { bottom:16px; }
+}
 @media(max-width:900px){
   .hub-cards { grid-template-columns:1fr; }
   .hub-nav { padding:16px 24px; }
@@ -1452,8 +1479,7 @@ footer {
         <div class="hub-card-sub" data-es="Elige un regalo y anótate" data-en="Pick a gift and sign up">Elige un regalo y anótate</div>
         <span class="hub-card-arrow">→</span>
       </div>
-      <div class="hub-card hub-card-disabled fade-up visible delay-1">
-        <span class="hub-card-badge" data-es="Próximamente" data-en="Coming soon">Próximamente</span>
+      <div class="hub-card fade-up visible delay-1" onclick="showPhotos()">
         <span class="hub-card-icon">
           <svg width="48" height="48" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="6" y="12" width="44" height="34" rx="2" stroke="#c8a96e" stroke-width="1.5"/>
@@ -1462,7 +1488,8 @@ footer {
           </svg>
         </span>
         <div class="hub-card-title" data-es="Fotos del<br>matrimonio" data-en="Wedding<br>photos">Fotos del<br>matrimonio</div>
-        <div class="hub-card-sub" data-es="Muy pronto" data-en="Very soon">Muy pronto</div>
+        <div class="hub-card-sub" data-es="Revive el día con nosotros" data-en="Relive the day with us">Revive el día con nosotros</div>
+        <span class="hub-card-arrow">→</span>
       </div>
     </div>
   </div>
@@ -1493,6 +1520,34 @@ footer {
       <div class="gallery-empty" id="galleryEmpty" style="display:none;" data-es="No hay regalos en esta categoría." data-en="No gifts in this category.">No hay regalos en esta categoría.</div>
     </div>
   </div>
+</div>
+
+<!-- FOTOS DEL MATRIMONIO -->
+<div id="photosView" style="display:none;">
+  <div class="section gallery-section">
+    <div class="section-inner">
+      <div class="regalos-intro-layout fade-up visible">
+        <h2 class="regalos-title" data-es="Fotos del<br><em>matrimonio</em>" data-en="Wedding<br><em>photos</em>">Fotos del<br><em>matrimonio</em></h2>
+        <p class="regalos-intro-text" data-es="Gracias por acompañarnos. Aquí están el video y las fotos del día; toca cualquier foto para verla en grande o descargarla." data-en="Thank you for being there. Here are the video and photos from the day; tap any photo to see it larger or download it.">Gracias por acompañarnos. Aquí están el video y las fotos del día; toca cualquier foto para verla en grande o descargarla.</p>
+      </div>
+      <a class="photos-video fade-up visible" href="https://youtu.be/U9SqZ-NzKZw" target="_blank" rel="noopener" aria-label="Ver el video en YouTube">
+        <img src="https://i.ytimg.com/vi/U9SqZ-NzKZw/maxresdefault.jpg" alt="" loading="lazy" />
+        <span class="photos-video-play" aria-hidden="true"></span>
+        <span class="photos-video-label" data-es="Ver el video en YouTube" data-en="Watch the video on YouTube">Ver el video en YouTube</span>
+      </a>
+      <div class="photos-grid" id="photosGrid"></div>
+      <div class="gallery-loading" id="photosLoading" data-es="Cargando fotos…" data-en="Loading photos…">Cargando fotos…</div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="photosLightbox">
+  <span class="photos-lightbox-count" id="photosLightboxCount"></span>
+  <button class="lightbox-close" onclick="closePhotoLightbox()">✕</button>
+  <button class="lightbox-prev" onclick="photoLightboxNav(-1)">&#8592;</button>
+  <img id="photosLightboxImg" src="" alt="" />
+  <button class="lightbox-next" onclick="photoLightboxNav(1)">&#8594;</button>
+  <a class="photos-lightbox-download" id="photosLightboxDownload" href="#" data-es="Descargar" data-en="Download">Descargar</a>
 </div>
 
 <!-- MODAL RESERVA REGALO BABY SHOWER -->
@@ -2231,6 +2286,7 @@ function escapeHTML(str) {
 
 function showHub() {
   document.getElementById('galleryView').style.display = 'none';
+  document.getElementById('photosView').style.display = 'none';
   document.getElementById('hubView').style.display = 'flex';
   document.getElementById('hubNav').style.display = 'flex';
   document.getElementById('hubBackBtn').style.display = 'none';
@@ -2245,6 +2301,88 @@ function showGallery() {
   window.scrollTo(0, 0);
   loadBabyGifts();
 }
+
+// ── FOTOS DEL MATRIMONIO (Cloudinary + YouTube)
+const CLOUDINARY_CLOUD = 'f26pgoma';
+const CLOUDINARY_TAG = 'boda_web';
+let weddingPhotos = [];
+let weddingPhotosLoaded = false;
+let photoLightboxIndex = 0;
+
+function cloudinaryUrl(photo, transform) {
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/${transform}/v${photo.version}/${photo.public_id}.${photo.format}`;
+}
+
+function showPhotos() {
+  document.getElementById('hubView').style.display = 'none';
+  document.getElementById('photosView').style.display = 'block';
+  document.getElementById('hubNav').style.display = 'flex';
+  document.getElementById('hubBackBtn').style.display = 'inline-block';
+  window.scrollTo(0, 0);
+  if (!weddingPhotosLoaded) loadWeddingPhotos();
+}
+
+async function loadWeddingPhotos() {
+  const loading = document.getElementById('photosLoading');
+  loading.style.display = 'block';
+  loading.classList.remove('gallery-error');
+  try {
+    const res = await fetch(`https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/list/${CLOUDINARY_TAG}.json`);
+    if (!res.ok) throw new Error(`(${res.status})`);
+    const data = await res.json();
+    weddingPhotos = (data.resources || []).sort((a, b) =>
+      a.public_id.localeCompare(b.public_id, undefined, { numeric: true })
+    );
+    weddingPhotosLoaded = true;
+    renderWeddingPhotos();
+    loading.style.display = 'none';
+  } catch (e) {
+    console.error('Error cargando fotos:', e);
+    loading.classList.add('gallery-error');
+    loading.textContent = (currentLang === 'en' ? 'Could not load photos ' : 'No se pudieron cargar las fotos ') + e.message;
+  }
+}
+
+function renderWeddingPhotos() {
+  document.getElementById('photosGrid').innerHTML = weddingPhotos.map((p, i) => `
+    <button class="photos-item" onclick="openPhotoLightbox(${i})" aria-label="Foto ${i + 1}">
+      <img src="${cloudinaryUrl(p, 'c_fill,g_auto,w_600,h_400,q_auto,f_auto')}" loading="lazy" alt="" />
+    </button>`).join('');
+}
+
+function openPhotoLightbox(i) {
+  photoLightboxIndex = i;
+  updatePhotoLightbox();
+  document.getElementById('photosLightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePhotoLightbox() {
+  document.getElementById('photosLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function photoLightboxNav(dir) {
+  photoLightboxIndex = (photoLightboxIndex + dir + weddingPhotos.length) % weddingPhotos.length;
+  updatePhotoLightbox();
+}
+
+function updatePhotoLightbox() {
+  const p = weddingPhotos[photoLightboxIndex];
+  document.getElementById('photosLightboxImg').src = cloudinaryUrl(p, 'c_limit,w_2000,q_auto,f_auto');
+  document.getElementById('photosLightboxDownload').href = cloudinaryUrl(p, 'fl_attachment');
+  document.getElementById('photosLightboxCount').textContent = `${photoLightboxIndex + 1} / ${weddingPhotos.length}`;
+}
+
+document.getElementById('photosLightbox').addEventListener('click', e => {
+  if (e.target.id === 'photosLightbox') closePhotoLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('photosLightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closePhotoLightbox();
+  if (e.key === 'ArrowRight') photoLightboxNav(1);
+  if (e.key === 'ArrowLeft') photoLightboxNav(-1);
+});
 
 async function loadBabyGifts() {
   const loading = document.getElementById('galleryLoading');
