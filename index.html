@@ -2252,6 +2252,9 @@ const ROUTES = { '/': () => showHub(), '/babyshower': () => showGallery(), '/fot
 
 function renderRoute() {
   const path = location.pathname.replace(/\/+$/, '') || '/';
+  // /fotos/<id> abre directo esa foto en el lightbox (link para compartir)
+  const photoMatch = path.match(/^\/fotos\/(.+)$/);
+  if (photoMatch) return showPhotos(decodeURIComponent(photoMatch[1]));
   (ROUTES[path] || ROUTES['/'])();
 }
 
@@ -2299,6 +2302,7 @@ function escapeHTML(str) {
 }
 
 function showHub() {
+  hidePhotoLightbox();
   document.getElementById('galleryView').style.display = 'none';
   document.getElementById('photosView').style.display = 'none';
   document.getElementById('hubView').style.display = 'flex';
@@ -2308,6 +2312,7 @@ function showHub() {
 }
 
 function showGallery() {
+  hidePhotoLightbox();
   document.getElementById('hubView').style.display = 'none';
   document.getElementById('galleryView').style.display = 'block';
   document.getElementById('photosView').style.display = 'none';
@@ -2323,19 +2328,38 @@ const CLOUDINARY_TAG = 'boda_web';
 let weddingPhotos = [];
 let weddingPhotosLoaded = false;
 let photoLightboxIndex = 0;
+let requestedPhotoId = null;
 
 function cloudinaryUrl(photo, transform) {
   return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/${transform}/v${photo.version}/${photo.public_id}.${photo.format}`;
 }
 
-function showPhotos() {
+// Id corto de la foto para la URL: el nombre del archivo en Cloudinary (sin carpeta)
+function photoSlug(photo) {
+  return photo.public_id.split('/').pop();
+}
+
+function showPhotos(photoId) {
+  const alreadyVisible = document.getElementById('photosView').style.display === 'block';
+  requestedPhotoId = photoId || null;
   document.getElementById('hubView').style.display = 'none';
   document.getElementById('photosView').style.display = 'block';
   document.getElementById('galleryView').style.display = 'none';
   document.getElementById('hubNav').style.display = 'flex';
   document.getElementById('hubBackBtn').style.display = 'inline-block';
-  window.scrollTo(0, 0);
+  if (!alreadyVisible) window.scrollTo(0, 0);
   if (!weddingPhotosLoaded) loadWeddingPhotos();
+  else syncPhotoLightboxWithUrl();
+}
+
+// Abre o cierra el lightbox según la foto pedida en la URL, sin tocar el historial
+function syncPhotoLightboxWithUrl() {
+  const i = requestedPhotoId ? weddingPhotos.findIndex(p => photoSlug(p) === requestedPhotoId) : -1;
+  if (i >= 0) showPhotoLightbox(i);
+  else {
+    if (requestedPhotoId) history.replaceState(null, '', '/fotos');
+    hidePhotoLightbox();
+  }
 }
 
 async function loadWeddingPhotos() {
@@ -2352,6 +2376,7 @@ async function loadWeddingPhotos() {
     weddingPhotosLoaded = true;
     renderWeddingPhotos();
     loading.style.display = 'none';
+    syncPhotoLightboxWithUrl();
   } catch (e) {
     console.error('Error cargando fotos:', e);
     loading.classList.add('gallery-error');
@@ -2367,6 +2392,12 @@ function renderWeddingPhotos() {
 }
 
 function openPhotoLightbox(i) {
+  // pushState para que el botón "atrás" (clave en el celular) cierre la foto
+  history.pushState({ photoOpen: true }, '', `/fotos/${encodeURIComponent(photoSlug(weddingPhotos[i]))}`);
+  showPhotoLightbox(i);
+}
+
+function showPhotoLightbox(i) {
   photoLightboxIndex = i;
   updatePhotoLightbox();
   document.getElementById('photosLightbox').classList.add('open');
@@ -2374,12 +2405,22 @@ function openPhotoLightbox(i) {
 }
 
 function closePhotoLightbox() {
-  document.getElementById('photosLightbox').classList.remove('open');
+  // Si la abrimos desde la grilla, volver atrás deja el historial limpio; si se entró por link, se reemplaza la URL
+  if (history.state && history.state.photoOpen) return history.back();
+  history.replaceState(null, '', '/fotos');
+  hidePhotoLightbox();
+}
+
+function hidePhotoLightbox() {
+  const lightbox = document.getElementById('photosLightbox');
+  if (!lightbox.classList.contains('open')) return;
+  lightbox.classList.remove('open');
   document.body.style.overflow = '';
 }
 
 function photoLightboxNav(dir) {
   photoLightboxIndex = (photoLightboxIndex + dir + weddingPhotos.length) % weddingPhotos.length;
+  history.replaceState(history.state, '', `/fotos/${encodeURIComponent(photoSlug(weddingPhotos[photoLightboxIndex]))}`);
   updatePhotoLightbox();
 }
 
