@@ -4,3 +4,13 @@
 
 [functions]
   node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/babyshower"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/fotos"
+  to = "/index.html"
+  status = 200

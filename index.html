@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucía &amp; Benjamín — 15.08.2026</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
@@ -942,9 +942,9 @@ footer {
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-photos" id="heroPhotos">
-    <div class="hero-photo active"><img src="img/Hero_1.svg" alt="" /></div>
-    <div class="hero-photo"><img src="img/Hero_2.svg" alt="" /></div>
-    <div class="hero-photo"><img src="img/Hero_3.svg" alt="" /></div>
+    <div class="hero-photo active"><img src="/img/Hero_1.svg" alt="" /></div>
+    <div class="hero-photo"><img src="/img/Hero_2.svg" alt="" /></div>
+    <div class="hero-photo"><img src="/img/Hero_3.svg" alt="" /></div>
   </div>
   <div class="hero-fade"></div>
   <div class="hero-overlay"></div>
@@ -983,25 +983,25 @@ footer {
         <div class="carousel-wrap">
           <div class="carousel" id="carousel">
             <div class="carousel-slide">
-              <img src="img/foto_01.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_01.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_2.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_2.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_3.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_3.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_4.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_4.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_5.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_5.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_6.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_6.jpg" alt="Lucía y Benjamín" />
             </div>
             <div class="carousel-slide">
-              <img src="img/foto_7.jpg" alt="Lucía y Benjamín" />
+              <img src="/img/foto_7.jpg" alt="Lucía y Benjamín" />
             </div>
           </div>
         </div>
@@ -1301,7 +1301,7 @@ footer {
       </div>
       <div class="fade-up delay-1">
         <div class="dresscode-img-wrap">
-          <img src="img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
+          <img src="/img/coupple.png" alt="Lucía y Benjamín" class="dresscode-img" />
         </div>
         <p class="dresscode-note" data-es="El blanco queda reservado para la novia." data-en="White is reserved for the bride.">El blanco queda reservado para la novia.</p>
       </div>
@@ -1447,8 +1447,8 @@ footer {
 
 <!-- HUB NAV -->
 <nav id="hubNav" class="hub-nav" style="display:none;">
-  <div class="nav-logo" onclick="showHub()">L &amp; B</div>
-  <button class="hub-nav-back" id="hubBackBtn" style="display:none;" onclick="showHub()" data-es="← Inicio" data-en="← Home">← Inicio</button>
+  <div class="nav-logo" onclick="navigate('/')">L &amp; B</div>
+  <button class="hub-nav-back" id="hubBackBtn" style="display:none;" onclick="navigate('/')" data-es="← Inicio" data-en="← Home">← Inicio</button>
   <div class="hub-nav-right">
     <button id="hub-lang-btn" onclick="toggleLang()">EN</button>
   </div>
@@ -1457,7 +1457,7 @@ footer {
 <!-- HUB -->
 <div id="hubView" class="hub-view" style="display:none;">
   <div class="hub-backdrop">
-    <img src="img/Hero_1.svg" alt="" />
+    <img src="/img/Hero_1.svg" alt="" />
     <div class="hub-backdrop-overlay"></div>
   </div>
   <div class="hub-content">
@@ -1466,7 +1466,7 @@ footer {
       <h1 class="hub-title" data-es="¿Qué quieres<br><em>ver hoy?</em>" data-en="What would you<br>like to <em>see?</em>">¿Qué quieres<br><em>ver hoy?</em></h1>
     </div>
     <div class="hub-cards">
-      <div class="hub-card fade-up visible" onclick="showGallery()">
+      <div class="hub-card fade-up visible" onclick="navigate('/babyshower')">
         <span class="hub-card-icon">
           <svg width="48" height="48" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M28 6 L50 22 L28 50 L6 22Z" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
@@ -1479,7 +1479,7 @@ footer {
         <div class="hub-card-sub" data-es="Elige un regalo y anótate" data-en="Pick a gift and sign up">Elige un regalo y anótate</div>
         <span class="hub-card-arrow">→</span>
       </div>
-      <div class="hub-card fade-up visible delay-1" onclick="showPhotos()">
+      <div class="hub-card fade-up visible delay-1" onclick="navigate('/fotos')">
         <span class="hub-card-icon">
           <svg width="48" height="48" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="6" y="12" width="44" height="34" rx="2" stroke="#c8a96e" stroke-width="1.5"/>
@@ -1828,12 +1828,12 @@ let activeTab = 'clp';
 let currentGift = { name: '', desc: '', price: '', isFree: false };
 
 const giftPhotos = {
-  'Una noche de cena':       'img/dinner.png',
-  'Aventura en la montaña':  'img/Mountain.png',
-  'Nuestro hogar':           'img/home.png',
-  'Luna de miel':            'img/honeymoon.jpg',
-  'Un viaje':                'img/trip.jpg',
-  'Lo que quieran':          'img/anything.jpeg'
+  'Una noche de cena':       '/img/dinner.png',
+  'Aventura en la montaña':  '/img/Mountain.png',
+  'Nuestro hogar':           '/img/home.png',
+  'Luna de miel':            '/img/honeymoon.jpg',
+  'Un viaje':                '/img/trip.jpg',
+  'Lo que quieran':          '/img/anything.jpeg'
 };
 
 function parsePrecio(priceStr) {
@@ -1940,7 +1940,7 @@ async function confirmGiftPayment() {
       })
     });
     if (res.ok) {
-      document.getElementById('giftConfirmImg').src = giftPhotos[currentGift.name] || 'img/anything.jpeg';
+      document.getElementById('giftConfirmImg').src = giftPhotos[currentGift.name] || '/img/anything.jpeg';
       const titulo = (uiT[currentLang].giftTitles[currentGift.name]) || uiT[currentLang].giftTitles['Lo que quieran'];
       document.getElementById('giftConfirmTitle').textContent = titulo;
       giftGoStep(4);
@@ -2247,7 +2247,21 @@ function toggleAuthPassword() {
 <script>
 // Acceso abierto: se sacó la pantalla de contraseña, cualquiera entra directo al hub.
 document.getElementById('auth-gate').style.display = 'none';
-document.addEventListener('DOMContentLoaded', function () { showHub(); });
+// Rutas: cada sección tiene su propia URL (netlify.toml las reescribe a index.html)
+const ROUTES = { '/': () => showHub(), '/babyshower': () => showGallery(), '/fotos': () => showPhotos() };
+
+function renderRoute() {
+  const path = location.pathname.replace(/\/+$/, '') || '/';
+  (ROUTES[path] || ROUTES['/'])();
+}
+
+function navigate(path) {
+  if (location.pathname !== path) history.pushState(null, '', path);
+  renderRoute();
+}
+
+window.addEventListener('popstate', renderRoute);
+document.addEventListener('DOMContentLoaded', renderRoute);
 </script>
 
 <script>
@@ -2296,6 +2310,7 @@ function showHub() {
 function showGallery() {
   document.getElementById('hubView').style.display = 'none';
   document.getElementById('galleryView').style.display = 'block';
+  document.getElementById('photosView').style.display = 'none';
   document.getElementById('hubNav').style.display = 'flex';
   document.getElementById('hubBackBtn').style.display = 'inline-block';
   window.scrollTo(0, 0);
@@ -2316,6 +2331,7 @@ function cloudinaryUrl(photo, transform) {
 function showPhotos() {
   document.getElementById('hubView').style.display = 'none';
   document.getElementById('photosView').style.display = 'block';
+  document.getElementById('galleryView').style.display = 'none';
   document.getElementById('hubNav').style.display = 'flex';
   document.getElementById('hubBackBtn').style.display = 'inline-block';
   window.scrollTo(0, 0);
